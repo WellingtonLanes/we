@@ -1,48 +1,44 @@
-/* ===== TROCA DE SEÇÕES (MENU) ===== */
-document.addEventListener("DOMContentLoaded", () => {
-  const botoes = document.querySelectorAll(".menu button[data-section]");
-  const secoes = document.querySelectorAll(".secao");
-
-  botoes.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const alvo = btn.dataset.section;
-
-      // Atualiza botões
-      botoes.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      // Mostra a seção correspondente
-      secoes.forEach(s => s.classList.remove("ativa"));
-      document.getElementById(alvo).classList.add("ativa");
-
-      // Reinicia slides da seção certa
-      if (alvo === "inicio") showSlides();
-      if (alvo === "pedido") showSlides2();
-    });
-  });
-
-  // Botões desativados
-  document.querySelectorAll(".menu button.disabled").forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (!document.querySelector(".em-breve")) {
-        const aviso = document.createElement("div");
-        aviso.textContent = "✨ Em breve...";
-        aviso.classList.add("em-breve");
-        btn.insertAdjacentElement("afterend", aviso);
-        setTimeout(() => aviso.remove(), 2000);
-      }
-    });
+// ======== Troca de seções ========
+document.querySelectorAll('.menu-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const alvo = btn.getAttribute('data-section');
+    document.querySelectorAll('.secao').forEach(sec => sec.classList.remove('ativa'));
+    document.getElementById(alvo).classList.add('ativa');
   });
 });
 
-/* ===== NOVO SLIDESHOW (PEDIDO DE NAMORO) ===== */
-let slideIndex2 = 0;
-function showSlides2() {
-  const slides = document.querySelectorAll(".mySlides2");
-  if (slides.length === 0) return;
-  slides.forEach(s => s.style.display = "none");
-  slideIndex2++;
-  if (slideIndex2 > slides.length) { slideIndex2 = 1; }
-  slides[slideIndex2 - 1].style.display = "block";
-  setTimeout(showSlides2, 4000);
+// ======== Mostrar resposta dela ========
+const btnResp = document.getElementById("btnMostrarResposta");
+const boxResp = document.getElementById("respostaBox");
+if (btnResp) {
+  btnResp.addEventListener("click", () => {
+    boxResp.classList.toggle("visually-hidden");
+  });
 }
+
+// ======== Fade-in ========
+function initFadeIn() {
+  const els = document.querySelectorAll('.fade-in');
+  function check() {
+    els.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight - 80) el.classList.add('show');
+    });
+  }
+  window.addEventListener('scroll', check);
+  window.addEventListener('load', check);
+  check();
+}
+initFadeIn();
+
+// ======== Slideshow ========
+let slideIndex = 0;
+function showSlides() {
+  const slides = document.querySelectorAll(".mySlides");
+  slides.forEach(s => s.style.display = "none");
+  slideIndex++;
+  if (slideIndex > slides.length) slideIndex = 1;
+  slides[slideIndex - 1].style.display = "block";
+  setTimeout(showSlides, 4000);
+}
+showSlides();

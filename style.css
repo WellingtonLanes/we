@@ -1,0 +1,62 @@
+/* ===== MENU ===== */
+.menu {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px;
+  z-index: 10;
+}
+
+.menu button {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.1rem;
+  color: #e75480;
+  background: #fff;
+  border: 2px solid #e75480;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.menu button:hover {
+  background: #e75480;
+  color: #fff;
+}
+
+.menu button.active {
+  background: #e75480;
+  color: #fff;
+}
+
+.menu button.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+
+/* ===== SEÇÕES ===== */
+.secao {
+  display: none;
+  margin-top: 70px; /* espaço pro menu */
+}
+
+.secao.ativa {
+  display: block;
+}
+
+/* ===== EM BREVE ===== */
+@keyframes piscar {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.em-breve {
+  animation: piscar 1s infinite;
+  color: #e75480;
+  font-weight: bold;
+}

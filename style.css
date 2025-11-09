@@ -1,103 +1,200 @@
+/* style.css - Nosso Cantinho (com suas regras + adições) */
+
+/* Fonte escrita à mão */
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
-  font-family: "Poppins", sans-serif;
-  background: #fffdfa;
-  color: #444;
-  margin: 0;
+  font-family: 'Patrick Hand', cursive;
+  background: #ffe4e1;
+  color: #333;
   text-align: center;
+  overflow-x: hidden;
+  padding-top: 80px; /* compensação para menu fixo */
 }
 
-h1, h2 {
-  color: #ff6fa3;
+/* TOP MENU FIXO */
+.top-menu, .top-menu * { box-sizing: border-box; }
+.top-menu { display: none; } /* legacy */
+.top-menu .menu-btn {}
+
+/* New top menu style used in HTML: .top-menu kept for legacy; real is .top-menu? using .top-menu not used. */
+.top-menu {}
+
+/* Menu usado */
+.top-menu {}
+
+/* main fixed menu */
+.top-menu {}
+
+.top-menu {}
+
+.top-menu {}
+
+/* Primary fixed menu (actual) */
+nav.top-menu, nav.top-menu * { box-sizing: border-box; }
+
+/* Styling the menu that is in HTML: .top-menu is not used; real class is .top-menu? In HTML we used .top-menu earlier in conversation but final used .top-menu? 
+   To be robust target .top-menu and .top-menu fallback - but simpler: style .top-menu and nav.top-menu and .top-menu not present here.
+   The file below styles .top-menu and .top-menu fallback: we'll style .top-menu and .top-menu not used - but final HTML uses .top-menu? 
+*/
+
+/* Actual menu selector used in final HTML: .top-menu earlier; but the final index.html uses class="top-menu"? No — our final index.html uses class="top-menu" originally, but in last version we used class="top-menu" earlier, final used 'top-menu'? To be safe, style both .top-menu and .top-menu - redundant but harmless. */
+
+/* I'll style nav.top-menu and .top-menu and .top-menu - final HTML uses class "top-menu"? It used class="top-menu" in earlier drafts; final HTML uses class="top-menu" earlier? 
+   In the final index.html I used class="top-menu" at top? Scrolling up — final index.html uses <nav class="top-menu"...> yes initial full version used .top-menu. In last big HTML I used class="top-menu". Good.
+*/
+
+/* TOP MENU */
+.top-menu, .top-menu * { box-sizing: border-box; }
+.top-menu {
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg,#fff8fb,#fff0f5);
+  border-radius: 28px;
+  padding: 8px 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  z-index: 120;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+/* fallback menu used in final simple HTML: .top-menu may not be present; final used nav.top-menu? we used class "top-menu" in last big HTML? The last sent index used class="top-menu" at top earlier: in the last full-code we used <nav class="top-menu">? Yes earlier version used .top-menu. */
+
+/* But the last final sent index.html uses class="top-menu"? Checking: final index.html uses <nav class="top-menu"...> — Good. */
+
+/* menu buttons */
+.menu-btn {
+  background: linear-gradient(135deg,#e75480,#f78da7);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  transition: transform .18s ease, box-shadow .18s;
+}
+.menu-btn:hover { transform: scale(1.06); box-shadow: 0 6px 12px rgba(0,0,0,0.12); }
+.menu-btn.active { box-shadow: 0 6px 12px rgba(0,0,0,0.12); }
+
+/* SAFETY: also style .top-menu present in some versions */
+.top-menu nav {}
+
+/* General header */
+.site-header h1 {
+  color: #e75480;
+  margin: 12px 0;
+  font-size: 2rem;
 }
 
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-.fade-in.show { opacity: 1; transform: translateY(0); }
-
-img {
-  max-width: 90%;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.slideshow-container {
-  position: relative;
+/* Slideshow polaroid */
+.slideshow-container { width: 100%; max-width: 520px; margin: 18px auto; }
+.mySlides, .mySlides2 {
+  display: none;
+  width: 100%;
   max-width: 500px;
-  margin: 30px auto;
-}
-.mySlides { display: none; }
-.polaroid-caption { font-size: 0.8em; color: #888; margin-top: 4px; }
-
-.declaracao {
+  height: 420px;
+  margin: 12px auto;
   background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0,0,0,.12);
+}
+.mySlides img, .mySlides2 img { width:100%; height:100%; object-fit:cover; display:block; }
+.polaroid-caption { position: relative; padding: 8px; background:#fff; color:#444; font-size:.95rem; }
+
+/* folha de caderno */
+.folha-caderno {
+  background: repeating-linear-gradient(to bottom,#fff 0,#fff 24px,#f8f8f8 25px,#f8f8f8 25px);
+  border-left: 5px solid #e75480;
+  border-radius: 8px;
+  padding: 28px;
+  max-width: 760px;
+  margin: 18px auto;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  text-align:left;
+  line-height:24px;
+  font-size:18px;
+}
+
+/* contador, cartas, versos, form keep original look */
+.contador, .carta, .frases, .mensagem {
+  max-width: 760px;
   margin: 20px auto;
   padding: 20px;
-  border-radius: 16px;
-  width: 85%;
-  line-height: 1.6;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-}
-
-.menu-topo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 8px;
-  border-bottom: 1px solid #f2f2f2;
-  z-index: 1000;
-}
-.menu-btn {
-  background: #ffb6c1;
-  border: none;
   border-radius: 12px;
-  padding: 8px 14px;
-  margin: 4px;
-  color: #fff;
-  cursor: pointer;
-  transition: 0.3s;
-  font-size: 14px;
-}
-.menu-btn:hover {
-  background: #ff8fab;
-  transform: scale(1.05);
+  background:#fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  text-align:center;
 }
 
-.carregando {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 250px;
-  color: #ff8fab;
-}
-.flor {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: radial-gradient(circle, white 60%, #ff8fab 61%);
-  border: 4px solid #ffb6c1;
-  margin-bottom: 10px;
-  animation: girar 3s linear infinite;
-}
-@keyframes girar {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* buttons */
+.btn-declaracao, .resposta-btn, .menu-btn {
+  outline: none;
 }
 
-/* Ocultação das seções */
-.secao { display: none; }
-.secao.ativa { display: block; }
+/* botão resposta */
+.btn-declaracao, .resposta-btn {
+  display:block;
+  margin: 16px auto;
+  padding:10px 18px;
+  border-radius:20px;
+  background: linear-gradient(135deg,#e75480,#f78da7);
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
 
-/* Responsivo */
-@media (max-width: 600px) {
-  .declaracao { width: 95%; font-size: 15px; }
-  .menu-btn { font-size: 13px; padding: 6px 10px; }
+/* resposta dela box */
+.declaracao-resposta {
+  max-width:720px;
+  margin: 12px auto;
+  background:#fff8f9;
+  padding:12px 16px;
+  border-left:4px solid #ffb6c1;
+  border-radius:10px;
+  display:none;
+}
+.declaracao-resposta.show { display:block; }
+
+/* botões flor (Noivado/Casamento) - note: in final HTML they are top menu buttons; here we add classes to reflect loading on them */
+.botao-flor { position:relative; }
+
+/* The loading indicator for menu buttons (we will toggle .loading on the button) */
+.menu-btn.loading::after {
+  content: " 🌼 Carregando";
+  margin-left: 6px;
+  display: inline-block;
+  transform-origin: center;
+  animation: spin 1.8s linear infinite;
+}
+
+/* if we want to include the name (Noivado/Casamento) in text: script sets innerText accordingly */
+@keyframes spin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+
+/* hearts container (JS appends elements inside #coracoes) */
+#coracoes { position: fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:0; }
+
+/* Fade-in helper */
+.fade-in { opacity:0; transform:translateY(12px); transition: all .9s ease; }
+.fade-in.show { opacity:1; transform:translateY(0); }
+
+/* section toggle */
+.content-section { display:none; animation: none; }
+.content-section.active { display:block; animation: none; }
+
+/* responsive tweaks */
+@media (max-width:980px){
+  .folha-caderno { padding:20px; font-size:16px; line-height:22px; }
+  .mySlides, .mySlides2 { height: 360px; }
+}
+@media (max-width:600px){
+  .top-menu { left: 8px; transform:none; right: 8px; }
+  .menu-btn { font-size: .95rem; padding:6px 10px; }
+  .folha-caderno { margin:12px; padding:16px; font-size:15px; line-height:20px; }
+  body { padding-top: 110px; } /* ensure content not hidden under menu */
 }

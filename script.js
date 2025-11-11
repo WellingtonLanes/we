@@ -1,6 +1,6 @@
-/* script.js - integrado com todas as funcionalidades combinadas */
+/* script.js - integra todas as funcionalidades */
 
-/* ---- Fade-in on scroll ---- */
+/* ---- Fade-in ao rolar ---- */
 function initFadeIn(){
   const els = document.querySelectorAll('.fade-in');
   function check(){
@@ -15,37 +15,23 @@ function initFadeIn(){
 }
 initFadeIn();
 
-/* ---- Slideshow for section "declaracao" (foto1..9) ---- */
-(function slideshowMain(){
+/* ---- Slideshows ---- */
+(function slideshow(selector, delay=3500){
   let idx = 0;
-  const slides = document.querySelectorAll('.mySlides');
-  if (!slides || slides.length===0) return;
+  const slides = document.querySelectorAll(selector);
+  if(!slides || slides.length===0) return;
   function show(){
     slides.forEach(s => s.style.display = 'none');
     idx++;
-    if (idx > slides.length) idx = 1;
+    if(idx > slides.length) idx = 1;
     slides[idx-1].style.display = 'block';
-    setTimeout(show, 3500);
+    setTimeout(show, delay);
   }
   show();
-})();
+})('.mySlides', 3500);
+(function(){ slideshow('.mySlides2', 3500); })();
 
-/* ---- Slideshow for section "namoro" (fotos10..19) ---- */
-(function slideshowNamoro(){
-  let idx2 = 0;
-  const slides = document.querySelectorAll('.mySlides2');
-  if (!slides || slides.length===0) return;
-  function show(){
-    slides.forEach(s => s.style.display = 'none');
-    idx2++;
-    if (idx2 > slides.length) idx2 = 1;
-    slides[idx2-1].style.display = 'block';
-    setTimeout(show, 3500);
-  }
-  show();
-})();
-
-/* ---- Hearts falling (creates span elements) ---- */
+/* ---- Corações flutuantes ---- */
 (function hearts(){
   const container = document.getElementById('coracoes');
   if(!container) return;
@@ -71,10 +57,9 @@ initFadeIn();
   setInterval(make, 500);
 })();
 
-/* ---- Contador (mantém teu data original) ---- */
+/* ---- Contador ---- */
 (function contador(){
-  // usa a data que tu definiu antes; ajusta se quiser
-  const dataInicio = new Date("August 11, 2025 11:10:00").getTime();
+  const dataInicio = new Date("August 11, 2025 11:10:00").getTime(); // ajusta se quiser
   function atualizar(){
     const agora = Date.now();
     const diff = agora - dataInicio;
@@ -82,24 +67,15 @@ initFadeIn();
     const horas = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
     const minutos = Math.floor((diff % (1000*60*60)) / (1000*60));
     const segundos = Math.floor((diff % (1000*60)) / 1000);
-    const eDias = document.getElementById('dias');
-    const eHoras = document.getElementById('horas');
-    const eMinutos = document.getElementById('minutos');
-    const eSegundos = document.getElementById('segundos');
-    if(eDias) eDias.textContent = dias;
-    if(eHoras) eHoras.textContent = horas;
-    if(eMinutos) eMinutos.textContent = minutos;
-    if(eSegundos) eSegundos.textContent = segundos;
-
-    // simple counter for namoro page
-    const dN = document.getElementById('dias_n');
-    if(dN) dN.textContent = dias;
+    const setIf = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+    setIf('dias', dias); setIf('horas', horas); setIf('minutos', minutos); setIf('segundos', segundos);
+    setIf('dias_n', dias);
   }
   setInterval(atualizar, 1000);
   atualizar();
 })();
 
-/* ---- Versículos (bot) ---- */
+/* ---- Versículos ---- */
 (function versos(){
   const versos = [
     "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4–7)",
@@ -137,7 +113,7 @@ initFadeIn();
   });
 })();
 
-/* ---- Formspree handler (feedback) ---- */
+/* ---- Formspree handler ---- */
 (function formHandler(){
   const form = document.getElementById('formMensagem');
   const status = document.getElementById('formStatus');
@@ -156,13 +132,13 @@ initFadeIn();
         if(status) status.textContent = j.error || 'Erro ao enviar — tente novamente';
       }
     } catch(err){
-      if(status) status.textContent = 'Erro ao enviar — verifique sua conexão';
+      if(status) status.textContent = 'Erro ao enviar — verifique a conexão';
     }
     setTimeout(()=> { if(status) status.textContent = ''; }, 5000);
   });
 })();
 
-/* ---- Menu: troca de seções (tudo na mesma página) ---- */
+/* ---- Toggle de seções pelo menu (tudo na mesma página) ---- */
 (function menu(){
   const buttons = document.querySelectorAll('.menu-btn');
   if(!buttons) return;
@@ -178,19 +154,15 @@ initFadeIn();
       const target = btn.getAttribute('data-section');
       if(!target) return;
 
-      // If Noivado or Casamento -> only animate the button to 'loading' (do not switch sections)
+      // if Noivado or Casamento: only change the button to loading state (do NOT switch section)
       if(target === 'noivado' || target === 'casamento'){
-        // put loading state on this button and set text accordingly
         btn.classList.add('loading');
-        // show full label with name
         btn.textContent = `🌼 Carregando ${target === 'noivado' ? 'Noivado' : 'Casamento'}...`;
-        // leave the button in loading state permanently (per your last instruction)
-        btn.disabled = true;
-        // do not switch sections
+        btn.disabled = true; // stays in loading state (per your request)
         return;
       }
 
-      // for normal sections (declaracao, namoro) switch content
+      // otherwise switch section
       clearActive();
       const sec = document.getElementById(target);
       if(!sec) return;
@@ -198,17 +170,16 @@ initFadeIn();
       sec.classList.add('show');
       sec.setAttribute('aria-hidden','false');
 
-      // update menu active styles
+      // mark menu active
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // scroll to top smoothly so header not hidden by fixed menu
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
 })();
 
-/* ---- Toggle resposta dela (só na seção Declaração) ---- */
+/* ---- Toggle resposta dela (apenas na seção Declaração) ---- */
 (function toggleResposta(){
   const btn = document.getElementById('btnResposta');
   const box = document.getElementById('declaracaoResposta');
@@ -222,7 +193,7 @@ initFadeIn();
       box.classList.remove('visually-hidden');
       box.classList.add('show');
       btn.textContent = 'Esconder resposta 💫';
-      // optional: small hearts or focus
+      // optional: add little hearts when opened (you said no extra needed)
     }
   });
 })();

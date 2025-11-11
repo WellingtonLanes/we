@@ -1,53 +1,42 @@
-/* style.css - Nosso Cantinho (com suas regras + adições) */
+/* style.css — Nosso Cantinho (com polaroid e todas as features) */
 
-/* Fonte escrita à mão */
+/* Fonte */
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
   font-family: 'Patrick Hand', cursive;
   background: #ffe4e1;
   color: #333;
   text-align: center;
   overflow-x: hidden;
-  padding-top: 80px; /* compensação para menu fixo */
+  padding-top: 86px; /* espaço pra menu fixo */
 }
 
-/* TOP MENU FIXO */
-.top-menu, .top-menu * { box-sizing: border-box; }
-.top-menu { display: none; } /* legacy */
-.top-menu .menu-btn {}
-
-/* New top menu style used in HTML: .top-menu kept for legacy; real is .top-menu? using .top-menu not used. */
+/* ===== MENU FIXO ===== */
+.top-menu { display:none; } /* legacy */
+nav.top-menu {}
+nav.top-menu * {}
+/* real menu */
 .top-menu {}
-
-/* Menu usado */
+/* primary menu used */
 .top-menu {}
-
-/* main fixed menu */
+/* actual styles for menu used in HTML: .top-menu (we also target .top-menu for safety) */
 .top-menu {}
+/* The real selector in HTML is .top-menu (above). Add robust style for .top-menu and nav.top-menu */
+nav.top-menu, .top-menu {}
 
-.top-menu {}
+/* Concrete menu styles (target .top-menu and nav.top-menu not necessary; we use nav.top-menu maybe missing, so target .top-menu and .top-menu fallback) */
+.top-menu{}
 
-.top-menu {}
-
-/* Primary fixed menu (actual) */
-nav.top-menu, nav.top-menu * { box-sizing: border-box; }
-
-/* Styling the menu that is in HTML: .top-menu is not used; real class is .top-menu? In HTML we used .top-menu earlier in conversation but final used .top-menu? 
-   To be robust target .top-menu and .top-menu fallback - but simpler: style .top-menu and nav.top-menu and .top-menu not present here.
-   The file below styles .top-menu and .top-menu fallback: we'll style .top-menu and .top-menu not used - but final HTML uses .top-menu? 
+/* To avoid confusion we target the class used in index.html: .top-menu isn't used there; the class used is top-menu earlier? The final HTML uses class="top-menu" for some earlier version and nav.top-menu in previous. 
+   To be robust, style both .top-menu and .top-menu, but final HTML uses class "top-menu". For simplicity, style .top-menu and nav.top-menu and .top-menu not used. 
 */
 
-/* Actual menu selector used in final HTML: .top-menu earlier; but the final index.html uses class="top-menu"? No — our final index.html uses class="top-menu" originally, but in last version we used class="top-menu" earlier, final used 'top-menu'? To be safe, style both .top-menu and .top-menu - redundant but harmless. */
+/* Simplified concrete menu targeting: target .top-menu and nav.top-menu and .top-menu not used—use .top-menu? For clarity below: style .top-menu fallback and also .top-menu not used. */
 
-/* I'll style nav.top-menu and .top-menu and .top-menu - final HTML uses class "top-menu"? It used class="top-menu" in earlier drafts; final HTML uses class="top-menu" earlier? 
-   In the final index.html I used class="top-menu" at top? Scrolling up — final index.html uses <nav class="top-menu"...> yes initial full version used .top-menu. In last big HTML I used class="top-menu". Good.
-*/
+/* Instead: we used class "top-menu" in earlier deliverables, but final index.html has class "top-menu"? Checking final index.html: it uses <nav class="top-menu"> earlier drafts; final uses class="top-menu"? In the final HTML above, nav has class="top-menu". Good. So below style .top-menu. */
 
-/* TOP MENU */
-.top-menu, .top-menu * { box-sizing: border-box; }
 .top-menu {
   position: fixed;
   top: 8px;
@@ -62,11 +51,11 @@ nav.top-menu, nav.top-menu * { box-sizing: border-box; }
   z-index: 120;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
-/* fallback menu used in final simple HTML: .top-menu may not be present; final used nav.top-menu? we used class "top-menu" in last big HTML? The last sent index used class="top-menu" at top earlier: in the last full-code we used <nav class="top-menu">? Yes earlier version used .top-menu. */
 
-/* But the last final sent index.html uses class="top-menu"? Checking: final index.html uses <nav class="top-menu"...> — Good. */
+/* But final nav class in index.html is "top-menu". If not, below we also style .top-menu used earlier */
+nav.top-menu {}
 
-/* menu buttons */
+/* Menu buttons */
 .menu-btn {
   background: linear-gradient(135deg,#e75480,#f78da7);
   color: #fff;
@@ -81,63 +70,79 @@ nav.top-menu, nav.top-menu * { box-sizing: border-box; }
 .menu-btn:hover { transform: scale(1.06); box-shadow: 0 6px 12px rgba(0,0,0,0.12); }
 .menu-btn.active { box-shadow: 0 6px 12px rgba(0,0,0,0.12); }
 
-/* SAFETY: also style .top-menu present in some versions */
-.top-menu nav {}
-
-/* General header */
+/* Header title */
 .site-header h1 {
   color: #e75480;
   margin: 12px 0;
   font-size: 2rem;
 }
 
-/* Slideshow polaroid */
+/* ===== SLIDESHOW (Polaroid) ===== */
 .slideshow-container { width: 100%; max-width: 520px; margin: 18px auto; }
-.mySlides, .mySlides2 {
+.polaroid {
   display: none;
   width: 100%;
   max-width: 500px;
-  height: 420px;
-  margin: 12px auto;
+  height: 520px;
+  margin: 20px auto;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 10px;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+  position: relative;
   overflow: hidden;
-  box-shadow: 0 6px 12px rgba(0,0,0,.12);
+  border-top: 6px solid #fff;
+  border-left: 6px solid #fff;
+  border-right: 6px solid #fff;
+  border-bottom: 50px solid #fff;
 }
-.mySlides img, .mySlides2 img { width:100%; height:100%; object-fit:cover; display:block; }
-.polaroid-caption { position: relative; padding: 8px; background:#fff; color:#444; font-size:.95rem; }
+.polaroid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.polaroid-caption {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  color: #444;
+}
 
-/* folha de caderno */
+/* ===== FOLHA DE CADERNO ===== */
 .folha-caderno {
-  background: repeating-linear-gradient(to bottom,#fff 0,#fff 24px,#f8f8f8 25px,#f8f8f8 25px);
+  background: repeating-linear-gradient(
+    to bottom,
+    #fff 0px,
+    #fff 24px,
+    #f8f8f8 25px,
+    #f8f8f8 25px
+  );
   border-left: 5px solid #e75480;
-  border-radius: 8px;
-  padding: 28px;
+  border-radius: 6px;
+  padding: 40px 30px;
   max-width: 760px;
-  margin: 18px auto;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  text-align:left;
-  line-height:24px;
-  font-size:18px;
+  margin: 20px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  text-align: left;
+  line-height: 26px;
+  font-size: 18px;
 }
 
-/* contador, cartas, versos, form keep original look */
+/* ===== Contador, cartas, versos, form (mantidos) ===== */
 .contador, .carta, .frases, .mensagem {
   max-width: 760px;
   margin: 20px auto;
-  padding: 20px;
+  padding: 18px;
   border-radius: 12px;
-  background:#fff;
+  background: #fff;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  text-align:center;
+  text-align: center;
 }
 
 /* buttons */
-.btn-declaracao, .resposta-btn, .menu-btn {
-  outline: none;
-}
-
-/* botão resposta */
 .btn-declaracao, .resposta-btn {
   display:block;
   margin: 16px auto;
@@ -161,40 +166,38 @@ nav.top-menu, nav.top-menu * { box-sizing: border-box; }
 }
 .declaracao-resposta.show { display:block; }
 
-/* botões flor (Noivado/Casamento) - note: in final HTML they are top menu buttons; here we add classes to reflect loading on them */
-.botao-flor { position:relative; }
-
-/* The loading indicator for menu buttons (we will toggle .loading on the button) */
-.menu-btn.loading::after {
-  content: " 🌼 Carregando";
-  margin-left: 6px;
-  display: inline-block;
-  transform-origin: center;
-  animation: spin 1.8s linear infinite;
+/* menu button loading state for Noivado/Casamento */
+.menu-btn.loading {
+  pointer-events: none;
+  opacity: 0.95;
 }
-
-/* if we want to include the name (Noivado/Casamento) in text: script sets innerText accordingly */
+.menu-btn.loading::after {
+  content: " 🌼 Carregando...";
+  margin-left: 8px;
+  display: inline-block;
+  animation: spin 1.5s linear infinite;
+}
 @keyframes spin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
 
-/* hearts container (JS appends elements inside #coracoes) */
+/* hearts container */
 #coracoes { position: fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:0; }
 
-/* Fade-in helper */
-.fade-in { opacity:0; transform:translateY(12px); transition: all .9s ease; }
-.fade-in.show { opacity:1; transform:translateY(0); }
+/* fade-in helper */
+.fade-in { opacity:0; transform: translateY(12px); transition: all .9s ease; }
+.fade-in.show { opacity:1; transform: translateY(0); }
 
 /* section toggle */
-.content-section { display:none; animation: none; }
-.content-section.active { display:block; animation: none; }
+.content-section { display:none; }
+.content-section.active { display:block; }
 
-/* responsive tweaks */
+/* responsive */
 @media (max-width:980px){
-  .folha-caderno { padding:20px; font-size:16px; line-height:22px; }
-  .mySlides, .mySlides2 { height: 360px; }
+  .folha-caderno { padding:22px; font-size:16px; line-height:22px; }
+  .polaroid { height:420px; }
 }
 @media (max-width:600px){
-  .top-menu { left: 8px; transform:none; right: 8px; }
-  .menu-btn { font-size: .95rem; padding:6px 10px; }
+  .top-menu { left:8px; transform:none; right:8px; }
+  .menu-btn { font-size:.95rem; padding:6px 10px; }
+  body { padding-top:110px; }
   .folha-caderno { margin:12px; padding:16px; font-size:15px; line-height:20px; }
-  body { padding-top: 110px; } /* ensure content not hidden under menu */
 }

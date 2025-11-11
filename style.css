@@ -1,45 +1,27 @@
-/* style.css — Nosso Cantinho (com polaroid e todas as features) */
+/* style.css - Nosso Cantinho (fundo branco/rosa, Patrick Hand, polaroids, responsivo) */
 
-/* Fonte */
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
   font-family: 'Patrick Hand', cursive;
-  background: #ffe4e1;
+  background: linear-gradient(180deg, #fff 0%, #fff0f6 100%);
   color: #333;
   text-align: center;
   overflow-x: hidden;
-  padding-top: 86px; /* espaço pra menu fixo */
+  padding-top: 86px; /* espaço para menu fixo */
 }
 
 /* ===== MENU FIXO ===== */
 .top-menu { display:none; } /* legacy */
 nav.top-menu {}
-nav.top-menu * {}
-/* real menu */
-.top-menu {}
-/* primary menu used */
-.top-menu {}
-/* actual styles for menu used in HTML: .top-menu (we also target .top-menu for safety) */
-.top-menu {}
-/* The real selector in HTML is .top-menu (above). Add robust style for .top-menu and nav.top-menu */
+
 nav.top-menu, .top-menu {}
-
-/* Concrete menu styles (target .top-menu and nav.top-menu not necessary; we use nav.top-menu maybe missing, so target .top-menu and .top-menu fallback) */
-.top-menu{}
-
-/* To avoid confusion we target the class used in index.html: .top-menu isn't used there; the class used is top-menu earlier? The final HTML uses class="top-menu" for some earlier version and nav.top-menu in previous. 
-   To be robust, style both .top-menu and .top-menu, but final HTML uses class "top-menu". For simplicity, style .top-menu and nav.top-menu and .top-menu not used. 
-*/
-
-/* Simplified concrete menu targeting: target .top-menu and nav.top-menu and .top-menu not used—use .top-menu? For clarity below: style .top-menu fallback and also .top-menu not used. */
-
-/* Instead: we used class "top-menu" in earlier deliverables, but final index.html has class "top-menu"? Checking final index.html: it uses <nav class="top-menu"> earlier drafts; final uses class="top-menu"? In the final HTML above, nav has class="top-menu". Good. So below style .top-menu. */
-
-.top-menu {
+/* actual nav used in HTML is .top-menu; provide robust styling via nav.top-menu and .top-menu */
+nav.top-menu, .top-menu {
   position: fixed;
-  top: 8px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg,#fff8fb,#fff0f5);
@@ -52,10 +34,10 @@ nav.top-menu, .top-menu {}
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-/* But final nav class in index.html is "top-menu". If not, below we also style .top-menu used earlier */
-nav.top-menu {}
+/* we also style the actual nav in the DOM (nav.top-menu) */
+nav.top-menu { display: block; }
 
-/* Menu buttons */
+/* Buttons in menu */
 .menu-btn {
   background: linear-gradient(135deg,#e75480,#f78da7);
   color: #fff;
@@ -70,37 +52,47 @@ nav.top-menu {}
 .menu-btn:hover { transform: scale(1.06); box-shadow: 0 6px 12px rgba(0,0,0,0.12); }
 .menu-btn.active { box-shadow: 0 6px 12px rgba(0,0,0,0.12); }
 
-/* Header title */
+/* Site header */
 .site-header h1 {
   color: #e75480;
-  margin: 12px 0;
+  margin: 8px 0 18px;
   font-size: 2rem;
 }
 
-/* ===== SLIDESHOW (Polaroid) ===== */
-.slideshow-container { width: 100%; max-width: 520px; margin: 18px auto; }
-.polaroid {
+/* ===== SLIDESHOW POLAROID ===== */
+.slideshow-container {
+  width: 100%;
+  max-width: 520px;
+  margin: 18px auto;
+  text-align: center;
+}
+
+.polaroid, .mySlides, .mySlides2 {
   display: none;
   width: 100%;
   max-width: 500px;
-  height: 520px;
+  height: 700px; /* big like original */
   margin: 20px auto;
   background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 12px 24px rgba(0,0,0,0.18);
-  position: relative;
-  overflow: hidden;
   border-top: 6px solid #fff;
   border-left: 6px solid #fff;
   border-right: 6px solid #fff;
-  border-bottom: 50px solid #fff;
+  border-bottom: 50px solid #fff; /* thick bottom strip */
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+  overflow: hidden;
+  position: relative;
+  flex-direction: column;
 }
-.polaroid img {
+
+.polaroid img, .mySlides img, .mySlides2 img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* cover but container big to avoid excessive cropping */
   display: block;
 }
+
+/* caption inside the bottom white band */
 .polaroid-caption {
   position: absolute;
   bottom: 6px;
@@ -122,19 +114,19 @@ nav.top-menu {}
   );
   border-left: 5px solid #e75480;
   border-radius: 6px;
-  padding: 40px 30px;
+  padding: 36px 30px;
   max-width: 760px;
-  margin: 20px auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  margin: 18px auto;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   text-align: left;
   line-height: 26px;
   font-size: 18px;
 }
 
-/* ===== Contador, cartas, versos, form (mantidos) ===== */
+/* ===== CONTADOR, CARTA, VERSÍCULOS, FORM ===== */
 .contador, .carta, .frases, .mensagem {
   max-width: 760px;
-  margin: 20px auto;
+  margin: 18px auto;
   padding: 18px;
   border-radius: 12px;
   background: #fff;
@@ -142,29 +134,29 @@ nav.top-menu {}
   text-align: center;
 }
 
-/* buttons */
-.btn-declaracao, .resposta-btn {
-  display:block;
-  margin: 16px auto;
-  padding:10px 18px;
-  border-radius:20px;
-  background: linear-gradient(135deg,#e75480,#f78da7);
-  color:#fff;
-  border:none;
-  cursor:pointer;
+/* button estilo */
+.btn-declaracao {
+  margin-top: 12px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg,#ff9eb5,#ff6f93);
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  font-size: 1rem;
 }
 
-/* resposta dela box */
+/* resposta dela */
 .declaracao-resposta {
-  max-width:720px;
-  margin: 12px auto;
-  background:#fff8f9;
-  padding:12px 16px;
-  border-left:4px solid #ffb6c1;
-  border-radius:10px;
-  display:none;
+  margin-top: 12px;
+  padding: 14px;
+  background: #fff8f9;
+  border-left: 4px solid #ffb6c1;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  display: none;
 }
-.declaracao-resposta.show { display:block; }
+.declaracao-resposta.show, .declaracao-resposta.visible { display:block; }
 
 /* menu button loading state for Noivado/Casamento */
 .menu-btn.loading {
@@ -175,29 +167,32 @@ nav.top-menu {}
   content: " 🌼 Carregando...";
   margin-left: 8px;
   display: inline-block;
-  animation: spin 1.5s linear infinite;
+  animation: spin 1.6s linear infinite;
 }
 @keyframes spin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
 
-/* hearts container */
+/* corações container */
 #coracoes { position: fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:0; }
 
-/* fade-in helper */
+/* fade-in */
 .fade-in { opacity:0; transform: translateY(12px); transition: all .9s ease; }
 .fade-in.show { opacity:1; transform: translateY(0); }
 
-/* section toggle */
+/* content sections */
 .content-section { display:none; }
-.content-section.active { display:block; }
+.content-section.active, .content-section.show { display:block; }
 
 /* responsive */
 @media (max-width:980px){
-  .folha-caderno { padding:22px; font-size:16px; line-height:22px; }
-  .polaroid { height:420px; }
+  .polaroid, .mySlides, .mySlides2 { height:650px; max-width:450px; }
+  .folha-caderno { padding:28px; font-size:16px; }
 }
-@media (max-width:600px){
-  .top-menu { left:8px; transform:none; right:8px; }
-  .menu-btn { font-size:.95rem; padding:6px 10px; }
+@media (max-width:768px){
+  .polaroid, .mySlides, .mySlides2 { height:550px; max-width:380px; }
   body { padding-top:110px; }
-  .folha-caderno { margin:12px; padding:16px; font-size:15px; line-height:20px; }
+  .folha-caderno { padding:22px; font-size:15px; line-height:22px; }
+}
+@media (max-width:480px){
+  .polaroid, .mySlides, .mySlides2 { height:420px; max-width:300px; }
+  nav.top-menu { left:8px; transform:none; right:8px; }
 }

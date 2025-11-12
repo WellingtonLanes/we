@@ -2,199 +2,39 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nosso Cantinho ❤️</title>
 
   <!-- Dancing Script -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
   <script defer src="script.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
 </head>
 <body>
-  <!-- corações -->
+  <!-- corações (container) -->
   <div id="coracoes" aria-hidden="true"></div>
 
-  <!-- header fixo -->
+  <!-- menu fixo -->
   <header class="site-header" role="banner">
     <div class="header-inner">
       <h1 class="site-title">Nosso Cantinho 💕</h1>
-      <nav class="menu" role="navigation" aria-label="Menu principal">
-        <button class="menu-btn ativo" data-section="declaracao">Declaração</button>
-        <button class="menu-btn" data-section="namoro">Namoro</button>
-        <button class="menu-btn loading-btn" data-section="noivado">Noivado</button>
-        <button class="menu-btn loading-btn" data-section="casamento">Casamento</button>
+      <nav class="menu" aria-label="Navegação principal">
+        <button class="menu-btn active" data-section="declaracao">🌸 Declaração</button>
+        <button class="menu-btn" data-section="namoro">💕 Namoro</button>
+        <button class="menu-btn disabled" data-section="noivado" aria-disabled="true">💍 Noivado <span class="loading">⏳</span></button>
+        <button class="menu-btn disabled" data-section="casamento" aria-disabled="true">💒 Casamento <span class="loading">⏳</span></button>
       </nav>
     </div>
   </header>
 
-  <main class="main" id="main">
-    <!-- DECLARAÇÃO -->
-    <section id="declaracao" class="section active" aria-labelledby="titulo-declaracao">
-      <div class="container">
-
-        <!-- SLIDESHOW: mostrar 1 polaroid por vez, com setas -->
-        <div class="slideshow-wrapper">
-          <button class="slide-arrow prev" data-target="declara">‹</button>
-          <div class="slideshow slideshow-decl" data-slideshow="declara">
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto1.jpg" alt=""></div><div class="polaroid-caption">13/09/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto2.jpg" alt=""></div><div class="polaroid-caption">13/09/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto3.jpg" alt=""></div><div class="polaroid-caption">21/09/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto4.jpg" alt=""></div><div class="polaroid-caption">21/09/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto5.jpg" alt=""></div><div class="polaroid-caption">28/09/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto6.jpg" alt=""></div><div class="polaroid-caption">28/09/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto7.jpg" alt=""></div><div class="polaroid-caption">28/09/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto8.jpg" alt=""></div><div class="polaroid-caption">04/10/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto9.jpg" alt=""></div><div class="polaroid-caption">10/10/2025</div></div>
-          </div>
-          <button class="slide-arrow next" data-target="declara">›</button>
-        </div>
-
-        <!-- texto em estilo caderno -->
-        <article id="titulo-declaracao" class="paper">
-          <!-- cole seu texto completo aqui -->
-          <p>"Oii, paz, prazer kkkk" foi assim que me apresentei e assim queria começar esse texto, eu nunca fui bom em puxar assunto...</p>
-          <p>...(cole o restante do texto aqui)...</p>
-        </article>
-
-        <!-- contador / versos / mensagens -->
-        <div class="grid-3">
-          <div class="card">
-            <h3>Tempo que nos conhecemos</h3>
-            <div class="card-body counter" aria-live="polite">
-              <span id="diasConhecimento">0</span> dias •
-              <span id="horasConhecimento">0</span> h •
-              <span id="minutosConhecimento">0</span> m •
-              <span id="segundosConhecimento">0</span> s
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Versículos Bíblicos</h3>
-            <div class="card-body">
-              <button id="btnVersiculo" class="small-btn">Mostrar versículo</button>
-              <div id="versiculoBox" class="text-box hidden" aria-live="polite"></div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Nossas Mensagens</h3>
-            <div class="card-body">
-              <button id="btnCarta" class="small-btn">Mostrar Mensagens</button>
-              <div id="cartaTexto" class="text-box hidden" aria-live="polite"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- formulário -->
-        <div class="form-wrap">
-          <div class="card form-card">
-            <h3>Enviar uma mensagem</h3>
-            <form id="formDeclaracao" action="https://formspree.io/f/xovkwzej" method="POST" class="form-inner">
-              <div class="row">
-                <input name="name" type="text" placeholder="Seu nome" required>
-                <input name="email" type="email" placeholder="Seu e-mail" required>
-              </div>
-              <textarea name="message" placeholder="Escreva sua mensagem..." rows="5" required></textarea>
-              <input type="hidden" name="_subject" value="Mensagem - Declaração">
-              <div class="form-actions">
-                <button type="submit" class="primary-btn">Enviar mensagem</button>
-                <div id="formStatusDeclaracao" class="form-status" aria-live="polite"></div>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <!-- resposta dela -->
-        <div class="reply-wrap">
-          <button id="btnResposta" class="secondary-btn">Ver a resposta dela 💖</button>
-          <div id="respostaTexto" class="text-box hidden reply-text" aria-live="polite">
-            <p>"Quando li tua mensagem meu coração sorriu... 💕"</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- NAMORO -->
-    <section id="namoro" class="section" aria-labelledby="titulo-namoro">
-      <div class="container">
-        <div class="slideshow-wrapper">
-          <button class="slide-arrow prev" data-target="namoro">‹</button>
-          <div class="slideshow slideshow-nam" data-slideshow="namoro">
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos10.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos11.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos12.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos13.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos14.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos15.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos16.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos17.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos18.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
-            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos19.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
-          </div>
-          <button class="slide-arrow next" data-target="namoro">›</button>
-        </div>
-
-        <article id="titulo-namoro" class="paper">
-          <p>Nosso namoro começou leve, com muitos sorrisos e orações...</p>
-        </article>
-
-        <div class="grid-3">
-          <div class="card">
-            <h3>Tempo de namoro</h3>
-            <div class="card-body counter" aria-live="polite">
-              <span id="diasNamoro">0</span> dias •
-              <span id="horasNamoro">0</span> h •
-              <span id="minutosNamoro">0</span> m •
-              <span id="segundosNamoro">0</span> s
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Versículos</h3>
-            <div class="card-body">
-              <button id="btnVersiculoNamoro" class="small-btn">Mostrar versículo</button>
-              <div id="versiculoBoxNamoro" class="text-box hidden" aria-live="polite"></div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Mensagens</h3>
-            <div class="card-body">
-              <button id="btnCartaNamoro" class="small-btn">Mostrar Mensagens</button>
-              <div id="cartaTextoNamoro" class="text-box hidden" aria-live="polite"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-wrap">
-          <div class="card form-card">
-            <h3>Enviar uma mensagem</h3>
-            <form id="formNamoro" action="https://formspree.io/f/xovkwzej" method="POST" class="form-inner">
-              <div class="row">
-                <input name="name" type="text" placeholder="Seu nome" required>
-                <input name="email" type="email" placeholder="Seu e-mail" required>
-              </div>
-              <textarea name="message" placeholder="Escreva sua mensagem..." rows="5" required></textarea>
-              <input type="hidden" name="_subject" value="Mensagem - Namoro">
-              <div class="form-actions">
-                <button type="submit" class="primary-btn">Enviar mensagem</button>
-                <div id="formStatusNamoro" class="form-status" aria-live="polite"></div>
-              </div>
-            </form>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- placeholders -->
-    <section id="noivado" class="section"><div class="placeholder-card"><p>🌼 Em breve (Noivado)</p></div></section>
-    <section id="casamento" class="section"><div class="placeholder-card"><p>🌼 Em breve (Casamento)</p></div></section>
+  <!-- main: todo o conteúdo vai aqui e é trocado pelo JS -->
+  <main id="main" class="main" role="main">
+    <!-- Conteúdo inicial carregado pelo JS -->
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" role="contentinfo">
     <p>Feito com ❤️ por Wellington 💌</p>
   </footer>
 </body>

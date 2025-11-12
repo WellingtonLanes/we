@@ -16,7 +16,7 @@
   <!-- corações -->
   <div id="coracoes" aria-hidden="true"></div>
 
-  <!-- header fixo (mantive o estilo atual, centralizado) -->
+  <!-- header fixo -->
   <header class="site-header" role="banner">
     <div class="header-inner">
       <h1 class="site-title">Nosso Cantinho 💕</h1>
@@ -29,32 +29,36 @@
     </div>
   </header>
 
-  <main class="main">
-    <!-- ===== DECLARAÇÃO ===== -->
+  <main class="main" id="main">
+    <!-- DECLARAÇÃO -->
     <section id="declaracao" class="section active" aria-labelledby="titulo-declaracao">
       <div class="container">
 
-        <!-- Polaroids (grid) -->
-        <div class="slideshow slideshow-decl" aria-hidden="false">
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto1.jpg" alt="foto1"></div><div class="polaroid-caption">13/09/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto2.jpg" alt="foto2"></div><div class="polaroid-caption">13/09/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto3.jpg" alt="foto3"></div><div class="polaroid-caption">21/09/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto4.jpg" alt="foto4"></div><div class="polaroid-caption">21/09/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto5.jpg" alt="foto5"></div><div class="polaroid-caption">28/09/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto6.jpg" alt="foto6"></div><div class="polaroid-caption">28/09/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto7.jpg" alt="foto7"></div><div class="polaroid-caption">28/09/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto8.jpg" alt="foto8"></div><div class="polaroid-caption">04/10/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto9.jpg" alt="foto9"></div><div class="polaroid-caption">10/10/2025</div></div>
+        <!-- SLIDESHOW: mostrar 1 polaroid por vez, com setas -->
+        <div class="slideshow-wrapper">
+          <button class="slide-arrow prev" data-target="declara">‹</button>
+          <div class="slideshow slideshow-decl" data-slideshow="declara">
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto1.jpg" alt=""></div><div class="polaroid-caption">13/09/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto2.jpg" alt=""></div><div class="polaroid-caption">13/09/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto3.jpg" alt=""></div><div class="polaroid-caption">21/09/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto4.jpg" alt=""></div><div class="polaroid-caption">21/09/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto5.jpg" alt=""></div><div class="polaroid-caption">28/09/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto6.jpg" alt=""></div><div class="polaroid-caption">28/09/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto7.jpg" alt=""></div><div class="polaroid-caption">28/09/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto8.jpg" alt=""></div><div class="polaroid-caption">04/10/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto9.jpg" alt=""></div><div class="polaroid-caption">10/10/2025</div></div>
+          </div>
+          <button class="slide-arrow next" data-target="declara">›</button>
         </div>
 
         <!-- texto em estilo caderno -->
         <article id="titulo-declaracao" class="paper">
           <!-- cole seu texto completo aqui -->
-          <p>"Oii, paz, prazer kkkk" foi assim que me apresentei e assim queria começar esse texto, eu nunca fui bom em puxar assunto, não sou muito bom em expressar em palavras o que eu estou sentindo...</p>
+          <p>"Oii, paz, prazer kkkk" foi assim que me apresentei e assim queria começar esse texto, eu nunca fui bom em puxar assunto...</p>
           <p>...(cole o restante do texto aqui)...</p>
         </article>
 
-        <!-- contador / versos / mensagens - ajustados ao conteúdo -->
+        <!-- contador / versos / mensagens -->
         <div class="grid-3">
           <div class="card">
             <h3>Tempo que nos conhecemos</h3>
@@ -102,7 +106,7 @@
           </div>
         </div>
 
-        <!-- resposta dela (aparece só quando clicar) -->
+        <!-- resposta dela -->
         <div class="reply-wrap">
           <button id="btnResposta" class="secondary-btn">Ver a resposta dela 💖</button>
           <div id="respostaTexto" class="text-box hidden reply-text" aria-live="polite">
@@ -112,20 +116,24 @@
       </div>
     </section>
 
-    <!-- ===== NAMORO ===== -->
+    <!-- NAMORO -->
     <section id="namoro" class="section" aria-labelledby="titulo-namoro">
       <div class="container">
-        <div class="slideshow slideshow-nam">
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos10.jpg" alt="fotos10"></div><div class="polaroid-caption">09/11/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos11.jpg" alt="fotos11"></div><div class="polaroid-caption">09/11/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos12.jpg" alt="fotos12"></div><div class="polaroid-caption">09/11/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos13.jpg" alt="fotos13"></div><div class="polaroid-caption">09/11/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos14.jpg" alt="fotos14"></div><div class="polaroid-caption">09/11/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos15.jpg" alt="fotos15"></div><div class="polaroid-caption">09/11/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos16.jpg" alt="fotos16"></div><div class="polaroid-caption">09/11/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos17.jpg" alt="fotos17"></div><div class="polaroid-caption">09/11/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos18.jpg" alt="fotos18"></div><div class="polaroid-caption">09/11/2025</div></div>
-          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos19.jpg" alt="fotos19"></div><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="slideshow-wrapper">
+          <button class="slide-arrow prev" data-target="namoro">‹</button>
+          <div class="slideshow slideshow-nam" data-slideshow="namoro">
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos10.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos11.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos12.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos13.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos14.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos15.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos16.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos17.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos18.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
+            <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos19.jpg" alt=""></div><div class="polaroid-caption">09/11/2025</div></div>
+          </div>
+          <button class="slide-arrow next" data-target="namoro">›</button>
         </div>
 
         <article id="titulo-namoro" class="paper">
@@ -181,7 +189,7 @@
       </div>
     </section>
 
-    <!-- Noivado / Casamento (em breve) -->
+    <!-- placeholders -->
     <section id="noivado" class="section"><div class="placeholder-card"><p>🌼 Em breve (Noivado)</p></div></section>
     <section id="casamento" class="section"><div class="placeholder-card"><p>🌼 Em breve (Casamento)</p></div></section>
   </main>

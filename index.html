@@ -1,47 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nosso Cantinho 💕</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nosso Cantinho ❤️</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Inter:wght@300;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
 </head>
 <body>
-  <header>
-    <h1>Nosso Cantinho 💕</h1>
-    <nav>
-      <button class="menu-btn ativo" data-secao="declaracao">💐 Declaração</button>
-      <button class="menu-btn" data-secao="namoro">💕 Namoro</button>
-      <button class="menu-btn" data-secao="noivado">💍 Noivado</button>
-      <button class="menu-btn" data-secao="casamento">👰 Casamento</button>
-    </nav>
+  <!-- corações -->
+  <div id="coracoes" aria-hidden="true"></div>
+
+  <!-- menu fixo -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <h1 class="site-title">Nosso Cantinho 💕</h1>
+      <nav class="menu" role="navigation" aria-label="Menu principal">
+        <button class="menu-btn ativo" data-section="declaracao">🌸 Declaração</button>
+        <button class="menu-btn" data-section="namoro">💕 Namoro</button>
+        <button class="menu-btn disabled" data-section="noivado" aria-disabled="true">💍 Noivado <span class="loading">⏳</span></button>
+        <button class="menu-btn disabled" data-section="casamento" aria-disabled="true">💒 Casamento <span class="loading">⏳</span></button>
+      </nav>
+    </div>
   </header>
 
-  <section class="polaroid-container">
-    <div class="slider" id="slider"></div>
-  </section>
-
-  <main>
-    <section class="bloco" id="contador-bloco">
-      <h2>⏳ Nosso contador</h2>
-      <p>Estamos juntos há <span id="contador"></span> 💖</p>
-    </section>
-
-    <section class="bloco" id="versiculo-bloco">
-      <h2>📖 Versículo do Dia</h2>
-      <p class="texto" id="versiculo"></p>
-    </section>
-
-    <section class="bloco" id="mensagem-bloco">
-      <h2>💌 Nossas mensagens</h2>
-      <form id="mensagemForm">
-        <textarea placeholder="Escreva sua mensagem..." required></textarea>
-        <button type="submit">Enviar 💖</button>
-      </form>
-      <div id="resposta" class="oculto"></div>
-    </section>
+  <main id="main" class="main" role="main">
+    <!-- conteúdo será injetado por script.js -->
   </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p>Feito com ❤️ por Wellington 💌</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>

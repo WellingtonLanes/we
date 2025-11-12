@@ -1,7 +1,16 @@
-/* script.js - final: seções, slides, corações, contadores, versos, mensagens, forms, carregando */
+/* script.js - final e consistente
+   funcionalidades:
+   - troca de seções (menu)
+   - carregamento estático (margarida) 5s para noivado/casamento
+   - corações vermelhos caindo
+   - contadores para conhecimento e namoro
+   - mostrar versículos / mensagens
+   - formulário com feedback via fetch (Formspree)
+*/
 
 document.addEventListener('DOMContentLoaded', () => {
-  /* ---------- Seções / Menu ---------- */
+
+  /* ---------- menu / seções ---------- */
   const menuBtns = document.querySelectorAll('.menu-btn');
   const sections = document.querySelectorAll('.section');
 
@@ -10,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     menuBtns.forEach(b => b.classList.toggle('ativo', b.dataset.section === id));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  // initial
+
+  // inicial: declaração
   showSection('declaracao');
 
   menuBtns.forEach(btn => {
@@ -18,14 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const target = btn.dataset.section;
       if (!target) return;
 
-      if (target === 'noivado' || target === 'casamento') {
-        const originalText = btn.textContent;
+      // loading para noivado/casamento
+      if (btn.classList.contains('loading-btn')) {
+        const original = btn.textContent;
         btn.disabled = true;
         btn.textContent = '🌼 Carregando...';
-        // static margarida (no rotation)
+        // permanece estático por 5s
         setTimeout(() => {
           btn.disabled = false;
-          btn.textContent = originalText;
+          btn.textContent = original;
           alert('🌸 Essa parte ainda está sendo preparada com muito amor 💕');
         }, 5000);
         return;
@@ -35,60 +46,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---------- Slideshows (declaração / namoro) ---------- */
-  (function slideshow(selectorRoot, interval = 4000) {
-    const root = document.querySelector(selectorRoot);
-    if (!root) return;
-    const slides = Array.from(root.querySelectorAll('.polaroid'));
-    if (!slides.length) return;
-    let i = 0;
-    slides.forEach((s, idx) => s.style.display = idx === 0 ? 'block' : 'none');
-    setInterval(() => {
-      slides.forEach(s => s.style.display = 'none');
-      i = (i + 1) % slides.length;
-      slides[i].style.display = 'block';
-    }, interval);
-  })('.slideshow-decl', 4000);
-
-  (function slideshow2() {
-    const root = document.querySelector('.slideshow-nam');
-    if (!root) return;
-    const slides = Array.from(root.querySelectorAll('.polaroid'));
-    if (!slides.length) return;
-    let i = 0;
-    slides.forEach((s, idx) => s.style.display = idx === 0 ? 'block' : 'none');
-    setInterval(() => {
-      slides.forEach(s => s.style.display = 'none');
-      i = (i + 1) % slides.length;
-      slides[i].style.display = 'block';
-    }, 4000);
-  })();
-
-  /* ---------- Corações flutuantes ---------- */
+  /* ---------- corações vermelhos ---------- */
   (function hearts(){
     const container = document.getElementById('coracoes');
     if (!container) return;
+    const reds = ['#ff3b5c', '#e83a62', '#c94057']; // tons vermelhos
     function makeOne() {
-      const el = document.createElement('div');
-      el.textContent = '❤';
-      el.style.position = 'fixed';
-      el.style.left = Math.random() * 100 + 'vw';
-      el.style.top = '-40px';
-      el.style.fontSize = (10 + Math.random()*20) + 'px';
-      el.style.opacity = (0.25 + Math.random()*0.7).toString();
-      el.style.pointerEvents = 'none';
-      el.style.transition = `transform ${6 + Math.random()*5}s linear, opacity ${6 + Math.random()*5}s linear`;
-      container.appendChild(el);
+      const d = document.createElement('div');
+      d.className = 'coracao';
+      d.textContent = '❤';
+      d.style.color = reds[Math.floor(Math.random() * reds.length)];
+      d.style.left = Math.random() * 100 + 'vw';
+      const size = 12 + Math.random() * 26;
+      d.style.fontSize = size + 'px';
+      d.style.opacity = (0.35 + Math.random() * 0.65).toString();
+      d.style.transition = `transform ${6 + Math.random()*4}s linear, opacity ${6 + Math.random()*4}s linear`;
+      container.appendChild(d);
       requestAnimationFrame(() => {
-        el.style.transform = `translateY(${window.innerHeight + 80}px) rotate(${(Math.random()*60)-30}deg)`;
-        el.style.opacity = '0';
+        d.style.transform = `translateY(${window.innerHeight + 120}px) rotate(${(Math.random()*80)-40}deg)`;
+        d.style.opacity = '0';
       });
-      setTimeout(()=> el.remove(), 9000);
+      setTimeout(()=> d.remove(), 10000);
     }
-    setInterval(makeOne, 450);
+    const interval = setInterval(makeOne, 420);
+    window.addEventListener('beforeunload', () => clearInterval(interval));
   })();
 
-  /* ---------- Contadores (2 contadores) ---------- */
+  /* ---------- contadores (duas datas) ---------- */
   (function counters(){
     const startConhecimento = new Date('2025-08-11T11:10:00').getTime();
     const startNamoro = new Date('2025-11-09T16:20:00').getTime();
@@ -96,32 +80,34 @@ document.addEventListener('DOMContentLoaded', () => {
     function update() {
       const now = Date.now();
 
-      const dC = Math.max(0, now - startConhecimento);
-      const diasC = Math.floor(dC / (1000*60*60*24));
-      const horasC = Math.floor((dC / (1000*60*60)) % 24);
-      const minutosC = Math.floor((dC / (1000*60)) % 60);
-      const segundosC = Math.floor((dC / 1000) % 60);
+      // conhecimento
+      const diffC = Math.max(0, now - startConhecimento);
+      const diasC = Math.floor(diffC / (1000*60*60*24));
+      const horasC = Math.floor((diffC / (1000*60*60)) % 24);
+      const minutosC = Math.floor((diffC / (1000*60)) % 60);
+      const segundosC = Math.floor((diffC / 1000) % 60);
+      document.getElementById('diasConhecimento').textContent = diasC;
+      document.getElementById('horasConhecimento').textContent = horasC;
+      document.getElementById('minutosConhecimento').textContent = minutosC;
+      document.getElementById('segundosConhecimento').textContent = segundosC;
 
-      const elIdsC = ['diasConhecimento','horasConhecimento','minutosConhecimento','segundosConhecimento'];
-      [diasC, horasC, minutosC, segundosC].forEach((v, idx) => {
-        const el = document.getElementById(elIdsC[idx]); if (el) el.textContent = v;
-      });
-
-      const dN = Math.max(0, now - startNamoro);
-      const diasN = Math.floor(dN / (1000*60*60*24));
-      const horasN = Math.floor((dN / (1000*60*60)) % 24);
-      const minutosN = Math.floor((dN / (1000*60)) % 60);
-      const segundosN = Math.floor((dN / 1000) % 60);
-      const elIdsN = ['diasNamoro','horasNamoro','minutosNamoro','segundosNamoro'];
-      [diasN, horasN, minutosN, segundosN].forEach((v, idx) => {
-        const el = document.getElementById(elIdsN[idx]); if (el) el.textContent = v;
-      });
+      // namoro
+      const diffN = Math.max(0, now - startNamoro);
+      const diasN = Math.floor(diffN / (1000*60*60*24));
+      const horasN = Math.floor((diffN / (1000*60*60)) % 24);
+      const minutosN = Math.floor((diffN / (1000*60)) % 60);
+      const segundosN = Math.floor((diffN / 1000) % 60);
+      document.getElementById('diasNamoro').textContent = diasN;
+      document.getElementById('horasNamoro').textContent = horasN;
+      document.getElementById('minutosNamoro').textContent = minutosN;
+      document.getElementById('segundosNamoro').textContent = segundosN;
     }
+
     update();
     setInterval(update, 1000);
   })();
 
-  /* ---------- Versículos / Mensagens (Declaração) ---------- */
+  /* ---------- versículos & mensagens (declaração) ---------- */
   (function declContent(){
     const versos = [
       "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4–7)",
@@ -132,9 +118,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let vi = 0;
     const btnV = document.getElementById('btnVersiculo');
     const boxV = document.getElementById('versiculoBox');
-    if (btnV && boxV) btnV.addEventListener('click', () => {
-      boxV.classList.remove('hidden'); boxV.textContent = versos[vi]; vi = (vi + 1) % versos.length;
-    });
+    if (btnV && boxV) {
+      btnV.addEventListener('click', () => {
+        boxV.classList.toggle('hidden');
+        boxV.textContent = versos[vi];
+        vi = (vi + 1) % versos.length;
+      });
+    }
 
     const msgs = [
       "Que bom, valeu a pena andar atrás das flores com você kkk.",
@@ -145,12 +135,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let mi = 0;
     const btnM = document.getElementById('btnCarta');
     const boxM = document.getElementById('cartaTexto');
-    if (btnM && boxM) btnM.addEventListener('click', () => {
-      boxM.classList.remove('hidden'); boxM.textContent = msgs[mi]; mi = (mi + 1) % msgs.length;
-    });
+    if (btnM && boxM) {
+      btnM.addEventListener('click', () => {
+        boxM.classList.toggle('hidden');
+        boxM.textContent = msgs[mi];
+        mi = (mi + 1) % msgs.length;
+      });
+    }
   })();
 
-  /* ---------- Versículos / Mensagens (Namoro) ---------- */
+  /* ---------- versículos & mensagens (namoro) ---------- */
   (function namContent(){
     const versos = [
       "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4–7)",
@@ -163,7 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnV = document.getElementById('btnVersiculoNamoro');
     const boxV = document.getElementById('versiculoBoxNamoro');
     if (btnV && boxV) btnV.addEventListener('click', () => {
-      boxV.classList.remove('hidden'); boxV.textContent = versos[vi]; vi = (vi + 1) % versos.length;
+      boxV.classList.toggle('hidden');
+      boxV.textContent = versos[vi];
+      vi = (vi + 1) % versos.length;
     });
 
     const msgs = [
@@ -176,11 +172,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnM = document.getElementById('btnCartaNamoro');
     const boxM = document.getElementById('cartaTextoNamoro');
     if (btnM && boxM) btnM.addEventListener('click', () => {
-      boxM.classList.remove('hidden'); boxM.textContent = msgs[mi]; mi = (mi + 1) % msgs.length;
+      boxM.classList.toggle('hidden');
+      boxM.textContent = msgs[mi];
+      mi = (mi + 1) % msgs.length;
     });
   })();
 
-  /* ---------- Forms (Formspree) ---------- */
+  /* ---------- forms (Formspree) ---------- */
   (function forms(){
     const list = [
       { id:'formDeclaracao', status:'formStatusDeclaracao' },
@@ -211,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   })();
 
-  /* ---------- Reply toggle ---------- */
+  /* ---------- resposta (declaração) ---------- */
   (function replyToggle(){
     const btn = document.getElementById('btnResposta');
     const box = document.getElementById('respostaTexto');

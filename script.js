@@ -1,13 +1,3 @@
-/* script.js - final e consistente
-   funcionalidades:
-   - troca de seções (menu)
-   - carregamento estático (margarida) 5s para noivado/casamento
-   - corações vermelhos caindo
-   - contadores para conhecimento e namoro
-   - mostrar versículos / mensagens
-   - formulário com feedback via fetch (Formspree)
-*/
-
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- menu / seções ---------- */
@@ -19,8 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     menuBtns.forEach(b => b.classList.toggle('ativo', b.dataset.section === id));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
-  // inicial: declaração
   showSection('declaracao');
 
   menuBtns.forEach(btn => {
@@ -28,12 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const target = btn.dataset.section;
       if (!target) return;
 
-      // loading para noivado/casamento
+      // loading for noivado/casamento
       if (btn.classList.contains('loading-btn')) {
         const original = btn.textContent;
         btn.disabled = true;
         btn.textContent = '🌼 Carregando...';
-        // permanece estático por 5s
         setTimeout(() => {
           btn.disabled = false;
           btn.textContent = original;
@@ -46,11 +33,62 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /* ---------- slideshow generic (auto + arrows) ---------- */
+  function createSlideshow(rootSelector, interval = 4000) {
+    const root = document.querySelector(rootSelector);
+    if (!root) return;
+    const slides = Array.from(root.querySelectorAll('.polaroid'));
+    if (!slides.length) return;
+    let index = 0;
+
+    // show initial
+    slides.forEach((s, i) => s.classList.toggle('active', i === 0));
+
+    function show(i) {
+      slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    }
+
+    // auto
+    let timer = setInterval(() => {
+      index = (index + 1) % slides.length;
+      show(index);
+    }, interval);
+
+    // arrows
+    const prevBtn = root.parentElement.querySelector('.slide-arrow.prev');
+    const nextBtn = root.parentElement.querySelector('.slide-arrow.next');
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        clearInterval(timer);
+        index = (index - 1 + slides.length) % slides.length;
+        show(index);
+        timer = setInterval(() => { index = (index + 1) % slides.length; show(index); }, interval);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        clearInterval(timer);
+        index = (index + 1) % slides.length;
+        show(index);
+        timer = setInterval(() => { index = (index + 1) % slides.length; show(index); }, interval);
+      });
+    }
+
+    // pause on hover
+    root.addEventListener('mouseenter', () => clearInterval(timer));
+    root.addEventListener('mouseleave', () => {
+      timer = setInterval(() => { index = (index + 1) % slides.length; show(index); }, interval);
+    });
+  }
+
+  createSlideshow('.slideshow-decl', 4500);
+  createSlideshow('.slideshow-nam', 4500);
+
   /* ---------- corações vermelhos ---------- */
   (function hearts(){
     const container = document.getElementById('coracoes');
     if (!container) return;
-    const reds = ['#ff3b5c', '#e83a62', '#c94057']; // tons vermelhos
+    const reds = ['#ff3b5c', '#e83a62', '#c94057'];
     function makeOne() {
       const d = document.createElement('div');
       d.className = 'coracao';
@@ -72,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('beforeunload', () => clearInterval(interval));
   })();
 
-  /* ---------- contadores (duas datas) ---------- */
+  /* ---------- contadores ---------- */
   (function counters(){
     const startConhecimento = new Date('2025-08-11T11:10:00').getTime();
     const startNamoro = new Date('2025-11-09T16:20:00').getTime();
@@ -86,10 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const horasC = Math.floor((diffC / (1000*60*60)) % 24);
       const minutosC = Math.floor((diffC / (1000*60)) % 60);
       const segundosC = Math.floor((diffC / 1000) % 60);
-      document.getElementById('diasConhecimento').textContent = diasC;
-      document.getElementById('horasConhecimento').textContent = horasC;
-      document.getElementById('minutosConhecimento').textContent = minutosC;
-      document.getElementById('segundosConhecimento').textContent = segundosC;
+      const elIdsC = ['diasConhecimento','horasConhecimento','minutosConhecimento','segundosConhecimento'];
+      [diasC, horasC, minutosC, segundosC].forEach((v, idx) => {
+        const el = document.getElementById(elIdsC[idx]); if (el) el.textContent = v;
+      });
 
       // namoro
       const diffN = Math.max(0, now - startNamoro);
@@ -97,85 +135,60 @@ document.addEventListener('DOMContentLoaded', () => {
       const horasN = Math.floor((diffN / (1000*60*60)) % 24);
       const minutosN = Math.floor((diffN / (1000*60)) % 60);
       const segundosN = Math.floor((diffN / 1000) % 60);
-      document.getElementById('diasNamoro').textContent = diasN;
-      document.getElementById('horasNamoro').textContent = horasN;
-      document.getElementById('minutosNamoro').textContent = minutosN;
-      document.getElementById('segundosNamoro').textContent = segundosN;
+      const elIdsN = ['diasNamoro','horasNamoro','minutosNamoro','segundosNamoro'];
+      [diasN, horasN, minutosN, segundosN].forEach((v, idx) => {
+        const el = document.getElementById(elIdsN[idx]); if (el) el.textContent = v;
+      });
     }
 
     update();
     setInterval(update, 1000);
   })();
 
-  /* ---------- versículos & mensagens (declaração) ---------- */
+  /* ---------- versos & mensagens (declaração) ---------- */
   (function declContent(){
     const versos = [
       "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4–7)",
       "Nós amamos porque Ele nos amou primeiro. (1 João 4:19)",
-      "Acima de tudo, revistam-se do amor, que é o elo perfeito. (Colossenses 3:14)",
-      "Ame o Senhor... e ame ao próximo como a si mesmo. (Mateus 22:37-39)"
+      "Acima de tudo, revistam-se do amor. (Colossenses 3:14)"
     ];
     let vi = 0;
     const btnV = document.getElementById('btnVersiculo');
     const boxV = document.getElementById('versiculoBox');
-    if (btnV && boxV) {
-      btnV.addEventListener('click', () => {
-        boxV.classList.toggle('hidden');
-        boxV.textContent = versos[vi];
-        vi = (vi + 1) % versos.length;
-      });
-    }
+    if (btnV && boxV) btnV.addEventListener('click', () => { boxV.classList.toggle('hidden'); boxV.textContent = versos[vi]; vi = (vi + 1) % versos.length; });
 
     const msgs = [
       "Que bom, valeu a pena andar atrás das flores com você kkk.",
       "A forma como tu chegou foi natural e educada; gostei.",
-      "Qualquer coisa que eu faça contigo é muito bom.",
       "Acordei sorrindo lembrando da nossa conversa kkk."
     ];
     let mi = 0;
     const btnM = document.getElementById('btnCarta');
     const boxM = document.getElementById('cartaTexto');
-    if (btnM && boxM) {
-      btnM.addEventListener('click', () => {
-        boxM.classList.toggle('hidden');
-        boxM.textContent = msgs[mi];
-        mi = (mi + 1) % msgs.length;
-      });
-    }
+    if (btnM && boxM) btnM.addEventListener('click', () => { boxM.classList.toggle('hidden'); boxM.textContent = msgs[mi]; mi = (mi + 1) % msgs.length; });
   })();
 
-  /* ---------- versículos & mensagens (namoro) ---------- */
+  /* ---------- versos & mensagens (namoro) ---------- */
   (function namContent(){
     const versos = [
       "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4–7)",
       "Nós amamos porque Ele nos amou primeiro. (1 João 4:19)",
-      "Revesti-vos de amor... (Colossenses 3:14)",
-      "Ama o teu próximo como a ti mesmo. (Mateus 22:39)",
-      "O amor não faz mal ao próximo. (Romanos 13:10)"
+      "Ama o teu próximo como a ti mesmo. (Mateus 22:39)"
     ];
     let vi = 0;
     const btnV = document.getElementById('btnVersiculoNamoro');
     const boxV = document.getElementById('versiculoBoxNamoro');
-    if (btnV && boxV) btnV.addEventListener('click', () => {
-      boxV.classList.toggle('hidden');
-      boxV.textContent = versos[vi];
-      vi = (vi + 1) % versos.length;
-    });
+    if (btnV && boxV) btnV.addEventListener('click', () => { boxV.classList.toggle('hidden'); boxV.textContent = versos[vi]; vi = (vi + 1) % versos.length; });
 
     const msgs = [
       "Lembra daquele dia que rimos até doer a barriga? Quero repetir sempre.",
       "Tu é meu lugar seguro.",
-      "Obrigado por cada cuidado, cada abraço e cada sorriso.",
-      "Construindo memórias juntos, um passo de cada vez."
+      "Obrigado por cada cuidado, cada abraço e cada sorriso."
     ];
     let mi = 0;
     const btnM = document.getElementById('btnCartaNamoro');
     const boxM = document.getElementById('cartaTextoNamoro');
-    if (btnM && boxM) btnM.addEventListener('click', () => {
-      boxM.classList.toggle('hidden');
-      boxM.textContent = msgs[mi];
-      mi = (mi + 1) % msgs.length;
-    });
+    if (btnM && boxM) btnM.addEventListener('click', () => { boxM.classList.toggle('hidden'); boxM.textContent = msgs[mi]; mi = (mi + 1) % msgs.length; });
   })();
 
   /* ---------- forms (Formspree) ---------- */
@@ -209,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   })();
 
-  /* ---------- resposta (declaração) ---------- */
+  /* ---------- resposta toggle ---------- */
   (function replyToggle(){
     const btn = document.getElementById('btnResposta');
     const box = document.getElementById('respostaTexto');

@@ -5,17 +5,18 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Nosso Cantinho ❤️</title>
 
-  <!-- Fonte Dancing Script -->
+  <!-- Dancing Script -->
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
   <script defer src="script.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
 </head>
 <body>
-  <!-- Corações (JS) -->
+  <!-- corações -->
   <div id="coracoes" aria-hidden="true"></div>
 
-  <!-- Header fixo -->
+  <!-- header fixo (mantive o estilo atual, centralizado) -->
   <header class="site-header" role="banner">
     <div class="header-inner">
       <h1 class="site-title">Nosso Cantinho 💕</h1>
@@ -28,71 +29,44 @@
     </div>
   </header>
 
-  <main id="main" class="main">
-    <!-- DECLARAÇÃO -->
+  <main class="main">
+    <!-- ===== DECLARAÇÃO ===== -->
     <section id="declaracao" class="section active" aria-labelledby="titulo-declaracao">
       <div class="container">
 
-        <!-- slideshow -->
+        <!-- Polaroids (grid) -->
         <div class="slideshow slideshow-decl" aria-hidden="false">
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/foto1.jpg" alt="foto1"></div>
-            <div class="polaroid-caption">13/09/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/foto2.jpg" alt="foto2"></div>
-            <div class="polaroid-caption">13/09/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/foto3.jpg" alt="foto3"></div>
-            <div class="polaroid-caption">21/09/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/foto4.jpg" alt="foto4"></div>
-            <div class="polaroid-caption">21/09/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/foto5.jpg" alt="foto5"></div>
-            <div class="polaroid-caption">28/09/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/foto6.jpg" alt="foto6"></div>
-            <div class="polaroid-caption">28/09/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/foto7.jpg" alt="foto7"></div>
-            <div class="polaroid-caption">28/09/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/foto8.jpg" alt="foto8"></div>
-            <div class="polaroid-caption">04/10/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/foto9.jpg" alt="foto9"></div>
-            <div class="polaroid-caption">10/10/2025</div>
-          </div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto1.jpg" alt="foto1"></div><div class="polaroid-caption">13/09/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto2.jpg" alt="foto2"></div><div class="polaroid-caption">13/09/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto3.jpg" alt="foto3"></div><div class="polaroid-caption">21/09/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto4.jpg" alt="foto4"></div><div class="polaroid-caption">21/09/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto5.jpg" alt="foto5"></div><div class="polaroid-caption">28/09/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto6.jpg" alt="foto6"></div><div class="polaroid-caption">28/09/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto7.jpg" alt="foto7"></div><div class="polaroid-caption">28/09/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto8.jpg" alt="foto8"></div><div class="polaroid-caption">04/10/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/foto9.jpg" alt="foto9"></div><div class="polaroid-caption">10/10/2025</div></div>
         </div>
 
-        <!-- texto estilo caderno -->
-        <article class="paper" id="titulo-declaracao">
-          <!-- cole seu texto original completo aqui -->
-          <p>"Oii, paz, prazer kkkk" foi assim que me apresentei e assim queria começar esse texto, eu nunca fui bom em puxar assunto...</p>
-          <p>...(cole o resto do seu texto completo aqui)...</p>
+        <!-- texto em estilo caderno -->
+        <article id="titulo-declaracao" class="paper">
+          <!-- cole seu texto completo aqui -->
+          <p>"Oii, paz, prazer kkkk" foi assim que me apresentei e assim queria começar esse texto, eu nunca fui bom em puxar assunto, não sou muito bom em expressar em palavras o que eu estou sentindo...</p>
+          <p>...(cole o restante do texto aqui)...</p>
         </article>
 
-        <!-- 3 colunas uniformes (contador / versos / mensagens) -->
+        <!-- contador / versos / mensagens - ajustados ao conteúdo -->
         <div class="grid-3">
-          <div class="card card-center">
+          <div class="card">
             <h3>Tempo que nos conhecemos</h3>
-            <div class="counter card-body" aria-live="polite">
-              <span id="diasConhecimento">0</span>d
-              <span id="horasConhecimento">0</span>h
-              <span id="minutosConhecimento">0</span>m
-              <span id="segundosConhecimento">0</span>s
+            <div class="card-body counter" aria-live="polite">
+              <span id="diasConhecimento">0</span> dias •
+              <span id="horasConhecimento">0</span> h •
+              <span id="minutosConhecimento">0</span> m •
+              <span id="segundosConhecimento">0</span> s
             </div>
           </div>
 
-          <div class="card card-center">
+          <div class="card">
             <h3>Versículos Bíblicos</h3>
             <div class="card-body">
               <button id="btnVersiculo" class="small-btn">Mostrar versículo</button>
@@ -100,7 +74,7 @@
             </div>
           </div>
 
-          <div class="card card-center">
+          <div class="card">
             <h3>Nossas Mensagens</h3>
             <div class="card-body">
               <button id="btnCarta" class="small-btn">Mostrar Mensagens</button>
@@ -109,7 +83,7 @@
           </div>
         </div>
 
-        <!-- formulário (Declaração) -->
+        <!-- formulário -->
         <div class="form-wrap">
           <div class="card form-card">
             <h3>Enviar uma mensagem</h3>
@@ -118,7 +92,7 @@
                 <input name="name" type="text" placeholder="Seu nome" required>
                 <input name="email" type="email" placeholder="Seu e-mail" required>
               </div>
-              <textarea name="message" placeholder="Escreva sua mensagem..." rows="4" required></textarea>
+              <textarea name="message" placeholder="Escreva sua mensagem..." rows="5" required></textarea>
               <input type="hidden" name="_subject" value="Mensagem - Declaração">
               <div class="form-actions">
                 <button type="submit" class="primary-btn">Enviar mensagem</button>
@@ -128,7 +102,7 @@
           </div>
         </div>
 
-        <!-- resposta dela (apenas declaração) -->
+        <!-- resposta dela (aparece só quando clicar) -->
         <div class="reply-wrap">
           <button id="btnResposta" class="secondary-btn">Ver a resposta dela 💖</button>
           <div id="respostaTexto" class="text-box hidden reply-text" aria-live="polite">
@@ -138,69 +112,38 @@
       </div>
     </section>
 
-    <!-- NAMORO -->
+    <!-- ===== NAMORO ===== -->
     <section id="namoro" class="section" aria-labelledby="titulo-namoro">
       <div class="container">
-
         <div class="slideshow slideshow-nam">
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/fotos10.jpg" alt="fotos10"></div>
-            <div class="polaroid-caption">09/11/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/fotos11.jpg" alt="fotos11"></div>
-            <div class="polaroid-caption">09/11/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/fotos12.jpg" alt="fotos12"></div>
-            <div class="polaroid-caption">09/11/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/fotos13.jpg" alt="fotos13"></div>
-            <div class="polaroid-caption">09/11/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/fotos14.jpg" alt="fotos14"></div>
-            <div class="polaroid-caption">09/11/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/fotos15.jpg" alt="fotos15"></div>
-            <div class="polaroid-caption">09/11/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/fotos16.jpg" alt="fotos16"></div>
-            <div class="polaroid-caption">09/11/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/fotos17.jpg" alt="fotos17"></div>
-            <div class="polaroid-caption">09/11/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/fotos18.jpg" alt="fotos18"></div>
-            <div class="polaroid-caption">09/11/2025</div>
-          </div>
-          <div class="polaroid">
-            <div class="photo-frame"><img class="photo" src="imagens/fotos19.jpg" alt="fotos19"></div>
-            <div class="polaroid-caption">09/11/2025</div>
-          </div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos10.jpg" alt="fotos10"></div><div class="polaroid-caption">09/11/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos11.jpg" alt="fotos11"></div><div class="polaroid-caption">09/11/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos12.jpg" alt="fotos12"></div><div class="polaroid-caption">09/11/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos13.jpg" alt="fotos13"></div><div class="polaroid-caption">09/11/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos14.jpg" alt="fotos14"></div><div class="polaroid-caption">09/11/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos15.jpg" alt="fotos15"></div><div class="polaroid-caption">09/11/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos16.jpg" alt="fotos16"></div><div class="polaroid-caption">09/11/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos17.jpg" alt="fotos17"></div><div class="polaroid-caption">09/11/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos18.jpg" alt="fotos18"></div><div class="polaroid-caption">09/11/2025</div></div>
+          <div class="polaroid"><div class="photo-frame"><img class="photo" src="imagens/fotos19.jpg" alt="fotos19"></div><div class="polaroid-caption">09/11/2025</div></div>
         </div>
 
-        <article class="paper" id="titulo-namoro">
+        <article id="titulo-namoro" class="paper">
           <p>Nosso namoro começou leve, com muitos sorrisos e orações...</p>
         </article>
 
         <div class="grid-3">
-          <div class="card card-center">
+          <div class="card">
             <h3>Tempo de namoro</h3>
-            <div class="counter card-body" aria-live="polite">
-              <span id="diasNamoro">0</span>d
-              <span id="horasNamoro">0</span>h
-              <span id="minutosNamoro">0</span>m
-              <span id="segundosNamoro">0</span>s
+            <div class="card-body counter" aria-live="polite">
+              <span id="diasNamoro">0</span> dias •
+              <span id="horasNamoro">0</span> h •
+              <span id="minutosNamoro">0</span> m •
+              <span id="segundosNamoro">0</span> s
             </div>
           </div>
 
-          <div class="card card-center">
+          <div class="card">
             <h3>Versículos</h3>
             <div class="card-body">
               <button id="btnVersiculoNamoro" class="small-btn">Mostrar versículo</button>
@@ -208,7 +151,7 @@
             </div>
           </div>
 
-          <div class="card card-center">
+          <div class="card">
             <h3>Mensagens</h3>
             <div class="card-body">
               <button id="btnCartaNamoro" class="small-btn">Mostrar Mensagens</button>
@@ -225,7 +168,7 @@
                 <input name="name" type="text" placeholder="Seu nome" required>
                 <input name="email" type="email" placeholder="Seu e-mail" required>
               </div>
-              <textarea name="message" placeholder="Escreva sua mensagem..." rows="4" required></textarea>
+              <textarea name="message" placeholder="Escreva sua mensagem..." rows="5" required></textarea>
               <input type="hidden" name="_subject" value="Mensagem - Namoro">
               <div class="form-actions">
                 <button type="submit" class="primary-btn">Enviar mensagem</button>
@@ -237,6 +180,10 @@
 
       </div>
     </section>
+
+    <!-- Noivado / Casamento (em breve) -->
+    <section id="noivado" class="section"><div class="placeholder-card"><p>🌼 Em breve (Noivado)</p></div></section>
+    <section id="casamento" class="section"><div class="placeholder-card"><p>🌼 Em breve (Casamento)</p></div></section>
   </main>
 
   <footer class="site-footer">

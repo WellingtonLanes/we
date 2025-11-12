@@ -1,198 +1,281 @@
-/* style.css - Nosso Cantinho (fundo branco/rosa, Patrick Hand, polaroids, responsivo) */
-
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
 
 body {
-  font-family: 'Patrick Hand', cursive;
-  background: linear-gradient(180deg, #fff 0%, #fff0f6 100%);
+  background-color: #fff;
   color: #333;
-  text-align: center;
   overflow-x: hidden;
-  padding-top: 86px; /* espaço para menu fixo */
-}
-
-/* ===== MENU FIXO ===== */
-.top-menu { display:none; } /* legacy */
-nav.top-menu {}
-
-nav.top-menu, .top-menu {}
-/* actual nav used in HTML is .top-menu; provide robust styling via nav.top-menu and .top-menu */
-nav.top-menu, .top-menu {
-  position: fixed;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg,#fff8fb,#fff0f5);
-  border-radius: 28px;
-  padding: 8px 12px;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  z-index: 120;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
-
-/* we also style the actual nav in the DOM (nav.top-menu) */
-nav.top-menu { display: block; }
-
-/* Buttons in menu */
-.menu-btn {
-  background: linear-gradient(135deg,#e75480,#f78da7);
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 8px 14px;
-  cursor: pointer;
-  font-family: 'Patrick Hand', cursive;
-  font-size: 1rem;
-  transition: transform .18s ease, box-shadow .18s;
-}
-.menu-btn:hover { transform: scale(1.06); box-shadow: 0 6px 12px rgba(0,0,0,0.12); }
-.menu-btn.active { box-shadow: 0 6px 12px rgba(0,0,0,0.12); }
-
-/* Site header */
-.site-header h1 {
-  color: #e75480;
-  margin: 8px 0 18px;
-  font-size: 2rem;
-}
-
-/* ===== SLIDESHOW POLAROID ===== */
-.slideshow-container {
-  width: 100%;
-  max-width: 520px;
-  margin: 18px auto;
+  position: relative;
   text-align: center;
 }
 
-.polaroid, .mySlides, .mySlides2 {
-  display: none;
-  width: 100%;
-  max-width: 500px;
-  height: 700px; /* big like original */
-  margin: 20px auto;
-  background: #fff;
-  border-top: 6px solid #fff;
-  border-left: 6px solid #fff;
-  border-right: 6px solid #fff;
-  border-bottom: 50px solid #fff; /* thick bottom strip */
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
-  overflow: hidden;
-  position: relative;
-  flex-direction: column;
-}
-
-.polaroid img, .mySlides img, .mySlides2 img {
+/* ===== CORAÇÕES CAINDO ===== */
+#coracoes {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* cover but container big to avoid excessive cropping */
+  pointer-events: none;
+  z-index: 0;
+}
+
+.coracao {
+  position: absolute;
+  color: #ff7b9c;
+  font-size: 18px;
+  animation: cair 6s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes cair {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+/* ===== CABEÇALHO FIXO ===== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffe6ef;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 15px 0;
+  z-index: 10;
+}
+
+.site-header h1 {
+  color: #ff4b81;
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+}
+
+/* ===== MENU ===== */
+.menu {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.menu-btn {
+  background-color: #fff;
+  border: 2px solid #ff7b9c;
+  border-radius: 30px;
+  color: #ff4b81;
+  padding: 8px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.menu-btn:hover,
+.menu-btn.ativo {
+  background-color: #ff7b9c;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.menu-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ===== ÁREA PRINCIPAL ===== */
+main {
+  margin-top: 150px;
+  padding-bottom: 80px;
+  z-index: 1;
+}
+
+/* ===== SEÇÕES ===== */
+.secao {
+  display: none;
+}
+
+.secao.ativa {
   display: block;
 }
 
-/* caption inside the bottom white band */
-.polaroid-caption {
-  position: absolute;
-  bottom: 6px;
-  left: 0;
+/* ===== SLIDESHOW ===== */
+.slideshow-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px auto;
+  max-width: 1000px;
+}
+
+.mySlides {
+  position: relative;
+  width: 280px;
+  background-color: #fff;
+  padding: 10px;
+  border: 3px solid #ffb6c1;
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  transform: rotate(calc(-3deg + 6deg * var(--i)));
+  transition: transform 0.3s;
+}
+
+.mySlides:hover {
+  transform: scale(1.05) rotate(0deg);
+}
+
+.mySlides img {
   width: 100%;
-  text-align: center;
-  font-size: 1rem;
-  color: #444;
+  border-radius: 8px;
+  display: block;
 }
 
-/* ===== FOLHA DE CADERNO ===== */
-.folha-caderno {
-  background: repeating-linear-gradient(
-    to bottom,
-    #fff 0px,
-    #fff 24px,
-    #f8f8f8 25px,
-    #f8f8f8 25px
-  );
-  border-left: 5px solid #e75480;
-  border-radius: 6px;
-  padding: 36px 30px;
-  max-width: 760px;
-  margin: 18px auto;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+.polaroid-caption {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 5px;
+}
+
+/* ===== DECLARAÇÃO ===== */
+.declaracao.caderno {
+  background: linear-gradient(to bottom, #fff 97%, #ffb6c1 3%);
+  background-size: 100% 2em;
+  line-height: 2em;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border-left: 5px solid #ff7b9c;
+  border-radius: 10px;
   text-align: left;
-  line-height: 26px;
-  font-size: 18px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* ===== CONTADOR, CARTA, VERSÍCULOS, FORM ===== */
-.contador, .carta, .frases, .mensagem {
-  max-width: 760px;
-  margin: 18px auto;
-  padding: 18px;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  text-align: center;
+/* ===== CONTADORES ===== */
+.contador {
+  margin: 30px auto;
+  background: #fff7fa;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid #ffb6c1;
+  width: 80%;
+  max-width: 600px;
 }
 
-/* button estilo */
-.btn-declaracao {
-  margin-top: 12px;
-  padding: 10px 20px;
-  background: linear-gradient(135deg,#ff9eb5,#ff6f93);
+.contador h2 {
+  color: #ff4b81;
+}
+
+/* ===== CARTA E VERSÍCULOS ===== */
+.carta, .frases {
+  margin: 40px auto;
+  width: 80%;
+  max-width: 600px;
+  background: #fff7fa;
+  border-radius: 15px;
+  padding: 20px;
+  border: 2px solid #ffb6c1;
+}
+
+button {
+  background-color: #ff7b9c;
   color: #fff;
   border: none;
-  border-radius: 18px;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
-/* resposta dela */
-.declaracao-resposta {
-  margin-top: 12px;
-  padding: 14px;
-  background: #fff8f9;
-  border-left: 4px solid #ffb6c1;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+button:hover {
+  background-color: #ff4b81;
+  transform: scale(1.05);
+}
+
+.visually-hidden {
   display: none;
 }
-.declaracao-resposta.show, .declaracao-resposta.visible { display:block; }
 
-/* menu button loading state for Noivado/Casamento */
-.menu-btn.loading {
-  pointer-events: none;
-  opacity: 0.95;
+/* ===== FORMULÁRIO ===== */
+.mensagem {
+  margin: 40px auto;
+  width: 80%;
+  max-width: 600px;
+  background: #fff7fa;
+  border-radius: 15px;
+  padding: 20px;
+  border: 2px solid #ffb6c1;
 }
-.menu-btn.loading::after {
-  content: " 🌼 Carregando...";
-  margin-left: 8px;
-  display: inline-block;
-  animation: spin 1.6s linear infinite;
+
+form input, form textarea {
+  width: 100%;
+  border: 2px solid #ffb6c1;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px 0;
 }
-@keyframes spin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
 
-/* corações container */
-#coracoes { position: fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:0; }
-
-/* fade-in */
-.fade-in { opacity:0; transform: translateY(12px); transition: all .9s ease; }
-.fade-in.show { opacity:1; transform: translateY(0); }
-
-/* content sections */
-.content-section { display:none; }
-.content-section.active, .content-section.show { display:block; }
-
-/* responsive */
-@media (max-width:980px){
-  .polaroid, .mySlides, .mySlides2 { height:650px; max-width:450px; }
-  .folha-caderno { padding:28px; font-size:16px; }
+form button {
+  margin-top: 10px;
 }
-@media (max-width:768px){
-  .polaroid, .mySlides, .mySlides2 { height:550px; max-width:380px; }
-  body { padding-top:110px; }
-  .folha-caderno { padding:22px; font-size:15px; line-height:22px; }
+
+/* ===== RODAPÉ ===== */
+.site-footer {
+  margin-top: 50px;
+  padding: 15px 0;
+  background-color: #ffe6ef;
+  color: #ff4b81;
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
 }
-@media (max-width:480px){
-  .polaroid, .mySlides, .mySlides2 { height:420px; max-width:300px; }
-  nav.top-menu { left:8px; transform:none; right:8px; }
+
+/* ===== ANIMAÇÕES ===== */
+.fade-in {
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .mySlides {
+    width: 45%;
+  }
+
+  .declaracao.caderno {
+    width: 90%;
+    font-size: 0.9rem;
+  }
+
+  .menu {
+    gap: 5px;
+  }
+
+  .menu-btn {
+    padding: 6px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mySlides {
+    width: 80%;
+  }
+
+  .site-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .menu-btn {
+    font-size: 0.8rem;
+  }
 }

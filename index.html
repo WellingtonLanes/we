@@ -1,163 +1,168 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nosso Cantinho ❤️</title>
   <link rel="stylesheet" href="style.css">
   <script defer src="script.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌼</text></svg>">
 </head>
+
 <body>
-  <!-- CORAÇÕES FLUTUANTES -->
+  <!-- Fundo de corações -->
   <div id="coracoes" aria-hidden="true"></div>
 
-  <!-- MENU FIXO -->
-  <nav class="top-menu" role="navigation" aria-label="Menu principal">
-    <button class="menu-btn active" data-section="declaracao">Declaração</button>
-    <button class="menu-btn" data-section="namoro">Namoro</button>
-    <button class="menu-btn" id="noivadoBtn" data-section="noivado">Noivado</button>
-    <button class="menu-btn" id="casamentoBtn" data-section="casamento">Casamento</button>
-  </nav>
+  <!-- Cabeçalho fixo com menu -->
+  <header class="site-header fade-in">
+    <h1>Nosso Cantinho 💕</h1>
+    <nav class="menu">
+      <button class="menu-btn ativo" data-section="declaracao">Declaração</button>
+      <button class="menu-btn" data-section="namoro">Namoro</button>
+      <button class="menu-btn carregando" data-section="noivado">Noivado</button>
+      <button class="menu-btn carregando" data-section="casamento">Casamento</button>
+    </nav>
+  </header>
 
-  <main id="main">
-
+  <main id="conteudo">
     <!-- ====== SEÇÃO DECLARAÇÃO ====== -->
-    <section id="declaracao" class="content-section active" aria-hidden="false">
-      <header class="site-header fade-in"><h1>Nosso Cantinho ❤️</h1></header>
-
-      <!-- slideshow polaroid foto1..foto9 -->
+    <section id="declaracao" class="secao ativa">
+      <!-- Slideshow -->
       <div class="slideshow-container fade-in">
-        <div class="mySlides polaroid"><img src="imagens/foto1.jpg" alt="foto1"><div class="polaroid-caption">13/09/2025</div></div>
-        <div class="mySlides polaroid"><img src="imagens/foto2.jpg" alt="foto2"><div class="polaroid-caption">13/09/2025</div></div>
-        <div class="mySlides polaroid"><img src="imagens/foto3.jpg" alt="foto3"><div class="polaroid-caption">21/09/2025</div></div>
-        <div class="mySlides polaroid"><img src="imagens/foto4.jpg" alt="foto4"><div class="polaroid-caption">21/09/2025</div></div>
-        <div class="mySlides polaroid"><img src="imagens/foto5.jpg" alt="foto5"><div class="polaroid-caption">28/09/2025</div></div>
-        <div class="mySlides polaroid"><img src="imagens/foto6.jpg" alt="foto6"><div class="polaroid-caption">28/09/2025</div></div>
-        <div class="mySlides polaroid"><img src="imagens/foto7.jpg" alt="foto7"><div class="polaroid-caption">28/09/2025</div></div>
-        <div class="mySlides polaroid"><img src="imagens/foto8.jpg" alt="foto8"><div class="polaroid-caption">04/10/2025</div></div>
-        <div class="mySlides polaroid"><img src="imagens/foto9.jpg" alt="foto9"><div class="polaroid-caption">10/10/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto1.jpg"><div class="polaroid-caption">13/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto2.jpg"><div class="polaroid-caption">13/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto3.jpg"><div class="polaroid-caption">21/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto4.jpg"><div class="polaroid-caption">21/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto5.jpg"><div class="polaroid-caption">28/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto6.jpg"><div class="polaroid-caption">28/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto7.jpg"><div class="polaroid-caption">28/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto8.jpg"><div class="polaroid-caption">04/10/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto9.jpg"><div class="polaroid-caption">10/10/2025</div></div>
       </div>
 
-      <!-- Texto estilo caderno -->
-      <article class="declaracao folha-caderno fade-in" id="texto-declaracao">
-        <!-- COLE TODO O TEU TEXTO ORIGINAL AQUI -->
-        <p>"Oii, paz, prazer kkkk" foi assim que me apresentei e assim queria começar esse texto...</p>
-        <p>...(cole o restante do seu texto completo aqui)...</p>
-      </article>
+      <div class="declaracao fade-in caderno">
+        <p>“Oii, paz, prazer kkkk” foi assim que me apresentei...</p>
+        <p>Eu queria dizer que mandar aquela mensagem foi a melhor decisão...</p>
+        <p>Tu tem um jeito que é só teu que eu acho incrível...</p>
+        <p>Eu quero te dar muitos brigadeiros, flores...</p>
+        <p>Eu acho que a gente combina muito em muitas coisas...</p>
+        <p>O que eu quero dizer é que eu estou gostando muito de ti 💖</p>
+      </div>
 
-      <!-- contador (início: 11/08/2025 11:10) -->
-      <section class="contador fade-in" aria-label="Contador de tempo">
-        <h2>Tempo que nos Conhecemos ⏳</h2>
-        <div id="tempoJuntos" class="tempo-box">
-          <p><span id="dias">0</span> dias, <span id="horas">0</span> horas, <span id="minutos">0</span> minutos e <span id="segundos">0</span> segundos</p>
+      <!-- Contador -->
+      <section class="contador fade-in">
+        <h2>Tempo que nos conhecemos ⏳</h2>
+        <div id="tempoConhecimento">
+          <p><span id="diasConhecimento">0</span> dias,
+             <span id="horasConhecimento">0</span> horas,
+             <span id="minutosConhecimento">0</span> minutos e
+             <span id="segundosConhecimento">0</span> segundos</p>
         </div>
       </section>
 
-      <!-- mensagens -->
-      <section class="carta fade-in" aria-label="Carta surpresa">
+      <!-- Mensagens -->
+      <section class="carta fade-in">
         <h2>Nossas Mensagens 💌</h2>
         <button id="btnCarta" type="button">Mostrar Mensagens</button>
-        <div id="cartaTexto" class="carta-box visually-hidden" aria-live="polite"></div>
+        <div id="cartaTexto" class="carta-box visually-hidden"></div>
       </section>
 
-      <!-- versículos -->
-      <section class="frases fade-in" aria-label="Versículos sobre o amor">
+      <!-- Versículos -->
+      <section class="frases fade-in">
         <h2>Versículos Bíblicos 📖</h2>
         <button id="btnVersiculo" type="button">Mostrar versículo</button>
-        <div id="versiculoBox" class="versiculo-box visually-hidden" aria-live="polite"></div>
+        <div id="versiculoBox" class="versiculo-box visually-hidden"></div>
       </section>
 
-      <!-- formulário (Formspree) -->
-      <section class="mensagem fade-in" aria-label="Enviar mensagem">
+      <!-- Formulário -->
+      <section class="mensagem fade-in">
         <h2>Enviar uma mensagem 💬</h2>
-        <form id="formDeclaracao" action="https://formspree.io/f/xovkwzej" method="POST">
+        <form id="formMensagem" action="https://formspree.io/f/xovkwzej" method="POST">
           <div class="form-row">
-            <input type="text" name="name" placeholder="Seu nome" required aria-label="Seu nome">
-            <input type="email" name="email" placeholder="Seu e-mail" required aria-label="Seu e-mail">
+            <input type="text" name="name" placeholder="Seu nome" required>
+            <input type="email" name="email" placeholder="Seu e-mail" required>
           </div>
-          <textarea name="message" placeholder="Escreva alguma mensagem..." required aria-label="Mensagem" rows="4"></textarea>
-          <input type="hidden" name="_subject" value="Mensagem do site - Nosso Cantinho (Declaração)">
+          <textarea name="message" placeholder="Escreva sua mensagem..." required rows="4"></textarea>
+          <input type="hidden" name="_subject" value="Mensagem do site - Nosso Cantinho">
           <button type="submit">Enviar mensagem</button>
-          <div id="formStatusDeclaracao" role="status" aria-live="polite"></div>
+          <div id="formStatus"></div>
         </form>
+      </section>
 
-        <!-- Botão para mostrar a resposta dela (só nesta seção) -->
-        <button id="btnResposta" class="btn-declaracao">Ver o que ela respondeu 💌</button>
-        <div id="declaracaoResposta" class="declaracao-resposta visually-hidden" aria-live="polite">
-          <p>"Quando li a tua mensagem, meu coração derreteu... 💖 Eu agradeço tanto a Deus por ter te colocado na minha vida."</p>
-          <p>💖 Elyse</p>
+      <!-- Botão resposta dela -->
+      <section class="resposta fade-in">
+        <button id="btnResposta" type="button">Ver a resposta dela 💖</button>
+        <div id="respostaTexto" class="visually-hidden">
+          <p>"Você é o meu lugar favorito no mundo inteiro 💕"</p>
         </div>
       </section>
-
-      <footer class="site-footer fade-in">
-        <p>Feito com ❤️ por Wellington 💌</p>
-      </footer>
     </section>
 
     <!-- ====== SEÇÃO NAMORO ====== -->
-    <section id="namoro" class="content-section" aria-hidden="true">
-      <header class="site-header fade-in"><h1>Nosso Cantinho — Namoro 💞</h1></header>
+    <section id="namoro" class="secao">
+      <div class="slideshow-container fade-in">
+        <div class="mySlides fade"><img src="imagens/fotos10.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos11.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos12.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos13.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos14.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos15.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos16.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos17.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos18.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos19.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+      </div>
 
-      <article class="declaracao folha-caderno fade-in" id="texto-namoro">
-        <p>Esse é o começo da nossa história. Vou ajustar o texto depois — por enquanto um texto genérico e romântico.</p>
-      </article>
+      <div class="declaracao fade-in caderno">
+        <p>Nosso namoro começou de um jeito leve e cheio de carinho...</p>
+        <p>Deus foi bom em cruzar nossos caminhos e fazer tudo florescer...</p>
+        <p>Quero viver muitos momentos contigo, rindo e crescendo juntos 💞</p>
+      </div>
 
-      <!-- contador namoro (início: 09/11/2025 16:20) -->
-      <section class="contador fade-in" aria-label="Contador namoro">
-        <h2>Tempo de Namoro ⏳</h2>
-        <div id="tempoNamoro" class="tempo-box">
-          <p><span id="dias_n">0</span> dias</p>
+      <!-- Contador -->
+      <section class="contador fade-in">
+        <h2>Tempo de namoro 💕</h2>
+        <div id="tempoNamoro">
+          <p><span id="diasNamoro">0</span> dias,
+             <span id="horasNamoro">0</span> horas,
+             <span id="minutosNamoro">0</span> minutos e
+             <span id="segundosNamoro">0</span> segundos</p>
         </div>
       </section>
 
-      <!-- slideshow namoro fotos10..fotos19 -->
-      <div class="slideshow-container fade-in">
-        <div class="mySlides2 polaroid"><img src="imagens/fotos10.jpg" alt="fotos10"><div class="polaroid-caption">data</div></div>
-        <div class="mySlides2 polaroid"><img src="imagens/fotos11.jpg" alt="fotos11"><div class="polaroid-caption">data</div></div>
-        <div class="mySlides2 polaroid"><img src="imagens/fotos12.jpg" alt="fotos12"><div class="polaroid-caption">data</div></div>
-        <div class="mySlides2 polaroid"><img src="imagens/fotos13.jpg" alt="fotos13"><div class="polaroid-caption">data</div></div>
-        <div class="mySlides2 polaroid"><img src="imagens/fotos14.jpg" alt="fotos14"><div class="polaroid-caption">data</div></div>
-        <div class="mySlides2 polaroid"><img src="imagens/fotos15.jpg" alt="fotos15"><div class="polaroid-caption">data</div></div>
-        <div class="mySlides2 polaroid"><img src="imagens/fotos16.jpg" alt="fotos16"><div class="polaroid-caption">data</div></div>
-        <div class="mySlides2 polaroid"><img src="imagens/fotos17.jpg" alt="fotos17"><div class="polaroid-caption">data</div></div>
-        <div class="mySlides2 polaroid"><img src="imagens/fotos18.jpg" alt="fotos18"><div class="polaroid-caption">data</div></div>
-        <div class="mySlides2 polaroid"><img src="imagens/fotos19.jpg" alt="fotos19"><div class="polaroid-caption">data</div></div>
-      </div>
-
-      <!-- mensagens namoro (genéricas, você editará depois) -->
-      <section class="carta fade-in" aria-label="Mensagens namoro">
+      <!-- Mensagens -->
+      <section class="carta fade-in">
         <h2>Nossas Mensagens 💌</h2>
         <button id="btnCartaNamoro" type="button">Mostrar Mensagens</button>
-        <div id="cartaTextoNamoro" class="carta-box visually-hidden" aria-live="polite"></div>
+        <div id="cartaTextoNamoro" class="carta-box visually-hidden"></div>
       </section>
 
-      <!-- versículos namoro (5 sobre amor) -->
-      <section class="frases fade-in" aria-label="Versículos namoro">
-        <h2>Versículos sobre o amor 📖</h2>
+      <!-- Versículos -->
+      <section class="frases fade-in">
+        <h2>Versículos sobre o amor 💖</h2>
         <button id="btnVersiculoNamoro" type="button">Mostrar versículo</button>
-        <div id="versiculoBoxNamoro" class="versiculo-box visually-hidden" aria-live="polite"></div>
+        <div id="versiculoBoxNamoro" class="versiculo-box visually-hidden"></div>
       </section>
 
-      <!-- formulário namoro (igual ao da declaração) -->
-      <section class="mensagem fade-in" aria-label="Enviar mensagem namoro">
+      <!-- Formulário -->
+      <section class="mensagem fade-in">
         <h2>Enviar uma mensagem 💬</h2>
-        <form id="formNamoro" action="https://formspree.io/f/xovkwzej" method="POST">
+        <form id="formMensagemNamoro" action="https://formspree.io/f/xovkwzej" method="POST">
           <div class="form-row">
-            <input type="text" name="name" placeholder="Seu nome" required aria-label="Seu nome">
-            <input type="email" name="email" placeholder="Seu e-mail" required aria-label="Seu e-mail">
+            <input type="text" name="name" placeholder="Seu nome" required>
+            <input type="email" name="email" placeholder="Seu e-mail" required>
           </div>
-          <textarea name="message" placeholder="Escreva alguma mensagem..." required aria-label="Mensagem" rows="4"></textarea>
+          <textarea name="message" placeholder="Escreva sua mensagem..." required rows="4"></textarea>
           <input type="hidden" name="_subject" value="Mensagem do site - Nosso Cantinho (Namoro)">
           <button type="submit">Enviar mensagem</button>
-          <div id="formStatusNamoro" role="status" aria-live="polite"></div>
+          <div id="formStatusNamoro"></div>
         </form>
       </section>
-
-      <footer class="site-footer fade-in">
-        <p>Feito com ❤️ por Wellington 💌</p>
-      </footer>
     </section>
-
   </main>
+
+  <footer class="site-footer fade-in">
+    <p>Feito com ❤️ por Wellington 💌</p>
+  </footer>
 </body>
 </html>

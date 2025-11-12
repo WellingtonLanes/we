@@ -1,233 +1,295 @@
+/* main script: troca de conteúdo (Declaração / Namoro),
+   slideshow automático 5s, contadores (duas datas),
+   versículos (random), mensagens, formulário (Formspree),
+   resposta dela somente na Declaração, e corações caindo.
+*/
+
 document.addEventListener('DOMContentLoaded', () => {
-
-  /* ---------- menu / seções ---------- */
+  const main = document.getElementById('main');
   const menuBtns = document.querySelectorAll('.menu-btn');
-  const sections = document.querySelectorAll('.section');
 
-  function showSection(id) {
-    sections.forEach(s => s.classList.toggle('active', s.id === id));
-    menuBtns.forEach(b => b.classList.toggle('ativo', b.dataset.section === id));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-  showSection('declaracao');
+  // dados de conteúdo
+  const CONTENT = {
+    declaracao: {
+      fotos: Array.from({length:9}, (_,i)=> `imagens/foto${i+1}.jpg`),
+      inicio: new Date('2025-08-11T11:10:00'),
+      texto: [
+        `"Oii, paz, prazer kkkk" foi assim que me apresentei...`,
+        `Eu te acho muito linda, eu poderia olhar pro teu sorriso e pro teu olhar o dia todo kkkk.`,
+        `Quero te dar muitos brigadeiros, flores e tirar fotos do pôr do sol juntos.`
+      ],
+      versiculos: [
+        "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4–7)",
+        "Nós amamos porque Ele nos amou primeiro. (1 João 4:19)",
+        "Acima de tudo, revistam-se do amor, que é o elo perfeito. (Colossenses 3:14)",
+        "Façam tudo com amor. (1 Coríntios 16:14)"
+      ],
+      mensagens: [
+        "Que bom, valeu a pena andar atrás das flores com você kkk.",
+        "Qualquer coisa que eu faça contigo é muito bom.",
+        "Acordei sorrindo lembrando da nossa conversa kkk."
+      ],
+      temResposta: true
+    },
+    namoro: {
+      fotos: Array.from({length:10}, (_,i)=> `imagens/fotos${i+10}.jpg`),
+      inicio: new Date('2025-11-09T16:20:00'),
+      texto: [
+        `Nosso namoro começou leve, com muitos sorrisos e orações...`,
+        `Que Deus continue sendo o centro de tudo!`,
+      ],
+      versiculos: [
+        "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4–7)",
+        "Nós amamos porque Ele nos amou primeiro. (1 João 4:19)",
+        "Acima de tudo, revistam-se do amor. (Colossenses 3:14)",
+        "Ama o teu próximo como a ti mesmo. (Mateus 22:39)",
+        "O amor não faz mal ao próximo. (Romanos 13:10)"
+      ],
+      mensagens: [
+        "Lembra daquele dia que rimos até doer a barriga? Quero repetir sempre.",
+        "Tu é meu lugar seguro.",
+        "Obrigado por cada abraço e cada cuidado."
+      ],
+      temResposta: false
+    }
+  };
 
+  // inicial: carregar declaração
+  let active = 'declaracao';
+  carregarSecao(active);
+
+  // menu handlers
   menuBtns.forEach(btn => {
     btn.addEventListener('click', () => {
+      if (btn.classList.contains('disabled')) return;
       const target = btn.dataset.section;
       if (!target) return;
-
-      // loading for noivado/casamento
-      if (btn.classList.contains('loading-btn')) {
-        const original = btn.textContent;
-        btn.disabled = true;
-        btn.textContent = '🌼 Carregando...';
-        setTimeout(() => {
-          btn.disabled = false;
-          btn.textContent = original;
-          alert('🌸 Essa parte ainda está sendo preparada com muito amor 💕');
-        }, 5000);
-        return;
-      }
-
-      showSection(target);
+      if (target === active) return;
+      // update active class on menu
+      menuBtns.forEach(b => b.classList.toggle('active', b.dataset.section === target));
+      active = target;
+      carregarSecao(target);
     });
   });
 
-  /* ---------- slideshow generic (auto + arrows) ---------- */
-  function createSlideshow(rootSelector, interval = 4000) {
-    const root = document.querySelector(rootSelector);
-    if (!root) return;
-    const slides = Array.from(root.querySelectorAll('.polaroid'));
-    if (!slides.length) return;
-    let index = 0;
+  /* ---------- função que monta e injeta o HTML para a seção --------- */
+  let slideInterval = null;
+  let contadorInterval = null;
 
-    // show initial
-    slides.forEach((s, i) => s.classList.toggle('active', i === 0));
+  function carregarSecao(key) {
+    // cleanup timers
+    if (slideInterval) { clearInterval(slideInterval); slideInterval = null; }
+    if (contadorInterval) { clearInterval(contadorInterval); contadorInterval = null; }
 
-    function show(i) {
-      slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
-    }
+    const data = CONTENT[key];
 
-    // auto
-    let timer = setInterval(() => {
-      index = (index + 1) % slides.length;
-      show(index);
-    }, interval);
+    // build slideshow HTML (one visible slide at a time)
+    const slidesHTML = data.fotos.map((src, i) => `
+      <div class="slide ${i===0 ? 'active' : ''}">
+        <div class="polaroid-frame">
+          <img src="${src}" alt="foto${i+1}" class="photo" loading="lazy">
+          <div class="polaroid-caption">Foto ${i+1}</div>
+        </div>
+      </div>
+    `).join('');
 
-    // arrows
-    const prevBtn = root.parentElement.querySelector('.slide-arrow.prev');
-    const nextBtn = root.parentElement.querySelector('.slide-arrow.next');
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        clearInterval(timer);
-        index = (index - 1 + slides.length) % slides.length;
-        show(index);
-        timer = setInterval(() => { index = (index + 1) % slides.length; show(index); }, interval);
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        clearInterval(timer);
-        index = (index + 1) % slides.length;
-        show(index);
-        timer = setInterval(() => { index = (index + 1) % slides.length; show(index); }, interval);
-      });
-    }
+    // build textual paragraphs
+    const textoHTML = data.texto.map(t => `<p>${t}</p>`).join('');
 
-    // pause on hover
-    root.addEventListener('mouseenter', () => clearInterval(timer));
-    root.addEventListener('mouseleave', () => {
-      timer = setInterval(() => { index = (index + 1) % slides.length; show(index); }, interval);
+    // build versiculos and mensagens placeholders (white inner)
+    const cardVersos = `
+      <div class="card">
+        <h2>Versículos Bíblicos 📖</h2>
+        <div class="inner" id="versiculosBox">
+          <p>${data.versiculos[0]}</p>
+        </div>
+        <div class="center"><button class="btn" id="btnVersiculo">Mostrar versículo</button></div>
+      </div>
+    `;
+
+    const cardMensagens = `
+      <div class="card">
+        <h2>Nossas Mensagens 💌</h2>
+        <div class="inner" id="mensagensBox">
+          <p>${data.mensagens[0]}</p>
+        </div>
+        <div class="center"><button class="btn" id="btnMensagem">Mostrar mensagem</button></div>
+      </div>
+    `;
+
+    const contadorCard = `
+      <div class="card">
+        <h2>Tempo ${key === 'declaracao' ? 'que nos conhecemos' : 'de namoro'} ⏳</h2>
+        <div class="inner center"><p id="contadorBox" style="font-weight:700;"></p></div>
+      </div>
+    `;
+
+    const formCard = `
+      <div class="card">
+        <h2>Enviar uma mensagem 💬</h2>
+        <div class="inner">
+          <form id="formMensagem" action="https://formspree.io/f/xovkwzej" method="POST">
+            <div class="form-row">
+              <input type="text" name="name" placeholder="Seu nome" required>
+            </div>
+            <div class="form-row">
+              <input type="email" name="email" placeholder="Seu e-mail" required>
+            </div>
+            <div class="form-row">
+              <textarea name="message" rows="4" placeholder="Escreva sua mensagem..." required></textarea>
+            </div>
+            <div class="center"><button type="submit" class="btn">Enviar mensagem</button></div>
+            <div id="formStatus" class="center" aria-live="polite" style="margin-top:8px;"></div>
+          </form>
+        </div>
+      </div>
+    `;
+
+    // resposta dela (only on declaration, below form)
+    const respostaHTML = data.temResposta ? `
+      <div class="card resposta-area">
+        <h2>Resposta dela 💌</h2>
+        <div class="inner" id="respostaInner">
+          <div class="center"><button id="btnMostrarResposta" class="btn">Mostrar resposta dela</button></div>
+          <div id="respostaTexto" class="inner visually-hidden" style="margin-top:10px; text-align:center;"></div>
+        </div>
+      </div>
+    ` : '';
+
+    // final assembled HTML for main
+    main.innerHTML = `
+      <div class="block slideshow-wrap">
+        <div class="slideshow" aria-live="polite">${slidesHTML}</div>
+      </div>
+
+      <div class="block">
+        <div class="paper">${textoHTML}</div>
+      </div>
+
+      <div class="stack" style="width:100%; max-width:760px;">
+        ${contadorCard}
+        ${cardVersos}
+        ${cardMensagens}
+        ${formCard}
+        ${respostaHTML}
+      </div>
+    `;
+
+    // make fade-in visible
+    requestAnimationFrame(()=> {
+      document.querySelectorAll('.block, .card').forEach(el => el.classList.add('fade-in', 'show'));
     });
-  }
 
-  createSlideshow('.slideshow-decl', 4500);
-  createSlideshow('.slideshow-nam', 4500);
+    // slideshow logic: show each slide for 5 seconds
+    const slides = Array.from(document.querySelectorAll('.slideshow .slide'));
+    let idx = 0;
+    function showSlide(i) {
+      slides.forEach((s, j) => s.classList.toggle('active', i === j));
+    }
+    showSlide(0);
+    slideInterval = setInterval(() => {
+      idx = (idx + 1) % slides.length;
+      showSlide(idx);
+    }, 5000);
 
-  /* ---------- corações vermelhos ---------- */
-  (function hearts(){
-    const container = document.getElementById('coracoes');
-    if (!container) return;
-    const reds = ['#ff3b5c', '#e83a62', '#c94057'];
-    function makeOne() {
+    // contador logic
+    const contadorEl = document.getElementById('contadorBox');
+    function atualizarContador() {
+      const now = new Date();
+      const diff = Math.max(0, now - data.inicio);
+      const dias = Math.floor(diff / (1000*60*60*24));
+      const horas = Math.floor((diff / (1000*60*60)) % 24);
+      const minutos = Math.floor((diff / (1000*60)) % 60);
+      const segundos = Math.floor((diff / 1000) % 60);
+      if (contadorEl) contadorEl.textContent = `${dias} dias, ${horas}h ${minutos}m ${segundos}s`;
+    }
+    atualizarContador();
+    contadorInterval = setInterval(atualizarContador, 1000);
+
+    // versiculo button
+    const btnV = document.getElementById('btnVersiculo');
+    const versBox = document.getElementById('versiculosBox');
+    let vIdx = 0;
+    if (btnV && versBox) {
+      btnV.addEventListener('click', () => {
+        vIdx = (vIdx + 1) % data.versiculos.length;
+        versBox.innerHTML = `<p>${data.versiculos[vIdx]}</p>`;
+        // keep inner white area same format
+      });
+    }
+
+    // mensagem button
+    const btnM = document.getElementById('btnMensagem');
+    const msgBox = document.getElementById('mensagensBox');
+    let mIdx = 0;
+    if (btnM && msgBox) {
+      btnM.addEventListener('click', () => {
+        mIdx = (mIdx + 1) % data.mensagens.length;
+        msgBox.innerHTML = `<p>${data.mensagens[mIdx]}</p>`;
+      });
+    }
+
+    // form submit (Formspree) - feedback only
+    const form = document.getElementById('formMensagem');
+    const statusEl = document.getElementById('formStatus');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (statusEl) statusEl.textContent = 'Enviando...';
+        const fd = new FormData(form);
+        try {
+          const res = await fetch(form.action, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' }});
+          if (res.ok) {
+            if (statusEl) statusEl.textContent = 'Mensagem enviada 💌';
+            form.reset();
+          } else {
+            const j = await res.json().catch(()=> null);
+            if (statusEl) statusEl.textContent = (j && j.error) ? j.error : 'Erro ao enviar — tente novamente';
+          }
+        } catch (err) {
+          if (statusEl) statusEl.textContent = 'Erro ao enviar — verifique a conexão';
+        }
+        setTimeout(()=> { if (statusEl) statusEl.textContent = ''; }, 4000);
+      });
+    }
+
+    // resposta dela button (only for declaracao)
+    const btnResp = document.getElementById('btnMostrarResposta');
+    const respTexto = document.getElementById('respostaTexto');
+    if (btnResp && respTexto) {
+      btnResp.addEventListener('click', () => {
+        respTexto.classList.remove('visually-hidden');
+        respTexto.innerHTML = `<p>"Quando li tua mensagem meu coração sorriu... 💕"</p>`;
+        btnResp.style.display = 'none';
+      });
+    }
+
+    // ensure page top (smooth)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } // end carregarSecao
+
+  // initial state already loaded earlier; but call again to ensure first load
+  carregarSecao(active);
+
+  /* ---------- hearts falling (red only) ---------- */
+  const heartsContainer = document.getElementById('coracoes');
+  (function startHearts() {
+    const redShades = ['#e23a5f','#d42855','#c21f4c'];
+    function makeHeart() {
       const d = document.createElement('div');
-      d.className = 'coracao';
+      d.className = 'heart';
       d.textContent = '❤';
-      d.style.color = reds[Math.floor(Math.random() * reds.length)];
       d.style.left = Math.random() * 100 + 'vw';
       const size = 12 + Math.random() * 26;
       d.style.fontSize = size + 'px';
-      d.style.opacity = (0.35 + Math.random() * 0.65).toString();
-      d.style.transition = `transform ${6 + Math.random()*4}s linear, opacity ${6 + Math.random()*4}s linear`;
-      container.appendChild(d);
-      requestAnimationFrame(() => {
-        d.style.transform = `translateY(${window.innerHeight + 120}px) rotate(${(Math.random()*80)-40}deg)`;
-        d.style.opacity = '0';
-      });
-      setTimeout(()=> d.remove(), 10000);
+      d.style.color = redShades[Math.floor(Math.random()*redShades.length)];
+      d.style.opacity = (0.5 + Math.random()*0.5).toString();
+      const dur = 4 + Math.random()*4; // seconds
+      d.style.animationDuration = dur + 's';
+      heartsContainer.appendChild(d);
+      setTimeout(()=> d.remove(), (dur+0.5)*1000);
     }
-    const interval = setInterval(makeOne, 420);
-    window.addEventListener('beforeunload', () => clearInterval(interval));
-  })();
-
-  /* ---------- contadores ---------- */
-  (function counters(){
-    const startConhecimento = new Date('2025-08-11T11:10:00').getTime();
-    const startNamoro = new Date('2025-11-09T16:20:00').getTime();
-
-    function update() {
-      const now = Date.now();
-
-      // conhecimento
-      const diffC = Math.max(0, now - startConhecimento);
-      const diasC = Math.floor(diffC / (1000*60*60*24));
-      const horasC = Math.floor((diffC / (1000*60*60)) % 24);
-      const minutosC = Math.floor((diffC / (1000*60)) % 60);
-      const segundosC = Math.floor((diffC / 1000) % 60);
-      const elIdsC = ['diasConhecimento','horasConhecimento','minutosConhecimento','segundosConhecimento'];
-      [diasC, horasC, minutosC, segundosC].forEach((v, idx) => {
-        const el = document.getElementById(elIdsC[idx]); if (el) el.textContent = v;
-      });
-
-      // namoro
-      const diffN = Math.max(0, now - startNamoro);
-      const diasN = Math.floor(diffN / (1000*60*60*24));
-      const horasN = Math.floor((diffN / (1000*60*60)) % 24);
-      const minutosN = Math.floor((diffN / (1000*60)) % 60);
-      const segundosN = Math.floor((diffN / 1000) % 60);
-      const elIdsN = ['diasNamoro','horasNamoro','minutosNamoro','segundosNamoro'];
-      [diasN, horasN, minutosN, segundosN].forEach((v, idx) => {
-        const el = document.getElementById(elIdsN[idx]); if (el) el.textContent = v;
-      });
-    }
-
-    update();
-    setInterval(update, 1000);
-  })();
-
-  /* ---------- versos & mensagens (declaração) ---------- */
-  (function declContent(){
-    const versos = [
-      "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4–7)",
-      "Nós amamos porque Ele nos amou primeiro. (1 João 4:19)",
-      "Acima de tudo, revistam-se do amor. (Colossenses 3:14)"
-    ];
-    let vi = 0;
-    const btnV = document.getElementById('btnVersiculo');
-    const boxV = document.getElementById('versiculoBox');
-    if (btnV && boxV) btnV.addEventListener('click', () => { boxV.classList.toggle('hidden'); boxV.textContent = versos[vi]; vi = (vi + 1) % versos.length; });
-
-    const msgs = [
-      "Que bom, valeu a pena andar atrás das flores com você kkk.",
-      "A forma como tu chegou foi natural e educada; gostei.",
-      "Acordei sorrindo lembrando da nossa conversa kkk."
-    ];
-    let mi = 0;
-    const btnM = document.getElementById('btnCarta');
-    const boxM = document.getElementById('cartaTexto');
-    if (btnM && boxM) btnM.addEventListener('click', () => { boxM.classList.toggle('hidden'); boxM.textContent = msgs[mi]; mi = (mi + 1) % msgs.length; });
-  })();
-
-  /* ---------- versos & mensagens (namoro) ---------- */
-  (function namContent(){
-    const versos = [
-      "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4–7)",
-      "Nós amamos porque Ele nos amou primeiro. (1 João 4:19)",
-      "Ama o teu próximo como a ti mesmo. (Mateus 22:39)"
-    ];
-    let vi = 0;
-    const btnV = document.getElementById('btnVersiculoNamoro');
-    const boxV = document.getElementById('versiculoBoxNamoro');
-    if (btnV && boxV) btnV.addEventListener('click', () => { boxV.classList.toggle('hidden'); boxV.textContent = versos[vi]; vi = (vi + 1) % versos.length; });
-
-    const msgs = [
-      "Lembra daquele dia que rimos até doer a barriga? Quero repetir sempre.",
-      "Tu é meu lugar seguro.",
-      "Obrigado por cada cuidado, cada abraço e cada sorriso."
-    ];
-    let mi = 0;
-    const btnM = document.getElementById('btnCartaNamoro');
-    const boxM = document.getElementById('cartaTextoNamoro');
-    if (btnM && boxM) btnM.addEventListener('click', () => { boxM.classList.toggle('hidden'); boxM.textContent = msgs[mi]; mi = (mi + 1) % msgs.length; });
-  })();
-
-  /* ---------- forms (Formspree) ---------- */
-  (function forms(){
-    const list = [
-      { id:'formDeclaracao', status:'formStatusDeclaracao' },
-      { id:'formNamoro', status:'formStatusNamoro' }
-    ];
-    list.forEach(cfg => {
-      const form = document.getElementById(cfg.id);
-      const status = document.getElementById(cfg.status);
-      if (!form) return;
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (status) status.textContent = 'Enviando...';
-        const data = new FormData(form);
-        try {
-          const res = await fetch(form.action, { method:'POST', body: data, headers: { 'Accept':'application/json' }});
-          if (res.ok) {
-            if (status) status.textContent = 'Mensagem enviada 💌';
-            form.reset();
-          } else {
-            const j = await res.json();
-            if (status) status.textContent = j.error || 'Erro ao enviar — tente novamente';
-          }
-        } catch (err) {
-          if (status) status.textContent = 'Erro ao enviar — verifique a conexão';
-        }
-        setTimeout(()=> { if (status) status.textContent = ''; }, 4000);
-      });
-    });
-  })();
-
-  /* ---------- resposta toggle ---------- */
-  (function replyToggle(){
-    const btn = document.getElementById('btnResposta');
-    const box = document.getElementById('respostaTexto');
-    if (!btn || !box) return;
-    btn.addEventListener('click', () => box.classList.toggle('hidden'));
+    setInterval(makeHeart, 420);
   })();
 
 }); // DOMContentLoaded end

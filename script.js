@@ -1,54 +1,49 @@
-/* script.js - arquivo único, consistente e sem conflitos */
+/* script.js - compatível com o HTML/CSS acima
+   - troca de seções
+   - slideshows (declaração / namoro)
+   - corações animados
+   - contadores para cada seção
+   - versículos / mensagens / forms
+   - carregando estático para noivado/casamento (5s)
+*/
 
 document.addEventListener('DOMContentLoaded', () => {
-  /* ---------- util: mostrar / esconder seções ---------- */
+
+  /* ---------- Seções / Menu ---------- */
   const menuBtns = document.querySelectorAll('.menu-btn');
   const sections = document.querySelectorAll('.section');
 
   function showSection(id) {
-    sections.forEach(s => {
-      if (s.id === id) {
-        s.classList.add('active');
-      } else {
-        s.classList.remove('active');
-      }
-    });
-    // marcar botão ativo
+    sections.forEach(s => s.classList.toggle('active', s.id === id));
     menuBtns.forEach(b => b.classList.toggle('ativo', b.getAttribute('data-section') === id));
-    // scroll to top (suavemente)
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // inicial: declarar a seção ativa por padrão
+  // inicial
   showSection('declaracao');
 
   menuBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const target = btn.getAttribute('data-section');
+      const target = btn.dataset.section;
       if (!target) return;
-
-      // se for noivado/casamento: mostrar carregando estático por 5s
       if (target === 'noivado' || target === 'casamento') {
-        const originalText = btn.textContent;
+        const original = btn.textContent;
         btn.disabled = true;
         btn.textContent = '🌼 Carregando...';
-        // não girar: apenas texto estático
         setTimeout(() => {
           btn.disabled = false;
-          btn.textContent = originalText;
-          // informar usuário (pode ser alterado para exibir mensagem na UI em vez de alert)
+          btn.textContent = original;
           alert('🌸 Essa parte ainda está sendo preparada com muito amor 💕');
         }, 5000);
         return;
       }
-
       showSection(target);
     });
   });
 
-  /* ---------- SLIDESHOW (Declaração) ---------- */
-  (function slideShow1() {
-    const slides = Array.from(document.querySelectorAll('.mySlides1'));
+  /* ---------- Slideshows (separados) ---------- */
+  (function slideshow(selector) {
+    const slides = Array.from(document.querySelectorAll(selector));
     if (!slides.length) return;
     let i = 0;
     slides.forEach((s, idx) => s.style.display = idx === 0 ? 'block' : 'none');
@@ -57,10 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
       i = (i + 1) % slides.length;
       slides[i].style.display = 'block';
     }, 4000);
-  })();
+  })('.mySlides1');
 
-  /* ---------- SLIDESHOW (Namoro) ---------- */
-  (function slideShow2() {
+  (function slideshow2() {
     const slides = Array.from(document.querySelectorAll('.mySlides2'));
     if (!slides.length) return;
     let i = 0;
@@ -72,49 +66,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 4000);
   })();
 
-  /* ---------- CORAÇÕES (gera alguns corações aleatórios) ---------- */
+  /* ---------- Corações (efeito) ---------- */
   (function hearts(){
     const container = document.getElementById('coracoes');
     if (!container) return;
-    function makeOne() {
+    function make() {
       const d = document.createElement('div');
       d.textContent = '❤';
       d.style.position = 'fixed';
-      d.style.left = Math.random() * 100 + 'vw';
+      d.style.left = (Math.random() * 100) + 'vw';
       d.style.top = '-30px';
-      const size = 12 + Math.random() * 18;
-      d.style.fontSize = size + 'px';
-      d.style.opacity = (0.3 + Math.random() * 0.7).toString();
+      d.style.fontSize = (10 + Math.random() * 22) + 'px';
+      d.style.opacity = (0.25 + Math.random() * 0.7).toString();
       d.style.pointerEvents = 'none';
       d.style.transition = `transform ${6 + Math.random()*4}s linear, opacity ${6 + Math.random()*4}s linear`;
       container.appendChild(d);
       requestAnimationFrame(() => {
-        d.style.transform = `translateY(${window.innerHeight + 60}px) rotate(${(Math.random()*60)-30}deg)`;
+        d.style.transform = `translateY(${window.innerHeight + 80}px) rotate(${(Math.random()*60)-30}deg)`;
         d.style.opacity = '0';
       });
       setTimeout(()=> d.remove(), 9000);
     }
-    setInterval(makeOne, 450);
+    setInterval(make, 450);
   })();
 
-  /* ---------- CONTADORES (Declaração e Namoro) ---------- */
+  /* ---------- Contadores ---------- */
   (function counters(){
-    const startConhecimento = new Date('2025-08-11T11:10:00').getTime(); // 11/08/2025 11:10
-    const startNamoro = new Date('2025-11-09T16:20:00').getTime(); // 09/11/2025 16:20
+    const startConhecimento = new Date('2025-08-11T11:10:00').getTime();
+    const startNamoro = new Date('2025-11-09T16:20:00').getTime();
 
     function update() {
       const now = Date.now();
-
       // conhecimento
       const diffC = Math.max(0, now - startConhecimento);
       const diasC = Math.floor(diffC / (1000*60*60*24));
       const horasC = Math.floor((diffC / (1000*60*60)) % 24);
       const minutosC = Math.floor((diffC / (1000*60)) % 60);
       const segundosC = Math.floor((diffC / 1000) % 60);
-      document.getElementById('diasConhecimento').textContent = diasC;
-      document.getElementById('horasConhecimento').textContent = horasC;
-      document.getElementById('minutosConhecimento').textContent = minutosC;
-      document.getElementById('segundosConhecimento').textContent = segundosC;
+      ['diasConhecimento','horasConhecimento','minutosConhecimento','segundosConhecimento']
+        .forEach((id, idx) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const vals = [diasC, horasC, minutosC, segundosC];
+          el.textContent = vals[idx];
+        });
 
       // namoro
       const diffN = Math.max(0, now - startNamoro);
@@ -122,18 +117,21 @@ document.addEventListener('DOMContentLoaded', () => {
       const horasN = Math.floor((diffN / (1000*60*60)) % 24);
       const minutosN = Math.floor((diffN / (1000*60)) % 60);
       const segundosN = Math.floor((diffN / 1000) % 60);
-      document.getElementById('diasNamoro').textContent = diasN;
-      document.getElementById('horasNamoro').textContent = horasN;
-      document.getElementById('minutosNamoro').textContent = minutosN;
-      document.getElementById('segundosNamoro').textContent = segundosN;
+      ['diasNamoro','horasNamoro','minutosNamoro','segundosNamoro']
+        .forEach((id, idx) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const vals = [diasN, horasN, minutosN, segundosN];
+          el.textContent = vals[idx];
+        });
     }
 
     update();
     setInterval(update, 1000);
   })();
 
-  /* ---------- VERSÍCULOS e MENSAGENS (Declaração) ---------- */
-  (function versesAndMsgsDecl(){
+  /* ---------- Versículos & Mensagens (Declaração) ---------- */
+  (function declContent(){
     const versos = [
       "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4–7)",
       "Nós amamos porque Ele nos amou primeiro. (1 João 4:19)",
@@ -169,8 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })();
 
-  /* ---------- VERSÍCULOS e MENSAGENS (Namoro) ---------- */
-  (function versesAndMsgsNam(){
+  /* ---------- Versículos & Mensagens (Namoro) ---------- */
+  (function namContent(){
     const versos = [
       "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4–7)",
       "Nós amamos porque Ele nos amou primeiro. (1 João 4:19)",
@@ -207,13 +205,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })();
 
-  /* ---------- FORMULARIOS (Formspree handler com feedback) ---------- */
-  (function forms() {
-    const forms = [
-      { id:'formDeclaracao', status:'formStatusDeclaracao' },
-      { id:'formNamoro', status:'formStatusNamoro' }
+  /* ---------- Forms (Formspree) ---------- */
+  (function forms(){
+    const maps = [
+      { id: 'formDeclaracao', status: 'formStatusDeclaracao' },
+      { id: 'formNamoro', status: 'formStatusNamoro' }
     ];
-    forms.forEach(cfg => {
+    maps.forEach(cfg => {
       const form = document.getElementById(cfg.id);
       const status = document.getElementById(cfg.status);
       if (!form) return;
@@ -222,9 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (status) status.textContent = 'Enviando...';
         const data = new FormData(form);
         try {
-          const res = await fetch(form.action || 'https://formspree.io/f/xovkwzej', {
-            method:'POST', body: data, headers: { 'Accept':'application/json' }
-          });
+          const res = await fetch(form.action, { method:'POST', body: data, headers: { 'Accept':'application/json' }});
           if (res.ok) {
             if (status) status.textContent = 'Mensagem enviada 💌';
             form.reset();
@@ -233,21 +229,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (status) status.textContent = j.error || 'Erro ao enviar — tente novamente';
           }
         } catch (err) {
-          if (status) status.textContent = 'Erro ao enviar — verifique sua conexão';
+          if (status) status.textContent = 'Erro ao enviar — verifique a conexão';
         }
         setTimeout(()=> { if (status) status.textContent = ''; }, 4000);
       });
     });
   })();
 
-  /* ---------- botão mostrar resposta (Declaração) ---------- */
-  (function replyToggle(){
+  /* ---------- Botão mostrar resposta (Declaração) ---------- */
+  (function reply(){
     const btn = document.getElementById('btnResposta');
     const box = document.getElementById('respostaTexto');
     if (!btn || !box) return;
-    btn.addEventListener('click', () => {
-      box.classList.toggle('hidden');
-    });
+    btn.addEventListener('click', () => box.classList.toggle('hidden'));
   })();
 
 }); // DOMContentLoaded end

@@ -1,33 +1,108 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nosso Cantinho ❤️</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nosso Cantinho ❤️</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
 </head>
 <body>
 
-  <canvas id="coracoes"></canvas>
+<!-- Canvas / corações -->
+<div id="coracoes" aria-hidden="true"></div>
 
-  <header>
-    <h1>Nosso Cantinho ❤️</h1>
-    <nav>
-      <button onclick="trocarBloco('declaracao')">Declaração</button>
-      <button onclick="trocarBloco('namoro')">Namoro</button>
-      <button class="disabled">Noivado</button>
-      <button class="disabled">Casamento</button>
-    </nav>
-  </header>
+<header class="site-header fade-in">
+    <h1>Nosso Cantinho 💕</h1>
+</header>
 
-  <main id="conteudo">
-    <!-- conteúdo dinâmico é trocado pelo JS -->
-  </main>
+<!-- Menu -->
+<nav class="menu fade-in">
+    <button class="menu-btn" data-bloco="declaracao">Declaração</button>
+    <button class="menu-btn" data-bloco="namoro">Namoro</button>
+    <button class="menu-btn" disabled>🛠 Noivado</button>
+    <button class="menu-btn" disabled>🛠 Casamento</button>
+</nav>
 
-  <footer class="site-footer">
-    <p>Feito com ❤️ por Wellington 💌 para Elyse</p>
-  </footer>
+<!-- Slide de fotos estilo Polaroid -->
+<div class="slideshow-container fade-in">
+    <!-- Bloco de Declaração -->
+    <div class="slide declaracao-slide">
+        <div class="mySlides fade"><img src="imagens/foto1.jpg"><div class="polaroid-caption">13/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto2.jpg"><div class="polaroid-caption">13/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto3.jpg"><div class="polaroid-caption">21/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto4.jpg"><div class="polaroid-caption">21/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto5.jpg"><div class="polaroid-caption">28/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto6.jpg"><div class="polaroid-caption">28/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto7.jpg"><div class="polaroid-caption">28/09/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto8.jpg"><div class="polaroid-caption">04/10/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/foto9.jpg"><div class="polaroid-caption">10/10/2025</div></div>
+    </div>
 
-  <script src="script.js"></script>
+    <!-- Bloco de Namoro -->
+    <div class="slide namoro-slide" style="display:none;">
+        <div class="mySlides fade"><img src="imagens/fotos10.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos11.jpg"><div class="polaroid-caption">09/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos12.jpg"><div class="polaroid-caption">10/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos13.jpg"><div class="polaroid-caption">10/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos14.jpg"><div class="polaroid-caption">11/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos15.jpg"><div class="polaroid-caption">11/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos16.jpg"><div class="polaroid-caption">12/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos17.jpg"><div class="polaroid-caption">12/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos18.jpg"><div class="polaroid-caption">13/11/2025</div></div>
+        <div class="mySlides fade"><img src="imagens/fotos19.jpg"><div class="polaroid-caption">13/11/2025</div></div>
+    </div>
+</div>
+
+<!-- Texto estilo folha de caderno -->
+<div class="declaracao fade-in">
+    <p>Aqui vai o texto da carta ou livro. Você pode escrever o que quiser.</p>
+</div>
+
+<!-- Contador -->
+<section class="contador fade-in">
+<h2>Tempo que nos Conhecemos ⏳</h2>
+<div id="tempoJuntos">
+    <p><span id="dias">0</span> dias, <span id="horas">0</span> horas, <span id="minutos">0</span> minutos e <span id="segundos">0</span> segundos</p>
+</div>
+</section>
+
+<!-- Mensagens -->
+<section class="revelar fade-in">
+<h2>Nossas Mensagens 💌</h2>
+<button id="btnCarta" type="button">Mostrar Mensagens</button>
+<div id="cartaTexto" class="box-conteudo visually-hidden"></div>
+</section>
+
+<!-- Versículos -->
+<section class="versiculos fade-in">
+<h2>Versículos Bíblicos 📖</h2>
+<button id="btnVersiculo" type="button">Mostrar Versículo</button>
+<div id="versiculoBox" class="box-conteudo visually-hidden"></div>
+</section>
+
+<!-- Formulário -->
+<section class="mensagem fade-in">
+<h2>Enviar uma mensagem 💬</h2>
+<form id="formMensagem" action="https://formspree.io/f/xovkwzej" method="POST">
+    <div class="form-row">
+        <input type="text" name="name" placeholder="Seu nome" required>
+        <input type="email" name="email" placeholder="Seu e-mail" required>
+    </div>
+    <textarea name="message" placeholder="Escreva sua mensagem..." required rows="4"></textarea>
+    <input type="hidden" name="_subject" value="Mensagem do site - Nosso Cantinho">
+    <button type="submit">Enviar mensagem 💌</button>
+    <div id="formStatus" role="status" aria-live="polite"></div>
+</form>
+<!-- Botão revelar resposta dela -->
+<button id="btnResposta" type="button" class="resposta-btn">Revelar resposta dela 💖</button>
+<div id="respostaTexto" class="box-conteudo visually-hidden"></div>
+</section>
+
+<footer class="site-footer fade-in show">
+<p>Feito com ❤️ por Wellington 💌</p>
+</footer>
+
 </body>
 </html>

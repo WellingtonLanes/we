@@ -1,110 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+/* ============================
+   script.js - Nosso Cantinho
+   ============================ */
 
-/* Reset */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Patrick Hand', cursive;
-  text-align: center;
-  color: #333;
-  background: #ffe4e1;
-  overflow-x: hidden;
+/* FADE-IN AO ROLAR */
+function initFadeIn() {
+  const els = document.querySelectorAll('.fade-in');
+  function check() { els.forEach(el => { const r = el.getBoundingClientRect(); if(r.top<window.innerHeight-80) el.classList.add('show'); }); }
+  window.addEventListener('scroll', check);
+  window.addEventListener('load', check);
+  check();
 }
+initFadeIn();
 
-/* Cabeçalho */
-h1 { color: #e75480; margin: 20px 0; font-size: 2em; }
+/* CORAÇÕES */
+(function hearts(){
+  const container = document.getElementById('coracoes');
+  function make() {
+    const d = document.createElement('div');
+    d.textContent = '❤️';
+    const size = Math.random()*20 + 14;
+    d.style.position='absolute';
+    d.style.left=(Math.random()*100)+'vw';
+    d.style.top='-40px';
+    d.style.fontSize=size+'px';
+    d.style.opacity=(Math.random()*0.6+0.25).toString();
+    d.style.pointerEvents='none';
+    d.style.transition=`transform ${6+Math.random()*6}s linear, opacity ${6+Math.random()*6}s linear`;
+    container.appendChild(d);
+    requestAnimationFrame(()=>{ d.style.transform=`translateY(${window.innerHeight+80}px) rotate(${(Math.random()*40)-20}deg)`; d.style.opacity='0'; });
+    setTimeout(()=>d.remove(),9000);
+  }
+  setInterval(make,350);
+})();
 
-/* ===== MENU ===== */
-.menu-principal {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin: 20px 0;
-  flex-wrap: wrap;
+/* SLIDE DE POLAROIDS */
+let slideIndex=0;
+function showSlides(){
+  const slides=document.querySelectorAll(".mySlides");
+  slides.forEach(s=>s.style.display="none");
+  slideIndex++;
+  if(slideIndex>slides.length) slideIndex=1;
+  slides[slideIndex-1].style.display="flex";
+  setTimeout(showSlides,4000);
 }
+showSlides();
 
-.menu-principal button {
-  background: linear-gradient(135deg, #e75480, #f78da7);
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: transform 0.2s ease, background 0.3s ease;
-}
+/* CONTADOR */
+document.addEventListener("DOMContentLoaded",()=>{
+  const dataInicio=new Date("August 11, 2025 11:10:00").getTime();
+  function atualizarContador(){
+    const agora=new Date().getTime();
+    const diff=agora-dataInicio;
+    const dias=Math.floor(diff/(1000*60*60*24));
+    const horas=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const minutos=Math.floor((diff%(1000*60*60))/(1000*60));
+    const segundos=Math.floor((diff%(1000*60))/1000);
+    document.getElementById("dias").textContent=dias;
+    document.getElementById("horas").textContent=horas;
+    document.getElementById("minutos").textContent=minutos;
+    document.getElementById("segundos").textContent=segundos;
+  }
+  setInterval(atualizarContador,1000);
+  atualizarContador();
+});
 
-.menu-principal button:hover:not(:disabled) {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #d34674, #f37c9a);
-}
+/* MENU FUNCIONAL */
+let currentMode="declaracao";
+const letter=document.querySelector('.declaracao');
+const slidesImgs=document.querySelectorAll(".mySlides img");
 
-.menu-principal button:disabled {
-  background: #f5c2d0;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-/* Slideshow Polaroid */
-.slideshow-container { width: 100%; max-width: 520px; margin: 20px auto; text-align: center; }
-.mySlides {
-  display: flex; width: 100%; max-width: 500px; height: 700px; margin: 20px auto; background: #fff;
-  border-top: 6px solid #fff; border-left: 6px solid #fff; border-right: 6px solid #fff; border-bottom: 50px solid #fff;
-  border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,0.25); overflow: hidden; position: relative; flex-direction: column;
-}
-.mySlides img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.polaroid-caption {
-  position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: #fff;
-  font-size: 1.1em; color: #444; display: flex; align-items: center; justify-content: center;
-}
-
-/* Declaração */
-.declaracao {
-  background: repeating-linear-gradient(to bottom, #fff 0px, #fff 24px, #f8f8f8 25px, #f8f8f8 25px);
-  border-left: 5px solid #e75480; border-radius: 6px; padding: 40px 50px; max-width: 700px; margin: 40px auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); font-size: 18px; line-height: 25px; text-align: left; position: relative;
-}
-.declaracao p { margin-bottom: 15px; text-indent: 20px; }
-
-/* Fade-in */
-.fade-in { opacity: 0; transform: translateY(20px); transition: all 1s ease-out; }
-.fade-in.show { opacity: 1; transform: translateY(0); }
-
-/* Contador */
-.contador { max-width: 760px; margin: 40px auto; padding: 30px; border-radius: 16px; background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.08); text-align: center; color: #444; }
-.contador h2 { font-size: 1.8rem; color: #e75480; margin-bottom: 18px; }
-#tempoJuntos { font-size: 1.2rem; font-weight: 600; color: #555; background: linear-gradient(135deg, #fff0f5, #ffe4e9); border-radius: 10px; padding: 18px 20px; display: inline-block; box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);}
-#tempoJuntos span { color: #e75480; }
-
-/* Carta e Versículos */
-.carta, .frases { max-width: 760px; margin: 40px auto; padding: 30px; border-radius: 16px; background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.08); text-align: center; }
-.carta h2, .frases h2 { font-size: 1.8rem; color: #e75480; margin-bottom: 18px; }
-.carta button, .frases button {
-  background: linear-gradient(135deg, #e75480, #f78da7);
-  color: #fff; border: none; padding: 12px 22px; border-radius: 10px; cursor: pointer; font-size: 1.05rem; font-weight: 600; transition: transform 0.2s ease, background 0.3s ease; margin-bottom: 22px;
-}
-.carta button:hover, .frases button:hover { transform: scale(1.05); background: linear-gradient(135deg, #d34674, #f37c9a); }
-.carta-box, .versiculo-box { max-width: 640px; width: 100%; background: #fff0f5; padding: 16px 20px; border-radius: 10px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); font-size: 1rem; color: #444; line-height: 1.6; text-align: center; margin: 0 auto; }
-
-/* Formulário */
-.mensagem { max-width: 760px; margin: 22px auto; padding: 18px; border-radius: 12px; background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.06); text-align: left; }
-.form-row { display: flex; gap: 12px; margin-bottom: 10px; }
-.form-row input { flex: 1 1 0; min-width: 0; padding: 10px 12px; border-radius: 8px; border: 1px solid #f0c8d6; }
-textarea { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #f0c8d6; resize: vertical; }
-.mensagem button { margin-top: 8px; display: block; background: #e75480; color: #fff; padding: 10px 16px; border-radius: 10px; border: none; cursor: pointer; }
-
-/* Rodapé */
-.site-footer { text-align: center; margin: 26px auto 0 auto; color: #a87a8f; }
-
-/* Corações */
-#coracoes { position: fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:0; }
-
-/* Visually hidden */
-.visually-hidden { display:none; }
-
-/* Responsivo */
-@media (max-width: 980px) { .slideshow-container { max-width: 450px; } .mySlides { height: 650px; } .declaracao { padding: 35px 40px; } .contador, .carta, .frases, .mensagem { padding: 25px; } }
-@media (max-width: 768px) { .slideshow-container { max-width: 380px; } .mySlides { height: 550px; } .declaracao { padding: 30px 35px; font-size: 16px; line-height: 22px; } .carta button, .frases button { font-size: 1rem; padding: 10px 18px; margin-bottom: 20px; } .carta-box, .versiculo-box { font-size: 0.95rem; } .form-row { flex-direction: column; } }
-@media (max-width: 480px) { .slideshow-container { max-width: 300px; } .mySlides { height: 450px; } .declaracao { padding: 25px 20px; font-size: 15px; line-height: 20px; } .contador, .carta, .frases, .mensagem { padding: 20px; } .carta button, .frases button { width: 100%; } .form-row input { width: 100%; } textarea { font-size: 0.95rem; } }
-@media (max-width: 360px) { h1 { font-size: 1.6rem; } .declaracao { padding: 20px 15px; font-size: 14px; line-height: 20px; } .contador h2, .carta h2, .frases h2 { font-size: 1.5rem; } }
+const contentData={
+  declaracao:{ letter:`"Oii

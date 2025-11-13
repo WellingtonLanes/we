@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nosso Cantinho ❤️</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="script.js"></script>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nosso Cantinho ❤️</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
 </head>
 <body>
 
 <div id="coracoes" aria-hidden="true"></div>
 
-<header class="site-header fade-in" role="banner">
+<header class="site-header fade-in">
   <h1>Nosso Cantinho 💕</h1>
   <nav class="menu">
     <button class="menu-btn" data-bloco="declaracao">Declaração</button>
@@ -23,25 +23,24 @@
 </header>
 
 <main>
-
   <!-- Slideshow -->
   <div class="slideshow-container fade-in">
     <!-- Declaracao slides -->
-    <div class="mySlides declaracao-slide fade">
-      <img src="imagens/foto1.jpg"><div class="polaroid-caption">13/09/2025</div>
+    <div class="mySlides declaracao-slide">
+      <img src="imagens/foto1.jpg"><div class="polaroid-caption">11/08/2025</div>
     </div>
-    <div class="mySlides declaracao-slide fade">
-      <img src="imagens/foto2.jpg"><div class="polaroid-caption">13/09/2025</div>
+    <div class="mySlides declaracao-slide">
+      <img src="imagens/foto2.jpg"><div class="polaroid-caption">11/08/2025</div>
     </div>
-    <div class="mySlides declaracao-slide fade">
-      <img src="imagens/foto3.jpg"><div class="polaroid-caption">21/09/2025</div>
+    <div class="mySlides declaracao-slide">
+      <img src="imagens/foto3.jpg"><div class="polaroid-caption">12/08/2025</div>
     </div>
     <!-- Namoro slides -->
-    <div class="mySlides namoro-slide fade" style="display:none">
+    <div class="mySlides namoro-slide" style="display:none">
       <img src="imagens/fotos10.jpg"><div class="polaroid-caption">09/11/2025</div>
     </div>
-    <div class="mySlides namoro-slide fade" style="display:none">
-      <img src="imagens/fotos11.jpg"><div class="polaroid-caption">09/11/2025</div>
+    <div class="mySlides namoro-slide" style="display:none">
+      <img src="imagens/fotos11.jpg"><div class="polaroid-caption">10/11/2025</div>
     </div>
   </div>
 
@@ -51,7 +50,7 @@
   </div>
 
   <!-- Contador -->
-  <section class="contador fade-in" aria-label="Contador de tempo">
+  <section class="contador fade-in">
     <h2>Tempo que nos Conhecemos ⏳</h2>
     <div id="tempoJuntos">
       <p>🗓️ <span id="dias">0</span> dias, <span id="horas">0</span> horas, <span id="minutos">0</span> minutos e <span id="segundos">0</span> segundos</p>
@@ -59,28 +58,28 @@
   </section>
 
   <!-- Mensagens -->
-  <section class="carta fade-in" aria-label="Carta surpresa">
+  <section class="carta fade-in">
     <h2>Nossas Mensagens 💌</h2>
     <button id="btnCarta" type="button">Mostrar Mensagens</button>
     <div id="cartaTexto" class="carta-box visually-hidden"></div>
   </section>
 
   <!-- Versículos -->
-  <section class="frases fade-in" aria-label="Versículos sobre o amor">
-    <h2>Versículos Biblicos 📖 </h2>
+  <section class="frases fade-in">
+    <h2>Versículos Bíblicos 📖 </h2>
     <button id="btnVersiculo" type="button">Mostrar versículo</button>
     <div id="versiculoBox" class="versiculo-box visually-hidden"></div>
   </section>
 
   <!-- Formulário -->
-  <section class="mensagem fade-in" aria-label="Enviar mensagem">
+  <section class="mensagem fade-in">
     <h2>Enviar uma mensagem 💬</h2>
     <form id="formMensagem" action="https://formspree.io/f/xovkwzej" method="POST">
       <div class="form-row">
         <input type="text" name="name" placeholder="Seu nome" required>
         <input type="email" name="email" placeholder="Seu e-mail" required>
       </div>
-      <textarea name="message" placeholder="Escreva alguma mensagem..." required rows="4"></textarea>
+      <textarea name="message" placeholder="Escreva sua mensagem..." required rows="4"></textarea>
       <input type="hidden" name="_subject" value="Mensagem do site - Nosso Cantinho">
       <button type="submit">Enviar mensagem 💖</button>
       <div id="formStatus" role="status" aria-live="polite"></div>
@@ -88,7 +87,6 @@
     <button id="btnResposta" class="resposta-btn fade-in">Revelar Resposta dela 💌</button>
     <div id="respostaTexto" class="carta-box visually-hidden"></div>
   </section>
-
 </main>
 
 <footer class="site-footer fade-in">

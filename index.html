@@ -8,13 +8,13 @@
   <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- corações -->
+  <!-- corações animados -->
   <div id="coracoes" aria-hidden="true"></div>
 
   <header class="site-header">
     <h1>Nosso Cantinho 💕</h1>
 
-    <nav class="menu">
+    <nav class="menu" aria-label="Menu principal">
       <button class="menu-btn active" data-mode="declaracao">Declaração</button>
       <button class="menu-btn" data-mode="namoro">Namoro</button>
       <button class="menu-btn disabled" disabled>Noivado</button>
@@ -22,12 +22,11 @@
     </nav>
   </header>
 
-  <main id="main-content">
-    <!-- Conteúdo é montado pelo script.js a partir do SITE_DATA -->
+  <main id="main-content" role="main">
     <p class="loading">Carregando conteúdo...</p>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" role="contentinfo">
     <p>Feito com ❤️ por Wellington 💌</p>
   </footer>
 </body>

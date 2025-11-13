@@ -1,63 +1,110 @@
-// Troca de seções
-const botoes = document.querySelectorAll(".menu-btn");
-const secoes = document.querySelectorAll(".conteudo");
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 
-botoes.forEach(btn => {
-  btn.addEventListener("click", () => {
-    botoes.forEach(b => b.classList.remove("ativo"));
-    secoes.forEach(sec => sec.classList.remove("ativo"));
-    btn.classList.add("ativo");
-    document.getElementById(btn.dataset.section).classList.add("ativo");
-  });
-});
+/* Reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-// Slide de polaroids automático
-let slideIndex = 0;
-const polaroids = document.querySelectorAll(".polaroid");
-function mostrarSlide() {
-  polaroids.forEach(p => p.style.display = "none");
-  slideIndex = (slideIndex + 1) % polaroids.length;
-  polaroids[slideIndex].style.display = "block";
-}
-if (polaroids.length > 0) {
-  mostrarSlide();
-  setInterval(mostrarSlide, 5000);
+body {
+  font-family: 'Patrick Hand', cursive;
+  text-align: center;
+  color: #333;
+  background: #ffe4e1;
+  overflow-x: hidden;
 }
 
-// Contador de tempo juntos
-const inicio = new Date("2023-03-10"); // <-- tua data aqui
-function atualizarTempo() {
-  const agora = new Date();
-  const diff = agora - inicio;
-  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const anos = Math.floor(dias / 365);
-  const meses = Math.floor((dias % 365) / 30);
-  const diasRestantes = dias - (anos * 365 + meses * 30);
-  document.getElementById("tempoJuntos").textContent =
-    `${anos} anos, ${meses} meses e ${diasRestantes} dias juntos 💕`;
+/* Cabeçalho */
+h1 { color: #e75480; margin: 20px 0; font-size: 2em; }
+
+/* ===== MENU ===== */
+.menu-principal {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+  flex-wrap: wrap;
 }
-atualizarTempo();
 
-// Versículo do dia
-const versiculos = [
-  "1 Coríntios 13:4-7 — O amor é paciente, o amor é bondoso...",
-  "Eclesiastes 4:9 — É melhor ter companhia do que estar sozinho.",
-  "Cantares 8:7 — As muitas águas não poderiam apagar o amor.",
-  "Provérbios 3:3 — Que o amor e a fidelidade nunca te abandonem.",
-  "Colossenses 3:14 — Acima de tudo, revistam-se do amor, que é o elo perfeito."
-];
-document.getElementById("versiculo").textContent =
-  versiculos[Math.floor(Math.random() * versiculos.length)];
+.menu-principal button {
+  background: linear-gradient(135deg, #e75480, #f78da7);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
 
-// Mensagens
-const form = document.getElementById("mensagemForm");
-const container = document.getElementById("mensagens-container");
+.menu-principal button:hover:not(:disabled) {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #d34674, #f37c9a);
+}
 
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  const msg = document.getElementById("novaMensagem").value;
-  const p = document.createElement("p");
-  p.textContent = `💌 ${msg}`;
-  container.appendChild(p);
-  form.reset();
-});
+.menu-principal button:disabled {
+  background: #f5c2d0;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Slideshow Polaroid */
+.slideshow-container { width: 100%; max-width: 520px; margin: 20px auto; text-align: center; }
+.mySlides {
+  display: flex; width: 100%; max-width: 500px; height: 700px; margin: 20px auto; background: #fff;
+  border-top: 6px solid #fff; border-left: 6px solid #fff; border-right: 6px solid #fff; border-bottom: 50px solid #fff;
+  border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,0.25); overflow: hidden; position: relative; flex-direction: column;
+}
+.mySlides img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.polaroid-caption {
+  position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background: #fff;
+  font-size: 1.1em; color: #444; display: flex; align-items: center; justify-content: center;
+}
+
+/* Declaração */
+.declaracao {
+  background: repeating-linear-gradient(to bottom, #fff 0px, #fff 24px, #f8f8f8 25px, #f8f8f8 25px);
+  border-left: 5px solid #e75480; border-radius: 6px; padding: 40px 50px; max-width: 700px; margin: 40px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); font-size: 18px; line-height: 25px; text-align: left; position: relative;
+}
+.declaracao p { margin-bottom: 15px; text-indent: 20px; }
+
+/* Fade-in */
+.fade-in { opacity: 0; transform: translateY(20px); transition: all 1s ease-out; }
+.fade-in.show { opacity: 1; transform: translateY(0); }
+
+/* Contador */
+.contador { max-width: 760px; margin: 40px auto; padding: 30px; border-radius: 16px; background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.08); text-align: center; color: #444; }
+.contador h2 { font-size: 1.8rem; color: #e75480; margin-bottom: 18px; }
+#tempoJuntos { font-size: 1.2rem; font-weight: 600; color: #555; background: linear-gradient(135deg, #fff0f5, #ffe4e9); border-radius: 10px; padding: 18px 20px; display: inline-block; box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);}
+#tempoJuntos span { color: #e75480; }
+
+/* Carta e Versículos */
+.carta, .frases { max-width: 760px; margin: 40px auto; padding: 30px; border-radius: 16px; background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.08); text-align: center; }
+.carta h2, .frases h2 { font-size: 1.8rem; color: #e75480; margin-bottom: 18px; }
+.carta button, .frases button {
+  background: linear-gradient(135deg, #e75480, #f78da7);
+  color: #fff; border: none; padding: 12px 22px; border-radius: 10px; cursor: pointer; font-size: 1.05rem; font-weight: 600; transition: transform 0.2s ease, background 0.3s ease; margin-bottom: 22px;
+}
+.carta button:hover, .frases button:hover { transform: scale(1.05); background: linear-gradient(135deg, #d34674, #f37c9a); }
+.carta-box, .versiculo-box { max-width: 640px; width: 100%; background: #fff0f5; padding: 16px 20px; border-radius: 10px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); font-size: 1rem; color: #444; line-height: 1.6; text-align: center; margin: 0 auto; }
+
+/* Formulário */
+.mensagem { max-width: 760px; margin: 22px auto; padding: 18px; border-radius: 12px; background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,0.06); text-align: left; }
+.form-row { display: flex; gap: 12px; margin-bottom: 10px; }
+.form-row input { flex: 1 1 0; min-width: 0; padding: 10px 12px; border-radius: 8px; border: 1px solid #f0c8d6; }
+textarea { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #f0c8d6; resize: vertical; }
+.mensagem button { margin-top: 8px; display: block; background: #e75480; color: #fff; padding: 10px 16px; border-radius: 10px; border: none; cursor: pointer; }
+
+/* Rodapé */
+.site-footer { text-align: center; margin: 26px auto 0 auto; color: #a87a8f; }
+
+/* Corações */
+#coracoes { position: fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:0; }
+
+/* Visually hidden */
+.visually-hidden { display:none; }
+
+/* Responsivo */
+@media (max-width: 980px) { .slideshow-container { max-width: 450px; } .mySlides { height: 650px; } .declaracao { padding: 35px 40px; } .contador, .carta, .frases, .mensagem { padding: 25px; } }
+@media (max-width: 768px) { .slideshow-container { max-width: 380px; } .mySlides { height: 550px; } .declaracao { padding: 30px 35px; font-size: 16px; line-height: 22px; } .carta button, .frases button { font-size: 1rem; padding: 10px 18px; margin-bottom: 20px; } .carta-box, .versiculo-box { font-size: 0.95rem; } .form-row { flex-direction: column; } }
+@media (max-width: 480px) { .slideshow-container { max-width: 300px; } .mySlides { height: 450px; } .declaracao { padding: 25px 20px; font-size: 15px; line-height: 20px; } .contador, .carta, .frases, .mensagem { padding: 20px; } .carta button, .frases button { width: 100%; } .form-row input { width: 100%; } textarea { font-size: 0.95rem; } }
+@media (max-width: 360px) { h1 { font-size: 1.6rem; } .declaracao { padding: 20px 15px; font-size: 14px; line-height: 20px; } .contador h2, .carta h2, .frases h2 { font-size: 1.5rem; } }

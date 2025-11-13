@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <!-- Canvas para corações -->
+  <!-- Corações -->
   <div id="coracoes" aria-hidden="true"></div>
 
   <!-- Cabeçalho -->
@@ -17,35 +17,27 @@
     <h1>Nosso Cantinho 💕</h1>
   </header>
 
-  <!-- Menu principal -->
+  <!-- Menu -->
   <nav class="menu-principal fade-in">
     <button id="btn-declaracao">Declaração</button>
     <button id="btn-namoro">Namoro</button>
-    <button id="btn-noivado" disabled>Noivado</button>
-    <button id="btn-casamento" disabled>Casamento</button>
+    <button disabled>Noivado</button>
+    <button disabled>Casamento</button>
   </nav>
 
-  <!-- Slide de fotos estilo Polaroid -->
+  <!-- Slide Polaroid -->
   <div class="slideshow-container fade-in">
-    <div class="mySlides fade"><img src="images/foto1.jpg"><div class="polaroid-caption">13/09/2025</div></div>
-    <div class="mySlides fade"><img src="images/foto2.jpg"><div class="polaroid-caption">13/09/2025</div></div>
-    <div class="mySlides fade"><img src="images/foto3.jpg"><div class="polaroid-caption">21/09/2025</div></div>
-    <div class="mySlides fade"><img src="images/foto4.jpg"><div class="polaroid-caption">21/09/2025</div></div>
-    <div class="mySlides fade"><img src="images/foto5.jpg"><div class="polaroid-caption">28/09/2025</div></div>
-    <div class="mySlides fade"><img src="images/foto6.jpg"><div class="polaroid-caption">28/09/2025</div></div>
-    <div class="mySlides fade"><img src="images/foto7.jpg"><div class="polaroid-caption">28/09/2025</div></div>
-    <div class="mySlides fade"><img src="images/foto8.jpg"><div class="polaroid-caption">04/10/2025</div></div>
-    <div class="mySlides fade"><img src="images/foto9.jpg"><div class="polaroid-caption">10/10/2025</div></div>
+    <!-- Slides serão carregados via JS -->
   </div>
 
-  <!-- Declaração estilo folha de caderno -->
-  <div class="declaracao fade-in">
-    <p>"Oii, paz, prazer kkkk" foi assim que me apresentei e assim queria começar esse texto...</p>
+  <!-- Texto estilo carta/livro -->
+  <div class="declaracao fade-in" id="textoBloco">
+    <!-- Texto carregado via JS -->
   </div>
 
-  <!-- Contador de tempo juntos -->
+  <!-- Contador -->
   <section class="contador fade-in" aria-label="Contador de tempo">
-    <h2>Tempo que nos Conhecemos ⏳</h2>
+    <h2>Tempo Juntos ⏳</h2>
     <div id="tempoJuntos">
       <p><span id="dias">0</span> dias, <span id="horas">0</span> horas, <span id="minutos">0</span> minutos e <span id="segundos">0</span> segundos</p>
     </div>
@@ -60,11 +52,9 @@
 
   <!-- Versículos -->
   <section class="frases fade-in" aria-label="Versículos sobre o amor">
-    <h2>Versículos Biblicos 📖 </h2>
-    <div class="versiculos-actions">
-      <button id="btnVersiculo" type="button">Mostrar versículo</button>
-      <div id="versiculoBox" class="versiculo-box visually-hidden" aria-live="polite"></div>
-    </div>
+    <h2>Versículos 📖 </h2>
+    <button id="btnVersiculo" type="button">Mostrar versículo</button>
+    <div id="versiculoBox" class="versiculo-box visually-hidden" aria-live="polite"></div>
   </section>
 
   <!-- Formulário -->
@@ -75,11 +65,13 @@
         <input type="text" name="name" placeholder="Seu nome" required aria-label="Seu nome">
         <input type="email" name="email" placeholder="Seu e-mail" required aria-label="Seu e-mail">
       </div>
-      <textarea name="message" placeholder="Escreva alguma mensagem..." required aria-label="Mensagem" rows="4"></textarea>
+      <textarea name="message" placeholder="Escreva sua mensagem..." required aria-label="Mensagem" rows="4"></textarea>
       <input type="hidden" name="_subject" value="Mensagem do site - Nosso Cantinho">
       <button type="submit">Enviar mensagem</button>
       <div id="formStatus" role="status" aria-live="polite"></div>
     </form>
+    <button id="btnResposta" class="resposta-btn visually-hidden">Mostrar Resposta dela 💖</button>
+    <div id="respostaTexto" class="carta-box visually-hidden"></div>
   </section>
 
   <!-- Rodapé -->

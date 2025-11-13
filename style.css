@@ -1,18 +1,16 @@
-/* ===== Base / fonte ===== */
+/* ===== Base ===== */
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
-
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
   font-family:'Patrick Hand', cursive;
-  background: #fff0f5;
+  background:#fff0f5;
   color:#333;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  line-height:1.35;
 }
 
-/* ===== Header / Menu ===== */
+/* ===== Header ===== */
 .site-header{
   background:linear-gradient(180deg,#fff,#fff6fb);
   padding:18px 12px;
@@ -28,27 +26,18 @@ body{
   transition: transform .14s ease, background .18s ease;
 }
 .menu-btn:hover:not(.disabled){ transform: translateY(-3px); }
-.menu-btn.active{ background: linear-gradient(135deg,#e75480,#f78da7); color:#fff; border-color:transparent; }
+.menu-btn.active{ background: linear-gradient(135deg,#e75480,#f78da7); color:#fff; border-color:transparent }
 .menu-btn.disabled{ opacity:.55; cursor:not-allowed }
 
-/* ===== Coracoes (container) ===== */
+/* ===== coracoes ===== */
 #coracoes{ position:fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:0; overflow:hidden; }
+.heart{ position:absolute; pointer-events:none; user-select:none; will-change: transform, opacity; font-size:18px; opacity:0.9; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.06)); }
 
-/* heart style (created/removed by JS) */
-.heart{
-  position:absolute; pointer-events:none; user-select:none;
-  will-change: transform, opacity; font-size:18px; opacity:0.9;
-  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.06));
-}
-
-/* ===== Main container ===== */
-#main-content{ position:relative; z-index:1; padding:18px 12px 60px; max-width:1100px; margin:0 auto; }
+/* ===== main ===== */
+#main-content{ position:relative; z-index:1; padding:18px 12px 80px; max-width:1100px; margin:0 auto; }
 
 /* ===== Polaroid / slideshow ===== */
-.slideshow {
-  display:flex; justify-content:center; gap:18px; flex-wrap:wrap;
-  margin:16px auto 6px; max-width:980px;
-}
+.slideshow { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin:16px auto 6px; max-width:980px; }
 .polaroid {
   width:380px;
   background:#fff;
@@ -61,49 +50,45 @@ body{
 
 .photo {
   width:100%;
-  height:350px;            /* fixed height requested */
+  height:350px;            /* fixed height */
   overflow:hidden;
   display:flex; align-items:center; justify-content:center;
   background:#f5f5f5; border-radius:8px;
 }
-.photo img {
-  max-height:100%; max-width:100%; object-fit:contain; display:block;
-}
+.photo img { max-height:100%; max-width:100%; object-fit:contain; display:block; }
 
-/* caption (white bottom area of polaroid) */
+/* caption (white bottom area) */
 .caption {
   margin-top:12px; width:100%; text-align:center;
   padding:10px 6px; background:#fff; border-radius:8px;
   font-weight:700; color:#6a2a3a; box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
-/* small rotation classes to look natural */
+/* rotation classes */
 .rotate-1 { transform: rotate(-2deg); }
 .rotate-2 { transform: rotate(2.5deg); }
 .rotate-3 { transform: rotate(-1.2deg); }
 
-/* hide slide wrappers by default (we'll display one via JS) */
+/* hide all slide wrappers default; JS shows current */
 .mySlides, .mySlides2 { display:none; }
 
-/* ===== Carta / texto estilo caderno ===== */
+/* ===== Carta / texto ===== */
 .carta {
-  max-width:840px; margin:18px auto; padding:26px 30px;
-  text-align:left;
+  max-width:840px; margin:18px auto; padding:26px 30px; text-align:left;
   background: repeating-linear-gradient(to bottom,#fff 0,#fff 24px,#f8f8f8 25px,#f8f8f8 25px);
-  border-left:6px solid #e75480; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06);
-  color:#333; line-height:1.6;
+  border-left:6px solid #e75480; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); color:#333; line-height:1.6;
 }
 .carta p{ margin-bottom:12px; }
 
-/* ===== Card-like style (used by contador/mensagem/versiculo) ===== */
+/* ===== card-like (white border look) ===== */
 .card-like {
   max-width:760px; margin:18px auto; padding:16px; background:#fff; border-radius:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.04); border:1px solid rgba(231,84,128,0.12);
+  box-shadow:0 6px 18px rgba(0,0,0,0.04); border:1px solid rgba(255,255,255,0.9);
 }
-.contador .title { color:#e75480; font-weight:800; margin-bottom:6px; font-size:1.05rem; }
-.contador .time { font-weight:700; color:#e75480; font-size:1.05rem; }
+.contador .title { color:#e75480; font-weight:800; margin-bottom:6px; font-size:1.05rem; text-align:center; }
+.contador .time { font-weight:700; color:#e75480; font-size:1.05rem; text-align:center; }
 
-/* ===== Sections for messages/verses ===== */
+/* ===== sections messages/verses ===== */
 .section { max-width:760px; margin:18px auto; text-align:center; }
 .section h2 { color:#e75480; margin-bottom:8px; font-size:1.15rem; }
 
@@ -113,44 +98,35 @@ body{
   color:#fff; border:none; padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800;
 }
 
-/* box hidden initially; pink bg only when 'pink' class is added */
+/* box hidden initially; appear with white bg/border when clicked */
 .box {
   display:none; margin:12px auto 0; padding:14px 16px; border-radius:10px;
   max-width:640px; text-align:center; color:#422033; font-size:1rem; line-height:1.5;
-  border:1px solid rgba(231,84,128,0.12);
+  border:1px solid rgba(255,255,255,0.95); background:#fff; box-shadow:0 6px 18px rgba(0,0,0,0.04);
 }
-.box.pink { display:block; background: linear-gradient(180deg,#fff0f5,#ffe6ee); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); }
+.box.pink { display:block; } /* we keep class name but visual is white as requested */
 
 /* ===== Form ===== */
 form {
   max-width:760px; margin:22px auto; padding:18px; background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04);
-  border:1px solid rgba(231,84,128,0.06); text-align:center;
+  border:1px solid rgba(255,255,255,0.9); text-align:center;
 }
 .form-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
 input[type="text"], input[type="email"], textarea {
-  border:1px solid #f0c8d6; border-radius:10px; padding:10px 12px; width:90%; max-width:420px; font-size:1rem;
+  border:1px solid rgba(255,255,255,0.9); border-radius:10px; padding:10px 12px; width:90%; max-width:420px; font-size:1rem; background:#fff;
 }
 textarea { min-height:110px; resize:vertical; }
-button[type="submit"] {
-  margin-top:8px; background: linear-gradient(135deg,#e75480,#f78da7); color:#fff; border:none;
-  padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800;
-}
+button[type="submit"] { margin-top:8px; background: linear-gradient(135deg,#e75480,#f78da7); color:#fff; border:none; padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800; }
 
-/* resposta area (only declaration) */
+/* resposta area */
 .resposta { max-width:760px; margin:14px auto; text-align:center; }
 
 /* footer */
 .site-footer { margin-top:40px; padding:16px 12px; color:#a87a8f; text-align:center; background: linear-gradient(180deg,#fff7fa,#fff0f5); }
 
-/* helpers */
-.hidden { display:none; }
+/* helper */
+.hidden{display:none}
 
 /* responsive */
-@media (max-width:920px) {
-  .polaroid{ width:340px } .photo{ height:320px }
-}
-@media (max-width:600px) {
-  .polaroid{ width:280px } .photo{ height:260px }
-  input[type="text"], input[type="email"], textarea { max-width:95%; width:95% }
-  .menu{ gap:6px }
-}
+@media (max-width:920px) { .polaroid{ width:340px } .photo{ height:320px } }
+@media (max-width:600px) { .polaroid{ width:280px } .photo{ height:260px } input[type="text"], input[type="email"], textarea { max-width:95%; width:95% } .menu{ gap:6px } }

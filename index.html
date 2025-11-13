@@ -1,39 +1,75 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nosso Cantinho ❤️</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Inter:wght@300;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosso Cantinho 💕</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- corações -->
-  <div id="coracoes" aria-hidden="true"></div>
-
-  <!-- menu fixo -->
-  <header class="site-header" role="banner">
-    <div class="header-inner">
-      <h1 class="site-title">Nosso Cantinho 💕</h1>
-      <nav class="menu" role="navigation" aria-label="Menu principal">
-        <button class="menu-btn ativo" data-section="declaracao">🌸 Declaração</button>
-        <button class="menu-btn" data-section="namoro">💕 Namoro</button>
-        <button class="menu-btn disabled" data-section="noivado" aria-disabled="true">💍 Noivado <span class="loading">⏳</span></button>
-        <button class="menu-btn disabled" data-section="casamento" aria-disabled="true">💒 Casamento <span class="loading">⏳</span></button>
-      </nav>
-    </div>
+  <header>
+    <h1>Nosso Cantinho 💕</h1>
+    <nav>
+      <button class="menu-btn ativo" data-section="declaracao">🌸 Declaração</button>
+      <button class="menu-btn" data-section="namoro">💕 Namoro</button>
+      <button class="menu-btn" data-section="noivado">💍 Noivado</button>
+      <button class="menu-btn" data-section="casamento">💒 Casamento</button>
+    </nav>
   </header>
 
-  <main id="main" class="main" role="main">
-    <!-- conteúdo será injetado por script.js -->
+  <main>
+    <!-- Declaração -->
+    <section id="declaracao" class="conteudo ativo">
+      <h2>🌸 Nossa Declaração</h2>
+      <p>Desde o primeiro dia, tu te tornou meu lugar seguro e o sorriso que muda meu dia. 💖</p>
+      <div class="contador">
+        <h3>⏰ Tempo juntos:</h3>
+        <p id="tempoJuntos"></p>
+      </div>
+      <div class="versiculo">
+        <h3>📖 Versículo do Dia</h3>
+        <p id="versiculo"></p>
+      </div>
+    </section>
+
+    <!-- Namoro -->
+    <section id="namoro" class="conteudo">
+      <h2>💕 Nosso Namoro</h2>
+      <p>Cada foto é uma lembrança do quanto eu te amo. 💫</p>
+      <div class="polaroid-slide">
+        <div class="polaroid"><img src="imagens/namoro1.jpg" alt="Namoro 1"></div>
+        <div class="polaroid"><img src="imagens/namoro2.jpg" alt="Namoro 2"></div>
+        <div class="polaroid"><img src="imagens/namoro3.jpg" alt="Namoro 3"></div>
+      </div>
+    </section>
+
+    <!-- Noivado -->
+    <section id="noivado" class="conteudo">
+      <h2>💍 Nosso Noivado</h2>
+      <p>Prometemos cuidar um do outro, rir juntos e caminhar lado a lado pra sempre. 💍✨</p>
+      <img src="imagens/noivado.jpg" alt="Noivado" class="foto">
+    </section>
+
+    <!-- Casamento -->
+    <section id="casamento" class="conteudo">
+      <h2>💒 Nosso Casamento</h2>
+      <p>Um amor selado por Deus, abençoado com fé e alegria. 💕</p>
+      <img src="imagens/casamento.jpg" alt="Casamento" class="foto">
+      <div class="mensagens">
+        <h3>💌 Nossas Mensagens</h3>
+        <div id="mensagens-container"></div>
+        <form id="mensagemForm">
+          <input type="text" id="novaMensagem" placeholder="Escreve algo pra ela..." required />
+          <button type="submit">Enviar</button>
+        </form>
+        <p id="resposta">💖 “Eu também te amo mais do que palavras podem dizer.” — Elyse</p>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer" role="contentinfo">
+  <footer>
     <p>Feito com ❤️ por Wellington 💌</p>
   </footer>
-
-  <script src="script.js"></script>
 </body>
 </html>

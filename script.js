@@ -1,4 +1,4 @@
-/* ========= SITE DATA (JSON-like) =========
+/* ========= SITE DATA =========
    Edite fotos, datas, textos, mensagens e versículos aqui.
 */
 const SITE_DATA = {
@@ -10,9 +10,8 @@ const SITE_DATA = {
       "imagens/foto7.jpg","imagens/foto8.jpg","imagens/foto9.jpg"
     ],
     datas: [
-      "11/08/2025","12/08/2025","13/08/2025",
-      "14/08/2025","15/08/2025","16/08/2025",
-      "17/08/2025","18/08/2025","19/08/2025"
+      "11/08/2025","12/08/2025","13/08/2025","14/08/2025","15/08/2025",
+      "16/08/2025","17/08/2025","18/08/2025","19/08/2025"
     ],
     texto: [
       "Desde o primeiro dia em que te conheci, meu mundo ficou mais leve.",
@@ -62,7 +61,7 @@ const SITE_DATA = {
   }
 };
 
-/* ========= Helpers ========= */
+/* ===== Helpers ===== */
 const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 
@@ -71,51 +70,47 @@ let slideTimer = null;
 let heartsInterval = null;
 let counterInterval = null;
 
-/* ========= Build UI from SITE_DATA ========= */
-function buildUI(mode){
+/* ========= Build UI ========= */
+function buildUI(mode) {
   const data = SITE_DATA[mode];
   const main = $('#main-content');
   main.innerHTML = '';
 
-  /* --- Slideshow / Polaroids --- */
+  // Slideshow wrapper
   const slideshow = document.createElement('div');
   slideshow.className = 'slideshow';
 
-  data.fotos.forEach((src, i) => {
-    const slideWrapper = document.createElement('div');
-    slideWrapper.className = mode === 'declaracao' ? 'mySlides' : 'mySlides2';
+  data.fotos.forEach((src, idx) => {
+    const wrapper = document.createElement('div');
+    wrapper.className = mode === 'declaracao' ? 'mySlides' : 'mySlides2';
 
     const polaroid = document.createElement('div');
     polaroid.className = 'polaroid';
-    // add small rotation variants for natural look
-    const r = i % 3;
-    if (r === 0) polaroid.classList.add('rotate-1');
-    if (r === 1) polaroid.classList.add('rotate-2');
-    if (r === 2) polaroid.classList.add('rotate-3');
+    if (idx % 3 === 0) polaroid.classList.add('rotate-1');
+    if (idx % 3 === 1) polaroid.classList.add('rotate-2');
+    if (idx % 3 === 2) polaroid.classList.add('rotate-3');
 
     const photo = document.createElement('div'); photo.className = 'photo';
-    const img = document.createElement('img'); img.src = src; img.alt = `Foto ${i+1}`;
+    const img = document.createElement('img'); img.src = src; img.alt = `Foto ${idx+1}`;
     photo.appendChild(img);
 
     const caption = document.createElement('div'); caption.className = 'caption';
-    caption.textContent = data.datas && data.datas[i] ? data.datas[i] : '';
+    caption.textContent = data.datas && data.datas[idx] ? data.datas[idx] : '';
 
     polaroid.appendChild(photo);
     polaroid.appendChild(caption);
-    slideWrapper.appendChild(polaroid);
-    slideshow.appendChild(slideWrapper);
+    wrapper.appendChild(polaroid);
+    slideshow.appendChild(wrapper);
   });
 
   main.appendChild(slideshow);
 
-  /* --- Carta (texto) --- */
-  const cartaDiv = document.createElement('div'); cartaDiv.className = 'carta';
-  data.texto.forEach(p => {
-    const pEl = document.createElement('p'); pEl.textContent = p; cartaDiv.appendChild(pEl);
-  });
-  main.appendChild(cartaDiv);
+  // Carta (texto)
+  const carta = document.createElement('div'); carta.className = 'carta';
+  data.texto.forEach(p => { const pEl = document.createElement('p'); pEl.textContent = p; carta.appendChild(pEl); });
+  main.appendChild(carta);
 
-  /* --- Contador --- */
+  // Contador (centralizado)
   const cont = document.createElement('div'); cont.className = 'card-like contador';
   const title = document.createElement('div'); title.className = 'title'; title.textContent = '⏳ Nossos tempo juntos';
   const time = document.createElement('div'); time.className = 'time';
@@ -123,15 +118,15 @@ function buildUI(mode){
   cont.appendChild(title); cont.appendChild(time);
   main.appendChild(cont);
 
-  /* --- Mensagens --- */
-  const msgSec = document.createElement('div'); msgSec.className='section';
-  const msgH = document.createElement('h2'); msgH.textContent = '💌 Nossas Mensagens';
-  const msgBtn = document.createElement('button'); msgBtn.className='reveal-btn'; msgBtn.id='btnMsg'; msgBtn.textContent='💌 Mostrar mensagem';
-  const msgBox = document.createElement('div'); msgBox.id='msgBox'; msgBox.className='box hidden';
-  msgSec.appendChild(msgH); msgSec.appendChild(msgBtn); msgSec.appendChild(msgBox);
-  main.appendChild(msgSec);
+  // Mensagens
+  const mSec = document.createElement('div'); mSec.className='section';
+  const mH = document.createElement('h2'); mH.textContent = '💌 Nossas Mensagens';
+  const mBtn = document.createElement('button'); mBtn.className='reveal-btn'; mBtn.id='btnMsg'; mBtn.textContent='💌 Mostrar mensagem';
+  const mBox = document.createElement('div'); mBox.id='msgBox'; mBox.className='box hidden';
+  mSec.appendChild(mH); mSec.appendChild(mBtn); mSec.appendChild(mBox);
+  main.appendChild(mSec);
 
-  /* --- Versículos --- */
+  // Versículos
   const vSec = document.createElement('div'); vSec.className='section';
   const vH = document.createElement('h2'); vH.textContent = '📖 Versículos Bíblicos';
   const vBtn = document.createElement('button'); vBtn.className='reveal-btn'; vBtn.id='btnVers'; vBtn.textContent='📖 Mostrar versículo';
@@ -139,9 +134,9 @@ function buildUI(mode){
   vSec.appendChild(vH); vSec.appendChild(vBtn); vSec.appendChild(vBox);
   main.appendChild(vSec);
 
-  /* --- Formulário --- */
-  const formSec = document.createElement('section'); formSec.className='section';
-  const formTitle = document.createElement('h2'); formTitle.textContent='💬 Enviar uma mensagem';
+  // Form
+  const fSec = document.createElement('section'); fSec.className='section';
+  const fTitle = document.createElement('h2'); fTitle.textContent='💬 Enviar uma mensagem';
   const form = document.createElement('form'); form.id='msgForm'; form.method='POST'; form.action='https://formspree.io/f/xovkwzej';
   form.innerHTML = `
     <div class="form-row">
@@ -152,24 +147,24 @@ function buildUI(mode){
     <button type="submit">Enviar 💌</button>
     <div id="formStatus" class="box hidden" aria-live="polite"></div>
   `;
-  formSec.appendChild(formTitle); formSec.appendChild(form);
-  main.appendChild(formSec);
+  fSec.appendChild(fTitle); fSec.appendChild(form);
+  main.appendChild(fSec);
 
-  /* --- Resposta dela (somente declaração) --- */
+  // Resposta dela (apenas declaração)
   if (mode === 'declaracao') {
-    const respSec = document.createElement('div'); respSec.className='section resposta';
-    const respBtn = document.createElement('button'); respBtn.className='reveal-btn'; respBtn.id='btnResp'; respBtn.textContent='💘 Revelar mensagem dela';
-    const respBox = document.createElement('div'); respBox.id='respBox'; respBox.className='box hidden';
-    respSec.appendChild(respBtn); respSec.appendChild(respBox);
-    main.appendChild(respSec);
+    const rSec = document.createElement('div'); rSec.className='section resposta';
+    const rBtn = document.createElement('button'); rBtn.className='reveal-btn'; rBtn.id='btnResp'; rBtn.textContent='💘 Revelar mensagem dela';
+    const rBox = document.createElement('div'); rBox.id='respBox'; rBox.className='box hidden';
+    rSec.appendChild(rBtn); rSec.appendChild(rBox);
+    main.appendChild(rSec);
   }
 
-  /* initialize behaviors */
+  // initialize interactions
   initSlides(mode);
   initCounter(new Date(data.dataInicio));
   initInteractions(mode, data);
 
-  // form handler
+  // form submit
   const frm = $('#main-content form');
   if (frm) {
     frm.addEventListener('submit', async (e) => {
@@ -193,15 +188,15 @@ function buildUI(mode){
 /* ========= Slides (4s) ========= */
 function initSlides(mode) {
   if (slideTimer) { clearTimeout(slideTimer); slideTimer = null; }
-  const sel = mode === 'declaracao' ? '.mySlides' : '.mySlides2';
-  const slides = Array.from(document.querySelectorAll(sel));
+  const selector = mode === 'declaracao' ? '.mySlides' : '.mySlides2';
+  const slides = Array.from(document.querySelectorAll(selector));
   if (!slides.length) return;
   slides.forEach(s=> s.style.display='none');
-  let idx = 0;
-  function show(){
+  let i=0;
+  function show() {
     slides.forEach(s=> s.style.display='none');
-    slides[idx].style.display = 'block';
-    idx = (idx + 1) % slides.length;
+    slides[i].style.display='block';
+    i = (i+1) % slides.length;
     slideTimer = setTimeout(show, 4000);
   }
   show();
@@ -211,54 +206,51 @@ function initSlides(mode) {
 function initCounter(startDate) {
   if (counterInterval) clearInterval(counterInterval);
   function update() {
-    const now = Date.now();
-    const diff = now - startDate.getTime();
+    const diff = Date.now() - startDate.getTime();
     const days = Math.floor(diff / (1000*60*60*24));
     const hours = Math.floor((diff / (1000*60*60)) % 24);
     const mins = Math.floor((diff / (1000*60)) % 60);
     const secs = Math.floor((diff / 1000) % 60);
-    const daysEl = $('#days'), hoursEl = $('#hours'), minsEl = $('#mins'), secsEl = $('#secs');
-    if (daysEl) daysEl.textContent = days;
-    if (hoursEl) hoursEl.textContent = hours;
-    if (minsEl) minsEl.textContent = mins;
-    if (secsEl) secsEl.textContent = secs;
+    const d = $('#days'), h = $('#hours'), m = $('#mins'), s = $('#secs');
+    if (d) d.textContent = days;
+    if (h) h.textContent = hours;
+    if (m) m.textContent = mins;
+    if (s) s.textContent = secs;
+  }
+  const timeEl = document.querySelector('.contador .time');
+  if (timeEl) {
+    timeEl.innerHTML = `<span id="days">0</span> dias • <span id="hours">0</span>h <span id="mins">0</span>m <span id="secs">0</span>s`;
   }
   update();
   counterInterval = setInterval(update, 1000);
 }
 
-/* ========= Interactions: messages, verses, response ========= */
+/* ========= Interactions ========= */
 function initInteractions(mode, data) {
-  // messages
-  const btnMsg = $('#btnMsg'), msgBox = $('#msgBox');
-  if (btnMsg && msgBox) {
-    let i = 0;
+  const btnMsg = $('#btnMsg'), boxMsg = $('#msgBox');
+  if (btnMsg && boxMsg) {
+    let i=0;
     btnMsg.onclick = () => {
-      const text = data.mensagens[i % data.mensagens.length];
-      msgBox.textContent = text;
-      msgBox.classList.add('pink'); msgBox.classList.remove('hidden'); msgBox.style.display='block';
+      boxMsg.textContent = data.mensagens[i % data.mensagens.length];
+      boxMsg.classList.add('pink'); boxMsg.classList.remove('hidden'); boxMsg.style.display='block';
       i++;
     };
   }
-  // verses
-  const btnV = $('#btnVers'), vBox = $('#vBox');
-  if (btnV && vBox) {
-    let j = 0;
+  const btnV = $('#btnVers'), boxV = $('#vBox');
+  if (btnV && boxV) {
+    let j=0;
     btnV.onclick = () => {
-      const text = data.versiculos[j % data.versiculos.length];
-      vBox.textContent = text;
-      vBox.classList.add('pink'); vBox.classList.remove('hidden'); vBox.style.display='block';
+      boxV.textContent = data.versiculos[j % data.versiculos.length];
+      boxV.classList.add('pink'); boxV.classList.remove('hidden'); boxV.style.display='block';
       j++;
     };
   }
-  // response (only declaracao)
-  const btnR = $('#btnResp'), respBox = $('#respBox');
-  if (btnR && respBox) {
-    let k = 0;
+  const btnR = $('#btnResp'), boxR = $('#respBox');
+  if (btnR && boxR) {
+    let k=0;
     btnR.onclick = () => {
-      const text = data.respostas && data.respostas.length ? data.respostas[k % data.respostas.length] : '💬';
-      respBox.textContent = text;
-      respBox.classList.add('pink'); respBox.classList.remove('hidden'); respBox.style.display='block';
+      boxR.textContent = data.respostas && data.respostas.length ? data.respostas[k % data.respostas.length] : '💬';
+      boxR.classList.add('pink'); boxR.classList.remove('hidden'); boxR.style.display='block';
       k++;
     };
   }

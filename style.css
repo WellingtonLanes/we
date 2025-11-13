@@ -1,21 +1,23 @@
-/* ===== Base ===== */
+/* ===== Base / fonte ===== */
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
   font-family:'Patrick Hand', cursive;
-  background:#fff0f5;
+  background:#fff0f5; /* suave rosa de página */
   color:#333;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  line-height:1.35;
 }
 
-/* ===== Header ===== */
+/* ===== Header / Menu ===== */
 .site-header{
   background:linear-gradient(180deg,#fff,#fff6fb);
   padding:18px 12px;
   box-shadow:0 2px 8px rgba(0,0,0,0.04);
-  position:sticky; top:0; z-index:50;
+  position:sticky; top:0; z-index:60;
 }
 .site-header h1{ color:#e75480; font-size:1.9rem; text-align:center; margin-bottom:8px; }
 .menu{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
@@ -31,13 +33,13 @@ body{
 
 /* ===== coracoes ===== */
 #coracoes{ position:fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:0; overflow:hidden; }
-.heart{ position:absolute; pointer-events:none; user-select:none; will-change: transform, opacity; font-size:18px; opacity:0.9; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.06)); }
+.heart{ position:absolute; pointer-events:none; user-select:none; will-change: transform, opacity; font-size:18px; opacity:0.95; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.06)); }
 
 /* ===== main ===== */
-#main-content{ position:relative; z-index:1; padding:18px 12px 80px; max-width:1100px; margin:0 auto; }
+#main-content{ position:relative; z-index:1; padding:18px 12px 100px; max-width:1100px; margin:0 auto; }
 
 /* ===== Polaroid / slideshow ===== */
-.slideshow { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin:16px auto 6px; max-width:980px; }
+.slideshow { display:flex; justify-content:center; gap:18px; flex-wrap:wrap; margin:18px auto 6px; max-width:980px; }
 .polaroid {
   width:380px;
   background:#fff;
@@ -45,6 +47,7 @@ body{
   box-shadow:0 10px 28px rgba(0,0,0,0.12);
   display:flex; flex-direction:column; align-items:center;
   padding:12px 12px 18px; transition: transform .22s ease;
+  position:relative;
 }
 .polaroid:hover{ transform: translateY(-6px); }
 
@@ -53,7 +56,7 @@ body{
   height:350px;            /* fixed height */
   overflow:hidden;
   display:flex; align-items:center; justify-content:center;
-  background:#f5f5f5; border-radius:8px;
+  background:#f8f8f8; border-radius:8px;
 }
 .photo img { max-height:100%; max-width:100%; object-fit:contain; display:block; }
 
@@ -69,21 +72,23 @@ body{
 .rotate-2 { transform: rotate(2.5deg); }
 .rotate-3 { transform: rotate(-1.2deg); }
 
-/* hide all slide wrappers default; JS shows current */
+/* hide slide wrappers default; JS shows current */
 .mySlides, .mySlides2 { display:none; }
 
-/* ===== Carta / texto ===== */
+/* ===== Carta (folha de caderno - opção A) ===== */
 .carta {
   max-width:840px; margin:18px auto; padding:26px 30px; text-align:left;
   background: repeating-linear-gradient(to bottom,#fff 0,#fff 24px,#f8f8f8 25px,#f8f8f8 25px);
-  border-left:6px solid #e75480; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); color:#333; line-height:1.6;
+  border-left:6px solid #e75480; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06);
+  color:#333; line-height:1.6;
 }
 .carta p{ margin-bottom:12px; }
 
-/* ===== card-like (white border look) ===== */
+/* ===== card-like (white border look) - used as "white box" base ===== */
 .card-like {
   max-width:760px; margin:18px auto; padding:16px; background:#fff; border-radius:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.04); border:1px solid rgba(255,255,255,0.9);
+  box-shadow:0 6px 18px rgba(0,0,0,0.04); border:1px solid rgba(255,255,255,0.95);
+  text-align:center;
 }
 .contador .title { color:#e75480; font-weight:800; margin-bottom:6px; font-size:1.05rem; text-align:center; }
 .contador .time { font-weight:700; color:#e75480; font-size:1.05rem; text-align:center; }
@@ -98,27 +103,64 @@ body{
   color:#fff; border:none; padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800;
 }
 
-/* box hidden initially; appear with white bg/border when clicked */
-.box {
-  display:none; margin:12px auto 0; padding:14px 16px; border-radius:10px;
-  max-width:640px; text-align:center; color:#422033; font-size:1rem; line-height:1.5;
-  border:1px solid rgba(255,255,255,0.95); background:#fff; box-shadow:0 6px 18px rgba(0,0,0,0.04);
+/* ===== White box base (always visible) =====
+   This is the box that is shown before clicking (same style as contador)
+*/
+.white-box {
+  display:block;
+  margin:12px auto 6px;
+  padding:14px 16px;
+  border-radius:12px;
+  max-width:640px;
+  background:#fff;
+  border:1px solid rgba(255,255,255,0.95);
+  box-shadow:0 6px 18px rgba(0,0,0,0.04);
+  min-height:60px; /* visual placeholder */
+  position:relative; /* container for pink overlay */
 }
-.box.pink { display:block; } /* we keep class name but visual is white as requested */
+
+/* ===== Pink overlay that appears ON TOP of the white box after click =====
+   It's positioned absolute to cover the white box exactly
+*/
+.pink-overlay {
+  position:absolute;
+  top:0; left:0; right:0; bottom:0;
+  background: linear-gradient(180deg,#fff0f5,#ffe6ef);
+  border-radius:12px;
+  border:1px solid rgba(231,84,128,0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  text-align:center;
+  color:#422033;
+  font-size:1rem;
+  line-height:1.4;
+  opacity:0;
+  transform:translateY(6px);
+  transition: opacity .25s ease, transform .25s ease;
+  pointer-events:auto;
+}
+.pink-overlay.show {
+  opacity:1;
+  transform:translateY(0);
+}
 
 /* ===== Form ===== */
 form {
   max-width:760px; margin:22px auto; padding:18px; background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04);
-  border:1px solid rgba(255,255,255,0.9); text-align:center;
+  border:1px solid rgba(255,255,255,0.95); text-align:center;
 }
 .form-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
 input[type="text"], input[type="email"], textarea {
-  border:1px solid rgba(255,255,255,0.9); border-radius:10px; padding:10px 12px; width:90%; max-width:420px; font-size:1rem; background:#fff;
+  border:1px solid rgba(235,200,215,0.6); border-radius:10px; padding:10px 12px; width:90%; max-width:420px; font-size:1rem;
+  background:#fff;
 }
 textarea { min-height:110px; resize:vertical; }
 button[type="submit"] { margin-top:8px; background: linear-gradient(135deg,#e75480,#f78da7); color:#fff; border:none; padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800; }
 
-/* resposta area */
+/* resposta area (only declaration) */
 .resposta { max-width:760px; margin:14px auto; text-align:center; }
 
 /* footer */

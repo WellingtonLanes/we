@@ -1,145 +1,100 @@
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: #fff5f8;
-  color: #444;
-  overflow-x: hidden;
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Patrick Hand',cursive;
+  background:#fff0f5;
+  color:#333;
+  text-align:center;
+  overflow-x:hidden;
+}
+h1{color:#e75480;margin:20px 0;font-size:2em;}
+nav{margin-bottom:20px;}
+nav button{
+  background:linear-gradient(135deg,#e75480,#f78da7);
+  color:#fff;border:none;padding:10px 20px;margin:5px;
+  border-radius:10px;cursor:pointer;font-size:1rem;
+  transition:transform 0.2s;
+}
+nav button:hover{transform:scale(1.05);}
+nav button.disabled{
+  background:#f5b6c2;cursor:not-allowed;opacity:.6;
 }
 
-.site-header {
-  background: linear-gradient(90deg, #ffb6c1, #ffd1dc);
-  padding: 1.5rem 0;
-  box-shadow: 0 2px 8px rgba(255,182,193,0.4);
+/* Polaroid Slide */
+.slideshow-container{
+  width:100%;max-width:520px;margin:20px auto;position:relative;
 }
-.site-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  color: #fff;
+.mySlides{
+  display:none;
+  width:100%;max-width:500px;height:650px;
+  margin:auto;background:#fff;
+  border:6px solid #fff;border-bottom:50px solid #fff;
+  border-radius:10px;box-shadow:0 6px 12px rgba(0,0,0,.25);
+  overflow:hidden;position:relative;
 }
-.menu {
-  margin-top: 1rem;
+.mySlides img{
+  width:100%;height:100%;object-fit:cover;
 }
-.menu-btn {
-  background: white;
-  border: 2px solid #ffb6c1;
-  color: #ff4f77;
-  padding: 0.6rem 1.2rem;
-  margin: 0.3rem;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.menu-btn:hover {
-  background: #ffb6c1;
-  color: white;
-}
-.menu-btn.ativo {
-  background: #ff4f77;
-  color: white;
-}
-.menu-btn.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.polaroid-caption{
+  position:absolute;bottom:0;left:0;width:100%;height:50px;
+  background:#fff;color:#444;display:flex;align-items:center;justify-content:center;
 }
 
-/* ===== SLIDES ===== */
-.slideshow-container {
-  position: relative;
-  max-width: 420px;
-  margin: 1.5rem auto;
+/* Carta (folha de caderno) */
+.declaracao{
+  background:repeating-linear-gradient(to bottom,#fff 0px,#fff 24px,#f8f8f8 25px,#f8f8f8 25px);
+  border-left:5px solid #e75480;border-radius:6px;
+  padding:40px 50px;max-width:700px;margin:40px auto;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  font-size:18px;text-align:left;line-height:25px;
 }
-.mySlides {
-  display: none;
+.declaracao p{margin-bottom:15px;text-indent:20px;}
+
+/* Contador */
+.contador{
+  max-width:760px;margin:40px auto;padding:30px;
+  border-radius:16px;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
-.mySlides img {
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.contador h2{color:#e75480;margin-bottom:15px;}
+#tempoJuntos span{color:#e75480;font-weight:bold;}
+
+/* Botões de revelar */
+.revelar, .versiculos{
+  max-width:760px;margin:40px auto;padding:30px;background:#fff;border-radius:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
-.polaroid-caption {
-  background: #fff;
-  padding: 0.3rem;
-  font-size: 0.8rem;
-  color: #555;
+.revelar button, .versiculos button, .mensagem button, #btnResposta{
+  background:linear-gradient(135deg,#e75480,#f78da7);
+  color:#fff;border:none;padding:12px 22px;border-radius:10px;
+  cursor:pointer;font-size:1rem;font-weight:600;
+  transition:transform .2s;
+}
+.revelar button:hover, .versiculos button:hover, .mensagem button:hover, #btnResposta:hover{transform:scale(1.05);}
+.box-conteudo{
+  background:#fff0f5;border-radius:10px;padding:16px;margin-top:10px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
 }
 
-/* ===== DECLARAÇÃO ===== */
-.declaracao-texto {
-  background: url('https://i.imgur.com/Ags0jN1.png') no-repeat center/cover;
-  padding: 2rem;
-  max-width: 600px;
-  margin: 1.5rem auto;
-  border-radius: 12px;
-  font-style: italic;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* Formulário */
+.mensagem{
+  max-width:760px;margin:20px auto;padding:25px;background:#fff;border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+  text-align:left;
 }
+.form-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #f0c8d6;}
+textarea{resize:vertical;}
+#formStatus{text-align:center;margin-top:10px;font-style:italic;}
+#btnResposta{display:block;margin:20px auto 0 auto;}
 
-/* ===== BOTÕES ===== */
-.pink-btn {
-  background: linear-gradient(90deg, #ffb6c1, #ff80aa);
-  border: none;
-  color: white;
-  padding: 0.7rem 1.5rem;
-  border-radius: 25px;
-  cursor: pointer;
-  margin-top: 0.5rem;
-  transition: 0.3s;
-}
-.pink-btn:hover {
-  transform: scale(1.05);
-}
+.site-footer{margin:30px auto;color:#a87a8f;}
+.visually-hidden{display:none;}
 
-/* ===== CAIXAS ===== */
-.caixa {
-  margin-top: 1rem;
-  background: #fff;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.oculto { display: none; }
+/* Corações */
+#coracoes{position:fixed;left:0;top:0;width:100vw;height:100vh;pointer-events:none;z-index:0;}
 
-/* ===== FORMULÁRIO ===== */
-form {
-  max-width: 500px;
-  margin: 1rem auto;
-  display: flex;
-  flex-direction: column;
-}
-form input, form textarea {
-  margin: 0.4rem 0;
-  padding: 0.7rem;
-  border: 1px solid #ffb6c1;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-#formStatus { margin-top: 0.5rem; color: #ff4f77; }
-
-/* ===== RODAPÉ ===== */
-.site-footer {
-  margin-top: 2rem;
-  padding: 1rem 0;
-  background: #ffd6e0;
-  color: #555;
-}
-
-/* ===== CORAÇÕES ===== */
-#coracoes div {
-  position: fixed;
-  color: #ff80aa;
-  animation: fall linear forwards;
-}
-@keyframes fall {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
-}
-
-/* ===== RESPONSIVO ===== */
-@media (max-width: 600px) {
-  .declaracao-texto { font-size: 0.9rem; padding: 1.2rem; }
-  .menu-btn { padding: 0.5rem 1rem; font-size: 0.9rem; }
+@media(max-width:768px){
+  .mySlides{height:480px;}
+  .declaracao{padding:25px 30px;font-size:16px;}
 }

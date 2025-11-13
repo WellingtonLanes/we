@@ -1,19 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Nosso Cantinho ❤️</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
   <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- Corações (container) -->
+  <!-- corações -->
   <div id="coracoes" aria-hidden="true"></div>
 
-  <!-- Header / Menu -->
   <header class="site-header">
     <h1>Nosso Cantinho 💕</h1>
+
     <nav class="menu">
       <button class="menu-btn active" data-mode="declaracao">Declaração</button>
       <button class="menu-btn" data-mode="namoro">Namoro</button>
@@ -22,13 +22,11 @@
     </nav>
   </header>
 
-  <!-- Main content (everything is updated by JS from the internal JSON) -->
   <main id="main-content">
-    <!-- Fallback while JS carrega -->
-    <p class="loading">Carregando...</p>
+    <!-- Conteúdo é montado pelo script.js a partir do SITE_DATA -->
+    <p class="loading">Carregando conteúdo...</p>
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
     <p>Feito com ❤️ por Wellington 💌</p>
   </footer>

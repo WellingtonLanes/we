@@ -1,75 +1,92 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nosso Cantinho 💕</title>
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosso Cantinho ❤️</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
 </head>
 <body>
-  <header>
+
+  <!-- Canvas para corações -->
+  <div id="coracoes" aria-hidden="true"></div>
+
+  <!-- Cabeçalho -->
+  <header class="site-header fade-in">
     <h1>Nosso Cantinho 💕</h1>
-    <nav>
-      <button class="menu-btn ativo" data-section="declaracao">🌸 Declaração</button>
-      <button class="menu-btn" data-section="namoro">💕 Namoro</button>
-      <button class="menu-btn" data-section="noivado">💍 Noivado</button>
-      <button class="menu-btn" data-section="casamento">💒 Casamento</button>
-    </nav>
   </header>
 
-  <main>
-    <!-- Declaração -->
-    <section id="declaracao" class="conteudo ativo">
-      <h2>🌸 Nossa Declaração</h2>
-      <p>Desde o primeiro dia, tu te tornou meu lugar seguro e o sorriso que muda meu dia. 💖</p>
-      <div class="contador">
-        <h3>⏰ Tempo juntos:</h3>
-        <p id="tempoJuntos"></p>
-      </div>
-      <div class="versiculo">
-        <h3>📖 Versículo do Dia</h3>
-        <p id="versiculo"></p>
-      </div>
-    </section>
+  <!-- Menu principal -->
+  <nav class="menu-principal fade-in">
+    <button id="btn-declaracao">Declaração</button>
+    <button id="btn-namoro">Namoro</button>
+    <button id="btn-noivado" disabled>Noivado</button>
+    <button id="btn-casamento" disabled>Casamento</button>
+  </nav>
 
-    <!-- Namoro -->
-    <section id="namoro" class="conteudo">
-      <h2>💕 Nosso Namoro</h2>
-      <p>Cada foto é uma lembrança do quanto eu te amo. 💫</p>
-      <div class="polaroid-slide">
-        <div class="polaroid"><img src="imagens/namoro1.jpg" alt="Namoro 1"></div>
-        <div class="polaroid"><img src="imagens/namoro2.jpg" alt="Namoro 2"></div>
-        <div class="polaroid"><img src="imagens/namoro3.jpg" alt="Namoro 3"></div>
+  <!-- Slide de fotos estilo Polaroid -->
+  <div class="slideshow-container fade-in">
+    <div class="mySlides fade"><img src="images/foto1.jpg"><div class="polaroid-caption">13/09/2025</div></div>
+    <div class="mySlides fade"><img src="images/foto2.jpg"><div class="polaroid-caption">13/09/2025</div></div>
+    <div class="mySlides fade"><img src="images/foto3.jpg"><div class="polaroid-caption">21/09/2025</div></div>
+    <div class="mySlides fade"><img src="images/foto4.jpg"><div class="polaroid-caption">21/09/2025</div></div>
+    <div class="mySlides fade"><img src="images/foto5.jpg"><div class="polaroid-caption">28/09/2025</div></div>
+    <div class="mySlides fade"><img src="images/foto6.jpg"><div class="polaroid-caption">28/09/2025</div></div>
+    <div class="mySlides fade"><img src="images/foto7.jpg"><div class="polaroid-caption">28/09/2025</div></div>
+    <div class="mySlides fade"><img src="images/foto8.jpg"><div class="polaroid-caption">04/10/2025</div></div>
+    <div class="mySlides fade"><img src="images/foto9.jpg"><div class="polaroid-caption">10/10/2025</div></div>
+  </div>
+
+  <!-- Declaração estilo folha de caderno -->
+  <div class="declaracao fade-in">
+    <p>"Oii, paz, prazer kkkk" foi assim que me apresentei e assim queria começar esse texto...</p>
+  </div>
+
+  <!-- Contador de tempo juntos -->
+  <section class="contador fade-in" aria-label="Contador de tempo">
+    <h2>Tempo que nos Conhecemos ⏳</h2>
+    <div id="tempoJuntos">
+      <p><span id="dias">0</span> dias, <span id="horas">0</span> horas, <span id="minutos">0</span> minutos e <span id="segundos">0</span> segundos</p>
+    </div>
+  </section>
+
+  <!-- Mensagens -->
+  <section class="carta fade-in" aria-label="Carta surpresa">
+    <h2>Nossas Mensagens 💌</h2>
+    <button id="btnCarta" type="button">Mostrar Mensagens</button>
+    <div id="cartaTexto" class="carta-box visually-hidden" aria-live="polite"></div>
+  </section>
+
+  <!-- Versículos -->
+  <section class="frases fade-in" aria-label="Versículos sobre o amor">
+    <h2>Versículos Biblicos 📖 </h2>
+    <div class="versiculos-actions">
+      <button id="btnVersiculo" type="button">Mostrar versículo</button>
+      <div id="versiculoBox" class="versiculo-box visually-hidden" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- Formulário -->
+  <section class="mensagem fade-in" aria-label="Enviar mensagem">
+    <h2>Enviar uma mensagem 💬</h2>
+    <form id="formMensagem" action="https://formspree.io/f/xovkwzej" method="POST">
+      <div class="form-row">
+        <input type="text" name="name" placeholder="Seu nome" required aria-label="Seu nome">
+        <input type="email" name="email" placeholder="Seu e-mail" required aria-label="Seu e-mail">
       </div>
-    </section>
+      <textarea name="message" placeholder="Escreva alguma mensagem..." required aria-label="Mensagem" rows="4"></textarea>
+      <input type="hidden" name="_subject" value="Mensagem do site - Nosso Cantinho">
+      <button type="submit">Enviar mensagem</button>
+      <div id="formStatus" role="status" aria-live="polite"></div>
+    </form>
+  </section>
 
-    <!-- Noivado -->
-    <section id="noivado" class="conteudo">
-      <h2>💍 Nosso Noivado</h2>
-      <p>Prometemos cuidar um do outro, rir juntos e caminhar lado a lado pra sempre. 💍✨</p>
-      <img src="imagens/noivado.jpg" alt="Noivado" class="foto">
-    </section>
-
-    <!-- Casamento -->
-    <section id="casamento" class="conteudo">
-      <h2>💒 Nosso Casamento</h2>
-      <p>Um amor selado por Deus, abençoado com fé e alegria. 💕</p>
-      <img src="imagens/casamento.jpg" alt="Casamento" class="foto">
-      <div class="mensagens">
-        <h3>💌 Nossas Mensagens</h3>
-        <div id="mensagens-container"></div>
-        <form id="mensagemForm">
-          <input type="text" id="novaMensagem" placeholder="Escreve algo pra ela..." required />
-          <button type="submit">Enviar</button>
-        </form>
-        <p id="resposta">💖 “Eu também te amo mais do que palavras podem dizer.” — Elyse</p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
+  <!-- Rodapé -->
+  <footer class="site-footer fade-in show">
     <p>Feito com ❤️ por Wellington 💌</p>
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>

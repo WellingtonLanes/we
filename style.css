@@ -12,69 +12,67 @@ body {
     overflow-x: hidden;
 }
 
-/* ===== Cabeçalho ===== */
+/* ===== Título ===== */
 h1 {
     color: #e75480;
     margin: 20px 0;
     font-size: 2em;
 }
 
+/* ===== Menu ===== */
 .menu {
     margin-bottom: 20px;
 }
-
 .menu-btn {
     background: linear-gradient(135deg, #e75480, #f78da7);
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 18px;
     border-radius: 10px;
-    margin: 0 6px;
     cursor: pointer;
+    margin: 5px;
     font-size: 1rem;
-    font-weight: 600;
-    transition: transform 0.2s, background 0.3s;
+    transition: transform 0.2s ease, background 0.3s ease;
 }
-
-.menu-btn:hover:not(:disabled) {
-    transform: scale(1.05);
+.menu-btn:hover:not([disabled]) { 
+    transform: scale(1.05); 
     background: linear-gradient(135deg, #d34674, #f37c9a);
 }
-
-.menu-btn:disabled {
-    opacity: 0.6;
+.menu-btn[disabled] {
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
-/* ===== Slideshow ===== */
+/* ===== Slideshow Polaroid ===== */
 .slideshow-container {
     width: 100%;
     max-width: 520px;
     margin: 20px auto;
     text-align: center;
 }
-
 .mySlides {
     display: none;
     width: 100%;
     max-width: 500px;
-    height: 600px;
+    height: 700px;
     margin: 20px auto;
     background: #fff;
+    border-top: 6px solid #fff;
+    border-left: 6px solid #fff;
+    border-right: 6px solid #fff;
+    border-bottom: 50px solid #fff;
     border-radius: 10px;
     box-shadow: 0 6px 12px rgba(0,0,0,0.25);
     overflow: hidden;
     position: relative;
     flex-direction: column;
 }
-
 .mySlides img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
-
 .polaroid-caption {
     position: absolute;
     bottom: 0;
@@ -83,13 +81,14 @@ h1 {
     height: 50px;
     background: #fff;
     font-size: 1.1em;
-    color: #444;
+    color: #e75480;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
-/* ===== Texto estilo caderno ===== */
+/* ===== Texto (Declaração/Namoro) ===== */
 .declaracao {
     background: repeating-linear-gradient(
         to bottom,
@@ -102,42 +101,33 @@ h1 {
     border-radius: 6px;
     padding: 40px 50px;
     max-width: 700px;
-    margin: 20px auto;
+    margin: 40px auto;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    text-align: left;
+    font-family: 'Patrick Hand', cursive;
     font-size: 18px;
+    color: #e75480;
     line-height: 25px;
+    text-align: left;
+    position: relative;
 }
+.declaracao p { margin-bottom: 15px; text-indent: 20px; }
 
 /* ===== Fade-in ===== */
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 1s ease-out;
-}
+.fade-in { opacity: 0; transform: translateY(20px); transition: all 1s ease-out; }
+.fade-in.show { opacity: 1; transform: translateY(0); }
 
-.fade-in.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ===== Contador ===== */
+/* ===== CONTADOR ===== */
 .contador {
     max-width: 760px;
     margin: 40px auto;
     padding: 30px;
     border-radius: 16px;
     background: #fff;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     text-align: center;
-}
-
-.contador h2 {
-    font-size: 1.8rem;
     color: #e75480;
-    margin-bottom: 18px;
 }
-
+.contador h2 { font-size: 1.8rem; margin-bottom: 18px; }
 #tempoJuntos {
     font-size: 1.2rem;
     font-weight: 600;
@@ -146,9 +136,11 @@ h1 {
     border-radius: 10px;
     padding: 18px 20px;
     display: inline-block;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
+#tempoJuntos span { color: #f78da7; font-weight: bold; }
 
-/* ===== Mensagens e Versículos ===== */
+/* ===== CARTA SURPRESA & VERSÍCULOS ===== */
 .carta, .frases {
     max-width: 760px;
     margin: 40px auto;
@@ -156,15 +148,10 @@ h1 {
     border-radius: 16px;
     background: #fff;
     box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    text-align: center;
 }
-
-.carta h2, .frases h2 {
-    font-size: 1.8rem;
-    color: #e75480;
-    margin-bottom: 18px;
-}
-
-.carta button, .frases button {
+.carta h2, .frases h2 { font-size: 1.8rem; margin-bottom: 18px; }
+.carta button, .frases button, .resposta-btn {
     background: linear-gradient(135deg, #e75480, #f78da7);
     color: #fff;
     border: none;
@@ -175,13 +162,12 @@ h1 {
     font-weight: 600;
     transition: transform 0.2s ease, background 0.3s ease;
     margin-bottom: 22px;
+    display: inline-block;
 }
-
-.carta button:hover, .frases button:hover {
+.carta button:hover, .frases button:hover, .resposta-btn:hover {
     transform: scale(1.05);
     background: linear-gradient(135deg, #d34674, #f37c9a);
 }
-
 .carta-box, .versiculo-box {
     max-width: 640px;
     width: 100%;
@@ -193,10 +179,10 @@ h1 {
     color: #e75480;
     line-height: 1.6;
     text-align: center;
-    margin: 0 auto;
+    margin: 0 auto 20px auto;
 }
 
-/* ===== Formulário ===== */
+/* ===== FORMULÁRIO ===== */
 .mensagem {
     max-width: 760px;
     margin: 22px auto;
@@ -206,22 +192,18 @@ h1 {
     box-shadow: 0 6px 18px rgba(0,0,0,0.06);
     text-align: center;
 }
-
 .form-row {
     display: flex;
     gap: 12px;
     margin-bottom: 10px;
-    flex-wrap: wrap;
 }
-
 .form-row input {
-    flex: 1 1 200px;
+    flex: 1 1 0;
     min-width: 0;
     padding: 10px 12px;
     border-radius: 8px;
     border: 1px solid #f0c8d6;
 }
-
 textarea {
     width: 100%;
     padding: 10px 12px;
@@ -229,33 +211,27 @@ textarea {
     border: 1px solid #f0c8d6;
     resize: vertical;
 }
-
-.mensagem button[type="submit"], .resposta-btn {
+.mensagem button {
     margin-top: 12px;
-    background: linear-gradient(135deg, #e75480, #f78da7);
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+    background: #e75480;
     color: #fff;
     padding: 12px 22px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    font-size: 1.05rem;
-    font-weight: 600;
-    transition: transform 0.2s, background 0.3s;
 }
 
-.mensagem button[type="submit"]:hover, .resposta-btn:hover {
-    transform: scale(1.05);
-    background: linear-gradient(135deg, #d34674, #f37c9a);
-}
-
-/* ===== Rodapé ===== */
+/* ===== RODAPÉ ===== */
 .site-footer {
     text-align: center;
     margin: 26px auto 0 auto;
     color: #a87a8f;
 }
 
-/* ===== Corações ===== */
+/* ===== CORAÇÕES ===== */
 #coracoes {
     position: fixed;
     left:0;
@@ -266,13 +242,34 @@ textarea {
     z-index:0;
 }
 
-/* ===== Visually hidden ===== */
+/* ===== VISUALLY HIDDEN ===== */
 .visually-hidden { display:none; }
 
-/* ===== Responsivo ===== */
+/* ===== RESPONSIVO ===== */
+@media (max-width: 980px) {
+    .slideshow-container { max-width: 450px; }
+    .mySlides { height: 650px; }
+    .declaracao { padding: 35px 40px; }
+    .contador, .carta, .frases, .mensagem { padding: 25px; }
+}
 @media (max-width: 768px) {
-    .mySlides { height: 450px; }
-    .declaracao { padding: 25px 30px; font-size: 16px; }
+    .slideshow-container { max-width: 380px; }
+    .mySlides { height: 550px; }
+    .declaracao { padding: 30px 35px; font-size: 16px; line-height: 22px; }
+    .carta button, .frases button, .resposta-btn { font-size: 1rem; padding: 10px 18px; margin-bottom: 20px; }
+    .carta-box, .versiculo-box { font-size: 0.95rem; }
     .form-row { flex-direction: column; }
 }
-
+@media (max-width: 480px) {
+    .slideshow-container { max-width: 300px; }
+    .mySlides { height: 450px; }
+    .declaracao { padding: 25px 20px; font-size: 15px; line-height: 20px; }
+    .carta button, .frases button, .resposta-btn { width: 100%; }
+    .form-row input { width: 100%; }
+    textarea { font-size: 0.95rem; }
+}
+@media (max-width: 360px) {
+    h1 { font-size: 1.6rem; }
+    .declaracao { padding: 20px 15px; font-size: 14px; line-height: 20px; }
+    .contador h2, .carta h2, .frases h2 { font-size: 1.5rem; }
+}

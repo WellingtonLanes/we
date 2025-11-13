@@ -1,84 +1,77 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nosso Cantinho ❤️</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nosso Cantinho ❤️</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
 </head>
 <body>
 
-  <!-- Corações -->
-  <div id="coracoes" aria-hidden="true"></div>
+<div id="coracoes" aria-hidden="true"></div>
 
-  <!-- Cabeçalho -->
-  <header class="site-header fade-in">
-    <h1>Nosso Cantinho 💕</h1>
-  </header>
-
-  <!-- Menu -->
-  <nav class="menu-principal fade-in">
-    <button id="btn-declaracao">Declaração</button>
-    <button id="btn-namoro">Namoro</button>
-    <button disabled>Noivado</button>
-    <button disabled>Casamento</button>
+<header class="site-header fade-in" role="banner">
+  <h1>Nosso Cantinho 💕</h1>
+  <nav>
+    <button onclick="carregarBloco('declaracao')">Declaração</button>
+    <button onclick="carregarBloco('namoro')">Namoro</button>
+    <button disabled>💤 Noivado</button>
+    <button disabled>💤 Casamento</button>
   </nav>
+</header>
 
-  <!-- Slide Polaroid -->
-  <div class="slideshow-container fade-in">
-    <!-- Slides serão carregados via JS -->
+<!-- Slide de Polaroids -->
+<div class="slideshow-container fade-in" id="slideContainer"></div>
+
+<!-- Texto estilo carta/livro -->
+<div class="declaracao fade-in">
+  <div id="textoBloco"></div>
+  <button id="btnResposta" class="visually-hidden">Mostrar Resposta dela 💌</button>
+  <div id="respostaTexto" class="carta-box visually-hidden"></div>
+</div>
+
+<!-- Contador -->
+<section class="contador fade-in">
+  <h2>Tempo que nos Conhecemos ⏳</h2>
+  <div id="tempoJuntos">
+    <p><span id="dias">0</span> dias, <span id="horas">0</span> horas, <span id="minutos">0</span> minutos e <span id="segundos">0</span> segundos</p>
   </div>
+</section>
 
-  <!-- Texto estilo carta/livro -->
-  <div class="declaracao fade-in" id="textoBloco">
-    <!-- Texto carregado via JS -->
-  </div>
+<!-- Mensagens -->
+<section class="carta fade-in">
+  <h2>Nossas Mensagens 💌</h2>
+  <button id="btnCarta">Mostrar Mensagens</button>
+  <div id="cartaTexto" class="carta-box visually-hidden"></div>
+</section>
 
-  <!-- Contador -->
-  <section class="contador fade-in" aria-label="Contador de tempo">
-    <h2>Tempo Juntos ⏳</h2>
-    <div id="tempoJuntos">
-      <p><span id="dias">0</span> dias, <span id="horas">0</span> horas, <span id="minutos">0</span> minutos e <span id="segundos">0</span> segundos</p>
+<!-- Versículos -->
+<section class="frases fade-in">
+  <h2>Versículos Bíblicos 📖</h2>
+  <button id="btnVersiculo">Mostrar Versículo</button>
+  <div id="versiculoBox" class="versiculo-box visually-hidden"></div>
+</section>
+
+<!-- Formulário -->
+<section class="mensagem fade-in">
+  <h2>Enviar uma mensagem 💬</h2>
+  <form id="formMensagem" action="https://formspree.io/f/xovkwzej" method="POST">
+    <div class="form-row">
+      <input type="text" name="name" placeholder="Seu nome" required>
+      <input type="email" name="email" placeholder="Seu e-mail" required>
     </div>
-  </section>
+    <textarea name="message" placeholder="Escreva uma mensagem..." required rows="4"></textarea>
+    <input type="hidden" name="_subject" value="Mensagem do site - Nosso Cantinho">
+    <button type="submit">Enviar mensagem</button>
+    <div id="formStatus" role="status" aria-live="polite"></div>
+  </form>
+</section>
 
-  <!-- Mensagens -->
-  <section class="carta fade-in" aria-label="Carta surpresa">
-    <h2>Nossas Mensagens 💌</h2>
-    <button id="btnCarta" type="button">Mostrar Mensagens</button>
-    <div id="cartaTexto" class="carta-box visually-hidden" aria-live="polite"></div>
-  </section>
+<footer class="site-footer fade-in">
+  <p>Feito com ❤️ por Wellington 💌</p>
+</footer>
 
-  <!-- Versículos -->
-  <section class="frases fade-in" aria-label="Versículos sobre o amor">
-    <h2>Versículos 📖 </h2>
-    <button id="btnVersiculo" type="button">Mostrar versículo</button>
-    <div id="versiculoBox" class="versiculo-box visually-hidden" aria-live="polite"></div>
-  </section>
-
-  <!-- Formulário -->
-  <section class="mensagem fade-in" aria-label="Enviar mensagem">
-    <h2>Enviar uma mensagem 💬</h2>
-    <form id="formMensagem" action="https://formspree.io/f/xovkwzej" method="POST">
-      <div class="form-row">
-        <input type="text" name="name" placeholder="Seu nome" required aria-label="Seu nome">
-        <input type="email" name="email" placeholder="Seu e-mail" required aria-label="Seu e-mail">
-      </div>
-      <textarea name="message" placeholder="Escreva sua mensagem..." required aria-label="Mensagem" rows="4"></textarea>
-      <input type="hidden" name="_subject" value="Mensagem do site - Nosso Cantinho">
-      <button type="submit">Enviar mensagem</button>
-      <div id="formStatus" role="status" aria-live="polite"></div>
-    </form>
-    <button id="btnResposta" class="resposta-btn visually-hidden">Mostrar Resposta dela 💖</button>
-    <div id="respostaTexto" class="carta-box visually-hidden"></div>
-  </section>
-
-  <!-- Rodapé -->
-  <footer class="site-footer fade-in show">
-    <p>Feito com ❤️ por Wellington 💌</p>
-  </footer>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

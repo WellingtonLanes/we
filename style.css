@@ -1,126 +1,161 @@
-/* style.css - visual romântico, carta/caderno */
-/* fontes */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Inter:wght@300;600&display=swap');
-
-* { box-sizing: border-box; margin:0; padding:0; }
-html,body { height:100%; }
-
-body{
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: #fff6f9 url('imagens/papel-textura.jpg');
-  background-size: 600px;
-  color:#402c2c;
-  -webkit-font-smoothing:antialiased;
-  padding-bottom:60px;
-  text-align:center;
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #fff5f8;
+  color: #4a2b2b;
+  text-align: center;
 }
 
-/* header/menu */
-.site-header {
-  position: fixed;
-  top: 0; left: 0; width: 100%;
-  background: linear-gradient(180deg,#fff0f4,#fff7fb);
-  border-bottom:1px solid rgba(214,75,120,0.06);
-  z-index: 200;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+header {
+  background: linear-gradient(to bottom, #ffd6e7, #ffe5ef);
+  padding: 20px;
+  border-bottom: 2px solid #ffb6c1;
 }
-.header-inner {
-  max-width:1100px; margin:0 auto; padding:12px 16px;
-  display:flex; gap:18px; align-items:center; justify-content:center; flex-wrap:wrap;
-}
-.site-title {
+
+h1 {
   font-family: "Dancing Script", cursive;
-  color:#d64b78; font-size:1.9rem; flex:1 1 100%; text-align:center;
-  margin-bottom:6px;
+  font-size: 2em;
+  color: #e75480;
+  margin: 0 0 15px;
 }
-.menu { display:flex; gap:12px; justify-content:center; align-items:center; flex:1 1 100%; }
+
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .menu-btn {
-  min-width:120px;
-  background: linear-gradient(180deg,#ff7aa7,#ff4d87);
-  color:#fff; border:none; padding:9px 16px; border-radius:28px; font-weight:700; cursor:pointer;
-  box-shadow: 0 8px 18px rgba(183,91,120,0.12); transition: transform .14s ease, box-shadow .14s ease;
-}
-.menu-btn:not(.ativo):hover{ transform: translateY(-3px); }
-.menu-btn.ativo{ transform: translateY(-3px); box-shadow: 0 14px 28px rgba(183,91,120,0.18); }
-.menu-btn.disabled{ opacity:.55; cursor:not-allowed; }
-
-/* loading pulse */
-.loading{ margin-left:6px; animation: pulse 1.6s infinite; }
-@keyframes pulse { 0%,100%{opacity:.35}50%{opacity:1} }
-
-/* main layout */
-.main { margin-top:122px; padding:20px; display:flex; flex-direction:column; align-items:center; gap:20px; max-width:1100px; margin-left:auto; margin-right:auto; }
-
-/* block general (pink background) */
-.block {
-  width:100%; max-width:760px;
-  background: #ffeaf2;
-  border-radius:14px;
-  border:1px solid rgba(214,75,120,0.08);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.06);
-  padding:16px;
+  background: #ff8fb1;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-/* white paper inside */
-.paper {
-  background:#fff; padding:14px; border-radius:10px; text-align:left; color:#3b2f2f;
-  font-size:1rem; line-height:1.6; border-left:5px solid rgba(214,75,120,0.10);
+.menu-btn:hover {
+  transform: scale(1.05);
+  background: #ff6f91;
 }
 
-/* slideshow polaroid */
-.slideshow-wrap{ display:flex; justify-content:center; align-items:center; gap:12px; }
-.slideshow { width:380px; height:310px; position:relative; display:block; margin:0 auto; }
-.slide { position:absolute; left:0; top:0; width:100%; height:100%; display:none; align-items:center; justify-content:center; }
-.slide.active { display:flex; }
-.polaroid-frame {
-  background:#fff; width:380px; height:310px; border-radius:12px; padding:10px;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  border-top:6px solid #fff; border-bottom:54px solid #fff; box-shadow:0 14px 30px rgba(0,0,0,0.12);
-  position:relative; overflow:visible;
+.menu-btn.ativo {
+  background: #ff4f81;
 }
-.photo { width:350px; height:250px; display:block; object-fit:contain; border-radius:8px; background:#f7f6f6; }
-.polaroid-caption { position:absolute; bottom:10px; left:0; width:100%; text-align:center; font-size:0.95rem; color:#8b5f66; background:rgba(255,255,255,0.9); padding:4px 0; margin:0 20px; border-radius:6px; }
 
-/* stacked cards (vertical) */
-.stack { display:flex; flex-direction:column; gap:14px; align-items:center; width:100%; max-width:760px; }
+.conteudo {
+  display: none;
+  padding: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+}
 
-/* card (used for contador, versiculos, mensagens, form) */
-.card { width:100%; background:#ffeaf2; padding:12px; border-radius:12px; border:1px solid rgba(214,75,120,0.06); box-shadow:0 8px 18px rgba(0,0,0,0.05); }
-.card h2{ color:#d64b78; margin:0 0 8px 0; font-size:1.05rem; }
-.card .inner{ background:#fff; padding:12px; border-radius:10px; text-align:left; color:#3b2f2f; }
+.conteudo.ativo {
+  display: block;
+}
 
-/* center helpers */
-.center{ display:flex; justify-content:center; align-items:center; }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-/* buttons */
-.btn{ background: linear-gradient(180deg,#ff6fa3,#ff4d87); color:#fff; border:none; padding:10px 16px; border-radius:12px; cursor:pointer; font-weight:700; box-shadow:0 10px 20px rgba(179,103,123,0.08); }
-.btn:active{ transform: translateY(1px); }
+.foto {
+  margin-top: 15px;
+  max-width: 90%;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(255, 182, 193, 0.7);
+}
 
-/* form */
-.form-row{ display:flex; gap:12px; margin-bottom:8px; flex-wrap:wrap; justify-content:center; }
-.form-row input, .form-row textarea{ width:100%; max-width:640px; padding:10px; border-radius:10px; border:1px solid rgba(214,75,120,0.08); background:#fff; font-family:inherit; font-size:1rem; }
+/* Polaroids */
+.polaroid-slide {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
 
-/* visually hidden */
-.visually-hidden{ display:none; }
+.polaroid {
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+}
 
-/* hearts falling */
-#coracoes{ position:fixed; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:5; overflow:hidden; }
-.heart{ position:absolute; font-size:16px; opacity:.9; will-change:transform,opacity; color:#d92d5a; text-shadow:0 2px 6px rgba(0,0,0,0.08); animation-name: fall; animation-timing-function: linear; }
-@keyframes fall { 0%{ transform: translateY(-10vh); opacity:1 } 100%{ transform: translateY(110vh); opacity:0 } }
+.polaroid img {
+  max-width: 200px;
+  border-radius: 5px;
+}
 
-/* fade-in */
-.fade-in{ opacity:0; transform:translateY(8px); transition:all 480ms ease; }
-.fade-in.show{ opacity:1; transform:translateY(0); }
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.05);
+}
 
-/* footer */
-.site-footer{ text-align:center; margin:36px 0; color:#d64b78; }
+/* Contador e Versículo */
+.contador, .versiculo {
+  background: #ffe8f1;
+  margin: 15px auto;
+  padding: 10px;
+  border-radius: 15px;
+  width: 80%;
+  box-shadow: 0 0 5px rgba(255, 182, 193, 0.5);
+}
 
-/* responsive */
-@media (max-width:880px){
-  .slideshow{ width:320px; height:260px; }
-  .polaroid-frame{ width:92%; height:auto; }
-  .photo{ width:100%; height:auto; aspect-ratio: 14/10; object-fit:contain; }
-  .site-title{ font-size:1.6rem; }
-  .menu-btn{ min-width:92px; padding:8px 10px; }
-  .main{ padding:12px; }
+/* Mensagens */
+.mensagens {
+  margin-top: 20px;
+  background: #ffe8f1;
+  padding: 15px;
+  border-radius: 15px;
+  width: 85%;
+  margin-inline: auto;
+  box-shadow: 0 0 5px rgba(255,182,193,0.5);
+}
+
+#mensagens-container {
+  margin-bottom: 10px;
+}
+
+#mensagemForm {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#novaMensagem {
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid #ffb6c1;
+  width: 70%;
+}
+
+button {
+  background: #ff8fb1;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+button:hover {
+  background: #ff4f81;
+}
+
+#resposta {
+  margin-top: 15px;
+  color: #e75480;
+  font-style: italic;
+}
+
+footer {
+  margin-top: 30px;
+  padding: 15px;
+  color: #e75480;
+  font-size: 1em;
 }

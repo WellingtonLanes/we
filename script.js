@@ -1,4 +1,4 @@
-/* ========= SITE DATA =========
+/* ================== SITE DATA (JSON inside JS) ==================
    Edite fotos, datas, textos, mensagens e versículos aqui.
 */
 const SITE_DATA = {
@@ -10,8 +10,9 @@ const SITE_DATA = {
       "imagens/foto7.jpg","imagens/foto8.jpg","imagens/foto9.jpg"
     ],
     datas: [
-      "11/08/2025","12/08/2025","13/08/2025","14/08/2025","15/08/2025",
-      "16/08/2025","17/08/2025","18/08/2025","19/08/2025"
+      "11/08/2025","12/08/2025","13/08/2025",
+      "14/08/2025","15/08/2025","16/08/2025",
+      "17/08/2025","18/08/2025","19/08/2025"
     ],
     texto: [
       "Desde o primeiro dia em que te conheci, meu mundo ficou mais leve.",
@@ -61,56 +62,60 @@ const SITE_DATA = {
   }
 };
 
-/* ===== Helpers ===== */
-const $ = s => document.querySelector(s);
-const $$ = s => Array.from(document.querySelectorAll(s));
+/* ================== Helpers ================== */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
 
 let currentMode = 'declaracao';
 let slideTimer = null;
 let heartsInterval = null;
 let counterInterval = null;
 
-/* ========= Build UI ========= */
+/* ================== Build UI from JSON ================== */
 function buildUI(mode) {
   const data = SITE_DATA[mode];
   const main = $('#main-content');
   main.innerHTML = '';
 
-  // Slideshow wrapper
+  /* --- SLIDESHOW (polaroids) --- */
   const slideshow = document.createElement('div');
   slideshow.className = 'slideshow';
 
-  data.fotos.forEach((src, idx) => {
-    const wrapper = document.createElement('div');
-    wrapper.className = mode === 'declaracao' ? 'mySlides' : 'mySlides2';
+  data.fotos.forEach((src, i) => {
+    const slideWrapper = document.createElement('div');
+    slideWrapper.className = mode === 'declaracao' ? 'mySlides' : 'mySlides2';
 
     const polaroid = document.createElement('div');
     polaroid.className = 'polaroid';
-    if (idx % 3 === 0) polaroid.classList.add('rotate-1');
-    if (idx % 3 === 1) polaroid.classList.add('rotate-2');
-    if (idx % 3 === 2) polaroid.classList.add('rotate-3');
+    // slight rotation for natural look
+    const r = i % 3;
+    if (r === 0) polaroid.classList.add('rotate-1');
+    if (r === 1) polaroid.classList.add('rotate-2');
+    if (r === 2) polaroid.classList.add('rotate-3');
 
     const photo = document.createElement('div'); photo.className = 'photo';
-    const img = document.createElement('img'); img.src = src; img.alt = `Foto ${idx+1}`;
+    const img = document.createElement('img'); img.src = src; img.alt = `Foto ${i+1}`;
     photo.appendChild(img);
 
     const caption = document.createElement('div'); caption.className = 'caption';
-    caption.textContent = data.datas && data.datas[idx] ? data.datas[idx] : '';
+    caption.textContent = (data.datas && data.datas[i]) ? data.datas[i] : '';
 
     polaroid.appendChild(photo);
     polaroid.appendChild(caption);
-    wrapper.appendChild(polaroid);
-    slideshow.appendChild(wrapper);
+    slideWrapper.appendChild(polaroid);
+    slideshow.appendChild(slideWrapper);
   });
 
   main.appendChild(slideshow);
 
-  // Carta (texto)
+  /* --- CARTA (folha de caderno) --- */
   const carta = document.createElement('div'); carta.className = 'carta';
-  data.texto.forEach(p => { const pEl = document.createElement('p'); pEl.textContent = p; carta.appendChild(pEl); });
+  data.texto.forEach(p => {
+    const pEl = document.createElement('p'); pEl.textContent = p; carta.appendChild(pEl);
+  });
   main.appendChild(carta);
 
-  // Contador (centralizado)
+  /* --- CONTADOR --- */
   const cont = document.createElement('div'); cont.className = 'card-like contador';
   const title = document.createElement('div'); title.className = 'title'; title.textContent = '⏳ Nossos tempo juntos';
   const time = document.createElement('div'); time.className = 'time';
@@ -118,26 +123,38 @@ function buildUI(mode) {
   cont.appendChild(title); cont.appendChild(time);
   main.appendChild(cont);
 
-  // Mensagens
-  const mSec = document.createElement('div'); mSec.className='section';
-  const mH = document.createElement('h2'); mH.textContent = '💌 Nossas Mensagens';
-  const mBtn = document.createElement('button'); mBtn.className='reveal-btn'; mBtn.id='btnMsg'; mBtn.textContent='💌 Mostrar mensagem';
-  const mBox = document.createElement('div'); mBox.id='msgBox'; mBox.className='box hidden';
-  mSec.appendChild(mH); mSec.appendChild(mBtn); mSec.appendChild(mBox);
-  main.appendChild(mSec);
+  /* --- MENSAGENS (white box always visible) --- */
+  const msgSection = document.createElement('div'); msgSection.className = 'section';
+  const msgTitle = document.createElement('h2'); msgTitle.textContent = '💌 Nossas Mensagens';
+  const whiteBoxMsg = document.createElement('div'); whiteBoxMsg.className = 'white-box'; whiteBoxMsg.id = 'whiteMsg';
+  // The white box always visible (placeholder)
+  whiteBoxMsg.innerHTML = `<div style="font-size:0.95rem;color:#8a5a66;">&nbsp;</div>`; // empty placeholder
+  // create pink overlay inside white box (hidden)
+  const overlayMsg = document.createElement('div'); overlayMsg.className = 'pink-overlay'; overlayMsg.id = 'overlayMsg';
+  overlayMsg.style.display = 'none';
+  whiteBoxMsg.appendChild(overlayMsg);
 
-  // Versículos
-  const vSec = document.createElement('div'); vSec.className='section';
-  const vH = document.createElement('h2'); vH.textContent = '📖 Versículos Bíblicos';
-  const vBtn = document.createElement('button'); vBtn.className='reveal-btn'; vBtn.id='btnVers'; vBtn.textContent='📖 Mostrar versículo';
-  const vBox = document.createElement('div'); vBox.id='vBox'; vBox.className='box hidden';
-  vSec.appendChild(vH); vSec.appendChild(vBtn); vSec.appendChild(vBox);
-  main.appendChild(vSec);
+  const msgBtn = document.createElement('button'); msgBtn.className = 'reveal-btn'; msgBtn.id = 'btnMsg'; msgBtn.textContent = '💌 Mostrar mensagem';
+  msgSection.appendChild(msgTitle); msgSection.appendChild(whiteBoxMsg); msgSection.appendChild(msgBtn);
+  main.appendChild(msgSection);
 
-  // Form
-  const fSec = document.createElement('section'); fSec.className='section';
-  const fTitle = document.createElement('h2'); fTitle.textContent='💬 Enviar uma mensagem';
-  const form = document.createElement('form'); form.id='msgForm'; form.method='POST'; form.action='https://formspree.io/f/xovkwzej';
+  /* --- VERSÍCULOS (white box always visible) --- */
+  const vSection = document.createElement('div'); vSection.className = 'section';
+  const vTitle = document.createElement('h2'); vTitle.textContent = '📖 Versículos Bíblicos';
+  const whiteBoxV = document.createElement('div'); whiteBoxV.className = 'white-box'; whiteBoxV.id = 'whiteV';
+  whiteBoxV.innerHTML = `<div style="font-size:0.95rem;color:#8a5a66;">&nbsp;</div>`;
+  const overlayV = document.createElement('div'); overlayV.className = 'pink-overlay'; overlayV.id = 'overlayV';
+  overlayV.style.display = 'none';
+  whiteBoxV.appendChild(overlayV);
+
+  const vBtn = document.createElement('button'); vBtn.className = 'reveal-btn'; vBtn.id = 'btnVers'; vBtn.textContent = '📖 Mostrar versículo';
+  vSection.appendChild(vTitle); vSection.appendChild(whiteBoxV); vSection.appendChild(vBtn);
+  main.appendChild(vSection);
+
+  /* --- FORMULÁRIO (centralizado) --- */
+  const formSec = document.createElement('section'); formSec.className = 'section';
+  const formTitle = document.createElement('h2'); formTitle.textContent = '💬 Enviar uma mensagem';
+  const form = document.createElement('form'); form.id = 'msgForm'; form.method = 'POST'; form.action = 'https://formspree.io/f/xovkwzej';
   form.innerHTML = `
     <div class="form-row">
       <input type="text" name="name" placeholder="Seu nome" required />
@@ -147,62 +164,66 @@ function buildUI(mode) {
     <button type="submit">Enviar 💌</button>
     <div id="formStatus" class="box hidden" aria-live="polite"></div>
   `;
-  fSec.appendChild(fTitle); fSec.appendChild(form);
-  main.appendChild(fSec);
+  formSec.appendChild(formTitle); formSec.appendChild(form);
+  main.appendChild(formSec);
 
-  // Resposta dela (apenas declaração)
+  /* --- BOTÃO REVELAR RESPOSTA DELA (somente DECLARAÇÃO) --- */
   if (mode === 'declaracao') {
-    const rSec = document.createElement('div'); rSec.className='section resposta';
-    const rBtn = document.createElement('button'); rBtn.className='reveal-btn'; rBtn.id='btnResp'; rBtn.textContent='💘 Revelar mensagem dela';
-    const rBox = document.createElement('div'); rBox.id='respBox'; rBox.className='box hidden';
-    rSec.appendChild(rBtn); rSec.appendChild(rBox);
-    main.appendChild(rSec);
+    const respSec = document.createElement('div'); respSec.className = 'section resposta';
+    const respBtn = document.createElement('button'); respBtn.className = 'reveal-btn'; respBtn.id = 'btnResp'; respBtn.textContent = '💘 Revelar mensagem dela';
+    const whiteResp = document.createElement('div'); whiteResp.className = 'white-box'; whiteResp.id = 'whiteResp';
+    whiteResp.innerHTML = `<div style="font-size:0.95rem;color:#8a5a66;">&nbsp;</div>`;
+    const overlayResp = document.createElement('div'); overlayResp.className = 'pink-overlay'; overlayResp.id = 'overlayResp';
+    overlayResp.style.display = 'none';
+    whiteResp.appendChild(overlayResp);
+    respSec.appendChild(whiteResp); respSec.appendChild(respBtn);
+    main.appendChild(respSec);
   }
 
-  // initialize interactions
+  /* initialize interactions and functional parts */
   initSlides(mode);
   initCounter(new Date(data.dataInicio));
   initInteractions(mode, data);
 
-  // form submit
+  // form submit handler
   const frm = $('#main-content form');
   if (frm) {
     frm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const status = $('#formStatus');
-      status.classList.remove('hidden'); status.classList.add('pink'); status.style.display='block';
-      status.textContent = 'Enviando...';
+      const st = $('#formStatus');
+      st.classList.remove('hidden'); st.style.display = 'block';
+      st.textContent = 'Enviando...';
       const fd = new FormData(frm);
       try {
-        const res = await fetch(frm.action, { method:'POST', body:fd, headers:{ 'Accept':'application/json' } });
-        if (res.ok) { status.textContent = 'Mensagem enviada 💌'; frm.reset(); }
-        else { status.textContent = 'Erro ao enviar — tente novamente'; }
-      } catch {
-        status.textContent = 'Erro de conexão.';
+        const res = await fetch(frm.action, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
+        if (res.ok) { st.textContent = 'Mensagem enviada 💌'; frm.reset(); }
+        else { st.textContent = 'Erro ao enviar — tente novamente'; }
+      } catch (err) {
+        st.textContent = 'Erro de conexão.';
       }
-      setTimeout(()=>{ status.textContent=''; status.classList.remove('pink'); status.style.display='none'; }, 4000);
+      setTimeout(()=> { st.textContent=''; st.classList.add('hidden'); st.style.display='none'; }, 3500);
     });
   }
 }
 
-/* ========= Slides (4s) ========= */
+/* ================== Slides (4s each) ================== */
 function initSlides(mode) {
   if (slideTimer) { clearTimeout(slideTimer); slideTimer = null; }
   const selector = mode === 'declaracao' ? '.mySlides' : '.mySlides2';
   const slides = Array.from(document.querySelectorAll(selector));
   if (!slides.length) return;
-  slides.forEach(s=> s.style.display='none');
-  let i=0;
+  slides.forEach(s => s.style.display = 'none');
+  let i = 0;
   function show() {
-    slides.forEach(s=> s.style.display='none');
-    slides[i].style.display='block';
-    i = (i+1) % slides.length;
-    slideTimer = setTimeout(show, 4000);
+    slides.forEach(s => s.style.display = 'none');
+    slides[i].style.display = 'block';
+    i = (i + 1) % slides.length;
+    slideTimer = setTimeout(show, 4000); // 4 seconds
   }
   show();
 }
 
-/* ========= Counter ========= */
+/* ================== Counter ================== */
 function initCounter(startDate) {
   if (counterInterval) clearInterval(counterInterval);
   function update() {
@@ -217,6 +238,7 @@ function initCounter(startDate) {
     if (m) m.textContent = mins;
     if (s) s.textContent = secs;
   }
+  // ensure placeholders exist
   const timeEl = document.querySelector('.contador .time');
   if (timeEl) {
     timeEl.innerHTML = `<span id="days">0</span> dias • <span id="hours">0</span>h <span id="mins">0</span>m <span id="secs">0</span>s`;
@@ -225,42 +247,52 @@ function initCounter(startDate) {
   counterInterval = setInterval(update, 1000);
 }
 
-/* ========= Interactions ========= */
+/* ================== Interactions (white box + pink overlay) ================== */
 function initInteractions(mode, data) {
-  const btnMsg = $('#btnMsg'), boxMsg = $('#msgBox');
-  if (btnMsg && boxMsg) {
-    let i=0;
+  // messages
+  const btnMsg = $('#btnMsg'), overlayMsg = $('#overlayMsg');
+  if (btnMsg && overlayMsg) {
+    let i = 0;
     btnMsg.onclick = () => {
-      boxMsg.textContent = data.mensagens[i % data.mensagens.length];
-      boxMsg.classList.add('pink'); boxMsg.classList.remove('hidden'); boxMsg.style.display='block';
+      overlayMsg.textContent = data.mensagens[i % data.mensagens.length];
+      overlayMsg.style.display = 'flex';
+      // add class to animate show
+      requestAnimationFrame(()=> overlayMsg.classList.add('show'));
       i++;
     };
   }
-  const btnV = $('#btnVers'), boxV = $('#vBox');
-  if (btnV && boxV) {
-    let j=0;
-    btnV.onclick = () => {
-      boxV.textContent = data.versiculos[j % data.versiculos.length];
-      boxV.classList.add('pink'); boxV.classList.remove('hidden'); boxV.style.display='block';
+
+  // versiculos
+  const btnVers = $('#btnVers'), overlayV = $('#overlayV');
+  if (btnVers && overlayV) {
+    let j = 0;
+    btnVers.onclick = () => {
+      overlayV.textContent = data.versiculos[j % data.versiculos.length];
+      overlayV.style.display = 'flex';
+      requestAnimationFrame(()=> overlayV.classList.add('show'));
       j++;
     };
   }
-  const btnR = $('#btnResp'), boxR = $('#respBox');
-  if (btnR && boxR) {
-    let k=0;
-    btnR.onclick = () => {
-      boxR.textContent = data.respostas && data.respostas.length ? data.respostas[k % data.respostas.length] : '💬';
-      boxR.classList.add('pink'); boxR.classList.remove('hidden'); boxR.style.display='block';
+
+  // resposta dela (declaracao only)
+  const btnResp = $('#btnResp'), overlayResp = $('#overlayResp');
+  if (btnResp && overlayResp) {
+    let k = 0;
+    btnResp.onclick = () => {
+      const text = (data.respostas && data.respostas.length) ? data.respostas[k % data.respostas.length] : '💬';
+      overlayResp.textContent = text;
+      overlayResp.style.display = 'flex';
+      requestAnimationFrame(()=> overlayResp.classList.add('show'));
       k++;
     };
   }
 }
 
-/* ========= Menu switching ========= */
-$$('.menu-btn').forEach(btn=>{
+/* ================== Menu switching ================== */
+$$('.menu-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     if (btn.classList.contains('disabled')) return;
-    $$('.menu-btn').forEach(b=> b.classList.remove('active'));
+    $$('.menu-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const mode = btn.dataset.mode || 'declaracao';
     currentMode = mode;
@@ -268,11 +300,11 @@ $$('.menu-btn').forEach(btn=>{
   });
 });
 
-/* ========= Hearts (lightweight) ========= */
-function startHearts(){
+/* ================== Hearts (lightweight) ================== */
+function startHearts() {
   if (heartsInterval) clearInterval(heartsInterval);
   const container = $('#coracoes');
-  heartsInterval = setInterval(()=>{
+  heartsInterval = setInterval(()=> {
     const d = document.createElement('div');
     d.className = 'heart';
     d.textContent = '💗';
@@ -287,12 +319,12 @@ function startHearts(){
       d.style.transform = `translateY(${window.innerHeight + 40}px) rotate(${Math.random()*60-30}deg)`;
       d.style.opacity = 0;
     });
-    setTimeout(()=> { d.remove(); }, (duration*1000)+300);
+    setTimeout(()=> d.remove(), (duration*1000)+300);
   }, 420);
 }
 startHearts();
 
-/* ========= Init ========= */
+/* ================== Init ================== */
 document.addEventListener('DOMContentLoaded', () => {
   buildUI(currentMode);
 });

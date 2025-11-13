@@ -1,175 +1,127 @@
-/* ===== base ===== */
+/* ===== Base / fonte ===== */
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
   font-family:'Patrick Hand', cursive;
-  background: #fff0f5; /* rosa suave no fundo da página */
+  background: #fff0f5;
   color:#333;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  line-height:1.35;
 }
 
-/* ===== header ===== */
+/* ===== Header / Menu ===== */
 .site-header{
-  background:linear-gradient(180deg,#fff,#fff6fa);
+  background:linear-gradient(180deg,#fff,#fff6fb);
   padding:18px 12px;
   box-shadow:0 2px 8px rgba(0,0,0,0.04);
-  position:sticky; top:0; z-index:5;
+  position:sticky; top:0; z-index:50;
 }
-.site-header h1{ color:#e75480; font-size:1.9rem; margin-bottom:8px; text-align:center; }
-.menu{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+.site-header h1{ color:#e75480; font-size:1.9rem; text-align:center; margin-bottom:8px; }
+.menu{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
 .menu-btn{
-  border:2px solid #e75480;
-  background:#fff;
-  color:#e75480;
-  padding:8px 14px;
-  border-radius:12px;
-  font-weight:700;
-  cursor:pointer;
-  transition: all .16s ease;
+  border:2px solid rgba(231,84,128,0.85);
+  background:#fff; color:#e75480;
+  padding:8px 14px; border-radius:12px; font-weight:700; cursor:pointer;
+  transition: transform .14s ease, background .18s ease;
 }
-.menu-btn:hover:not(.disabled){ transform:translateY(-3px) }
-.menu-btn.active{ background:linear-gradient(135deg,#e75480,#f78da7); color:#fff; border-color:transparent }
-.menu-btn.disabled{ opacity:.5; cursor:not-allowed }
+.menu-btn:hover:not(.disabled){ transform: translateY(-3px); }
+.menu-btn.active{ background: linear-gradient(135deg,#e75480,#f78da7); color:#fff; border-color:transparent; }
+.menu-btn.disabled{ opacity:.55; cursor:not-allowed }
 
-/* ===== corações (container) ===== */
+/* ===== Coracoes (container) ===== */
 #coracoes{ position:fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:0; overflow:hidden; }
 
-/* heart animation (will be created/removed by JS) */
+/* heart style (created/removed by JS) */
 .heart{
-  position: absolute;
-  will-change: transform, opacity;
-  pointer-events:none;
-  user-select:none;
-  opacity:0.9;
-  transform: translateY(-20px);
+  position:absolute; pointer-events:none; user-select:none;
+  will-change: transform, opacity; font-size:18px; opacity:0.9;
   filter: drop-shadow(0 2px 2px rgba(0,0,0,0.06));
 }
 
-/* ===== main ===== */
+/* ===== Main container ===== */
 #main-content{ position:relative; z-index:1; padding:18px 12px 60px; max-width:1100px; margin:0 auto; }
 
-/* ===== polaroid frame =====
-   - wrapper fixed size to keep consistent visual frame
-   - image inside uses object-fit: contain to avoid cropping
-*/
+/* ===== Polaroid / slideshow ===== */
 .slideshow {
-  display:flex;
-  justify-content:center;
-  gap:18px;
-  flex-wrap:wrap;
-  margin:16px auto;
-  max-width:960px;
+  display:flex; justify-content:center; gap:18px; flex-wrap:wrap;
+  margin:16px auto 6px; max-width:980px;
 }
 .polaroid {
-  width:380px;                /* fixed frame width */
+  width:380px;
   background:#fff;
   border-radius:12px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.12);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:12px 12px 18px;
-  transform-origin:center;
-  transition: transform .28s ease;
+  box-shadow:0 10px 28px rgba(0,0,0,0.12);
+  display:flex; flex-direction:column; align-items:center;
+  padding:12px 12px 18px; transition: transform .22s ease;
 }
-.polaroid:hover { transform: translateY(-6px); }
+.polaroid:hover{ transform: translateY(-6px); }
 
-/* image area (fixed height) */
-.polaroid .photo {
+.photo {
   width:100%;
-  height:350px;              /* fixed height as requested */
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  height:350px;            /* fixed height requested */
   overflow:hidden;
-  border-radius:8px;
-  background:#efefef;
+  display:flex; align-items:center; justify-content:center;
+  background:#f5f5f5; border-radius:8px;
 }
-.polaroid .photo img {
-  max-height:100%;           /* preserve image entirely (no cropping) */
-  max-width:100%;            /* keep proportional */
-  object-fit:contain;        /* important: do not crop */
-  display:block;
+.photo img {
+  max-height:100%; max-width:100%; object-fit:contain; display:block;
 }
 
-/* white caption bar (polaroid bottom area) */
-.polaroid .caption {
-  margin-top:12px;
-  width:100%;
-  text-align:center;
-  padding:10px 6px;
-  background:#fff;
-  border-radius:8px;
-  font-weight:700;
-  color:#6a2a3a;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+/* caption (white bottom area of polaroid) */
+.caption {
+  margin-top:12px; width:100%; text-align:center;
+  padding:10px 6px; background:#fff; border-radius:8px;
+  font-weight:700; color:#6a2a3a; box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
-/* small rotation for natural look (applied by JS randomly) */
-.rotate-small { transform: rotate(-2deg); }
-.rotate-small-2 { transform: rotate(3deg); }
+/* small rotation classes to look natural */
+.rotate-1 { transform: rotate(-2deg); }
+.rotate-2 { transform: rotate(2.5deg); }
+.rotate-3 { transform: rotate(-1.2deg); }
 
-/* ===== carta / texto estilo caderno ===== */
+/* hide slide wrappers by default (we'll display one via JS) */
+.mySlides, .mySlides2 { display:none; }
+
+/* ===== Carta / texto estilo caderno ===== */
 .carta {
-  max-width:840px;
-  margin:18px auto;
-  padding:26px 30px;
+  max-width:840px; margin:18px auto; padding:26px 30px;
   text-align:left;
   background: repeating-linear-gradient(to bottom,#fff 0,#fff 24px,#f8f8f8 25px,#f8f8f8 25px);
-  border-left:6px solid #e75480;
-  border-radius:10px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.06);
-  color:#333;
-  line-height:1.6;
+  border-left:6px solid #e75480; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06);
+  color:#333; line-height:1.6;
 }
-.carta p{ margin-bottom:12px }
+.carta p{ margin-bottom:12px; }
 
-/* ===== contador (style that will be reused) ===== */
+/* ===== Card-like style (used by contador/mensagem/versiculo) ===== */
 .card-like {
-  max-width:760px;
-  margin:18px auto;
-  padding:18px;
-  background:#fff;
-  border-radius:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.04);
-  border: 1px solid rgba(231,84,128,0.08);
+  max-width:760px; margin:18px auto; padding:16px; background:#fff; border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.04); border:1px solid rgba(231,84,128,0.12);
 }
-.contador .title { color:#e75480; font-weight:800; margin-bottom:6px; font-size:1.1rem; }
+.contador .title { color:#e75480; font-weight:800; margin-bottom:6px; font-size:1.05rem; }
 .contador .time { font-weight:700; color:#e75480; font-size:1.05rem; }
 
-/* ===== mensagens / versículos =====
-   - boxes are hidden by default; when shown JS adds class 'pink' which reveals and sets the pink bg
-   - border style matches card-like
-*/
-.section {
-  max-width:760px; margin:18px auto; text-align:center;
-}
-.section h2 { color:#e75480; margin-bottom:10px; font-size:1.15rem; }
+/* ===== Sections for messages/verses ===== */
+.section { max-width:760px; margin:18px auto; text-align:center; }
+.section h2 { color:#e75480; margin-bottom:8px; font-size:1.15rem; }
+
+/* reveal button style */
 .reveal-btn {
   background: linear-gradient(135deg,#e75480,#f78da7);
   color:#fff; border:none; padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800;
 }
 
-/* box hidden initially */
+/* box hidden initially; pink bg only when 'pink' class is added */
 .box {
-  display:none;
-  margin:12px auto 0;
-  padding:14px 16px;
-  border-radius:10px;
-  max-width:640px;
-  text-align:center;
-  color:#422033;
-  font-size:1rem;
-  line-height:1.5;
-  border:1px solid rgba(231,84,128,0.08);
+  display:none; margin:12px auto 0; padding:14px 16px; border-radius:10px;
+  max-width:640px; text-align:center; color:#422033; font-size:1rem; line-height:1.5;
+  border:1px solid rgba(231,84,128,0.12);
 }
-/* when revealed apply pink background */
-.box.pink { display:block; background: linear-gradient(180deg,#fff0f5,#ffe6ef); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); }
+.box.pink { display:block; background: linear-gradient(180deg,#fff0f5,#ffe6ee); box-shadow: inset 0 1px 0 rgba(255,255,255,0.6); }
 
-/* ===== form ===== */
+/* ===== Form ===== */
 form {
   max-width:760px; margin:22px auto; padding:18px; background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04);
   border:1px solid rgba(231,84,128,0.06); text-align:center;
@@ -180,30 +132,25 @@ input[type="text"], input[type="email"], textarea {
 }
 textarea { min-height:110px; resize:vertical; }
 button[type="submit"] {
-  margin-top:10px; background: linear-gradient(135deg,#e75480,#f78da7); color:#fff; border:none; padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800;
+  margin-top:8px; background: linear-gradient(135deg,#e75480,#f78da7); color:#fff; border:none;
+  padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800;
 }
 
-/* resposta dela area (declaracao only) */
+/* resposta area (only declaration) */
 .resposta { max-width:760px; margin:14px auto; text-align:center; }
-.resposta .box { display:none; }
 
-/* ===== footer ===== */
-.site-footer {
-  margin-top:40px; padding:16px 12px; color:#a87a8f; text-align:center; background: linear-gradient(180deg,#fff7fa,#fff0f5);
-  position:relative;
-}
+/* footer */
+.site-footer { margin-top:40px; padding:16px 12px; color:#a87a8f; text-align:center; background: linear-gradient(180deg,#fff7fa,#fff0f5); }
 
-/* helper hidden */
-.hidden{display:none}
+/* helpers */
+.hidden { display:none; }
 
-/* responsive adjustments */
+/* responsive */
 @media (max-width:920px) {
-  .polaroid{ width:340px }
-  .polaroid .photo{ height:320px }
+  .polaroid{ width:340px } .photo{ height:320px }
 }
 @media (max-width:600px) {
-  .polaroid{ width:280px }
-  .polaroid .photo{ height:260px }
-  .menu{ gap:6px }
+  .polaroid{ width:280px } .photo{ height:260px }
   input[type="text"], input[type="email"], textarea { max-width:95%; width:95% }
+  .menu{ gap:6px }
 }

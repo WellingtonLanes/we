@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nosso Cantinho 💌</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nosso Cantinho ❤️</title>
   <link rel="stylesheet" href="style.css" />
   <script defer src="script.js"></script>
 </head>
 <body>
-  <canvas id="coracoes"></canvas>
+  <!-- Corações (container) -->
+  <div id="coracoes" aria-hidden="true"></div>
 
-  <header>
-    <h1>Nosso Cantinho 💖</h1>
-    <nav>
-      <button id="btnDeclaracao">Declaração</button>
-      <button id="btnNamoro">Namoro</button>
-      <button disabled>💍 Noivado</button>
-      <button disabled>💒 Casamento</button>
+  <!-- Header / Menu -->
+  <header class="site-header">
+    <h1>Nosso Cantinho 💕</h1>
+    <nav class="menu">
+      <button class="menu-btn active" data-mode="declaracao">Declaração</button>
+      <button class="menu-btn" data-mode="namoro">Namoro</button>
+      <button class="menu-btn disabled" disabled>Noivado</button>
+      <button class="menu-btn disabled" disabled>Casamento</button>
     </nav>
   </header>
 
-  <main id="conteudoPrincipal"></main>
+  <!-- Main content (everything is updated by JS from the internal JSON) -->
+  <main id="main-content">
+    <!-- Fallback while JS carrega -->
+    <p class="loading">Carregando...</p>
+  </main>
 
+  <!-- Footer -->
   <footer class="site-footer">
     <p>Feito com ❤️ por Wellington 💌</p>
   </footer>

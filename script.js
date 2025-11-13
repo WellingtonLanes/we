@@ -1,112 +1,131 @@
-// ===== CORAÇÕES =====
-setInterval(() => {
-  const heart = document.createElement('div');
-  heart.textContent = '💗';
-  heart.style.left = Math.random() * 100 + 'vw';
-  heart.style.fontSize = (Math.random() * 20 + 14) + 'px';
-  heart.style.position = 'fixed';
-  heart.style.top = '-20px';
-  heart.style.animation = `fall ${5 + Math.random() * 5}s linear`;
-  document.getElementById('coracoes').appendChild(heart);
-  setTimeout(() => heart.remove(), 8000);
-}, 300);
+// ==== Corações Caindo ====
+(function hearts(){
+  const canvas=document.getElementById('coracoes');
+  const ctx=canvas.getContext('2d');
+  let w,h,hearts=[];
+  function resize(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
+  window.addEventListener('resize',resize);resize();
+  function Heart(){this.x=Math.random()*w;this.y=Math.random()*h;this.size=Math.random()*16+10;this.speed=Math.random()*1+0.5;}
+  Heart.prototype.draw=function(){ctx.font=this.size+'px serif';ctx.fillText('💗',this.x,this.y);}
+  function loop(){ctx.clearRect(0,0,w,h);for(let i=0;i<hearts.length;i++){let ht=hearts[i];ht.y+=ht.speed;if(ht.y>h){ht.y=-10;ht.x=Math.random()*w;}ht.draw();}
+    requestAnimationFrame(loop);}
+  for(let i=0;i<25;i++)hearts.push(new Heart());
+  loop();
+})();
 
-// ===== SLIDES =====
-function iniciarSlide(bloco) {
-  let idx = 0;
-  const slides = bloco.querySelectorAll(".mySlides");
-  function mostrar() {
-    slides.forEach(s => s.style.display = "none");
-    idx = (idx + 1) % slides.length;
-    slides[idx].style.display = "block";
+// ==== Dados ====
+const blocos={
+  declaracao:{
+    dataInicio:new Date("2025-08-11T11:10:00"),
+    slides:[...Array(9)].map((_,i)=>({img:`imagens/foto${i+1}.jpg`,date:`13/09/2025`})),
+    texto:`<p>Desde o primeiro dia em que nos conhecemos, tudo ficou mais leve. Este cantinho é pra lembrar de cada momento que nos fez sorrir e agradecer a Deus pelo que Ele tem feito em nós.</p>`,
+    mensagens:["Você é minha resposta de oração 💌","Cada dia contigo é um presente.","Obrigado por me fazer sorrir sempre ❤️"],
+    versiculos:["O amor é paciente e bondoso. (1 Coríntios 13:4)","Nós amamos porque Ele nos amou primeiro. (1 João 4:19)"]
+  },
+  namoro:{
+    dataInicio:new Date("2025-11-09T16:20:00"),
+    slides:[...Array(10)].map((_,i)=>({img:`imagens/fotos${i+10}.jpg`,date:`09/11/2025`})),
+    texto:`<p>Nosso namoro começou e com ele veio um novo capítulo. Que Deus continue sendo o centro de tudo o que vivemos, guiando nossos passos com amor e fé.</p>`,
+    mensagens:["Te amo mais a cada dia 💕","A presença de Deus em nós é o que nos sustenta.","Contigo eu aprendi o verdadeiro amor 💗"],
+    versiculos:["Acima de tudo, revistam-se do amor. (Colossenses 3:14)","O meu mandamento é este: que vos ameis uns aos outros. (João 15:12)"]
   }
-  mostrar();
-  setInterval(mostrar, 4000);
+};
+
+let blocoAtual='declaracao',slideIndex=0;
+
+// ==== Trocar conteúdo ====
+function trocarBloco(nome){
+  if(nome==='noivado'||nome==='casamento')return;
+  blocoAtual=nome;
+  const bloco=blocos[nome];
+  const main=document.getElementById('conteudo');
+  main.innerHTML=`
+  <div class="slideshow-container" id="slideshow"></div>
+  <div class="declaracao">${bloco.texto}</div>
+  <div class="contador">
+    <h2>Nosso tempo juntos</h2>
+    <div id="tempoJuntos"><span id="dias"></span> dias, <span id="horas"></span>h <span id="minutos"></span>m <span id="segundos"></span>s</div>
+  </div>
+  <div class="revelar">
+    <h2>Nossas mensagens</h2>
+    <button id="btnMsg">Mostrar</button>
+    <div id="msgBox" class="box-conteudo visually-hidden"></div>
+  </div>
+  <div class="versiculos">
+    <h2>Versículos</h2>
+    <button id="btnVerso">Mostrar</button>
+    <div id="versoBox" class="box-conteudo visually-hidden"></div>
+  </div>
+  <form class="mensagem" id="formMensagem" action="https://formspree.io/f/mayvlpqd" method="POST">
+    <div class="form-row">
+      <input type="text" name="nome" placeholder="Seu nome" required>
+      <input type="email" name="email" placeholder="Seu email" required>
+    </div>
+    <textarea name="mensagem" rows="4" placeholder="Escreva uma mensagem..." required></textarea>
+    <button type="submit">Enviar 💌</button>
+    <div id="formStatus"></div>
+  </form>
+  ${nome==='declaracao'?'<button id="btnResposta">Revelar resposta dela 💗</button>':''}
+  `;
+  carregarSlides(bloco.slides);
+  iniciarContador(bloco.dataInicio);
+  configurarBotoes(bloco);
 }
 
-// ===== TROCA DE BLOCOS =====
-const botoes = document.querySelectorAll(".menu-btn[data-bloco]");
-const blocos = document.querySelectorAll(".bloco");
-botoes.forEach(btn => {
-  btn.addEventListener("click", () => {
-    if (btn.disabled) return;
-    botoes.forEach(b => b.classList.remove("ativo"));
-    blocos.forEach(b => b.classList.remove("ativo"));
-    btn.classList.add("ativo");
-    document.getElementById(btn.dataset.bloco).classList.add("ativo");
+// ==== Slides ====
+function carregarSlides(slides){
+  const cont=document.getElementById('slideshow');
+  cont.innerHTML='';
+  slides.forEach(s=>{
+    const div=document.createElement('div');
+    div.className='mySlides';
+    div.innerHTML=`<img src="${s.img}"><div class="polaroid-caption">${s.date}</div>`;
+    cont.appendChild(div);
   });
-});
-
-// ===== CONTADOR DECLARAÇÃO =====
-const dataInicio = new Date("August 11, 2025 11:10:00").getTime();
-setInterval(() => atualizarContador("dias", "horas", "minutos", "segundos", dataInicio), 1000);
-
-// ===== CONTADOR NAMORO =====
-const dataNamoro = new Date("November 9, 2025 16:20:00").getTime();
-setInterval(() => atualizarContador("diasNamoro", "horasNamoro", "minutosNamoro", "segundosNamoro", dataNamoro), 1000);
-
-function atualizarContador(diasId, horasId, minutosId, segundosId, inicio) {
-  const agora = new Date().getTime();
-  const diff = agora - inicio;
-  if (diff < 0) return;
-  document.getElementById(diasId).textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
-  document.getElementById(horasId).textContent = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  document.getElementById(minutosId).textContent = Math.floor((diff / (1000 * 60)) % 60);
-  document.getElementById(segundosId).textContent = Math.floor((diff / 1000) % 60);
+  slideIndex=0;
+  mostrarSlides();
+}
+function mostrarSlides(){
+  const slides=document.querySelectorAll('.mySlides');
+  slides.forEach(s=>s.style.display='none');
+  if(slides.length===0)return;
+  slideIndex++;
+  if(slideIndex>slides.length)slideIndex=1;
+  slides[slideIndex-1].style.display='block';
+  setTimeout(mostrarSlides,4000);
 }
 
-// ===== VERSÍCULOS =====
-const versos = [
-  "O amor é paciente, o amor é bondoso. (1 Coríntios 13:4)",
-  "Nós amamos porque Ele nos amou primeiro. (1 João 4:19)",
-  "Acima de tudo, revistam-se do amor. (Colossenses 3:14)"
-];
-let idxVerso = 0;
-document.getElementById("btnVersiculo").addEventListener("click", () => {
-  const box = document.getElementById("versiculoBox");
-  box.classList.remove("oculto");
-  box.textContent = versos[idxVerso];
-  idxVerso = (idxVerso + 1) % versos.length;
-});
-
-// ===== CARTA =====
-const msgs = [
-  "Qualquer coisa contigo é especial 💖",
-  "Adoro conversar e rir contigo 💕",
-  "Tu me faz muito bem ❤️"
-];
-let idxMsg = 0;
-document.getElementById("btnCarta").addEventListener("click", () => {
-  const box = document.getElementById("cartaTexto");
-  box.classList.remove("oculto");
-  box.textContent = msgs[idxMsg];
-  idxMsg = (idxMsg + 1) % msgs.length;
-});
-
-// ===== FORM =====
-document.getElementById("formMensagem").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const status = document.getElementById("formStatus");
-  status.textContent = "Enviando...";
-  const data = new FormData(e.target);
-  try {
-    const res = await fetch(e.target.action, { method: "POST", body: data });
-    if (res.ok) {
-      status.textContent = "Mensagem enviada 💌";
-      e.target.reset();
-    } else status.textContent = "Erro ao enviar 😢";
-  } catch {
-    status.textContent = "Erro de conexão 😢";
+// ==== Contador ====
+function iniciarContador(dataInicio){
+  function atualizar(){
+    const diff=new Date()-dataInicio;
+    const dias=Math.floor(diff/(1000*60*60*24));
+    const horas=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const minutos=Math.floor((diff%(1000*60*60))/(1000*60));
+    const segundos=Math.floor((diff%(1000*60))/1000);
+    document.getElementById('dias').textContent=dias;
+    document.getElementById('horas').textContent=horas;
+    document.getElementById('minutos').textContent=minutos;
+    document.getElementById('segundos').textContent=segundos;
   }
-  setTimeout(() => status.textContent = "", 4000);
-});
+  clearInterval(window.contadorTimer);
+  window.contadorTimer=setInterval(atualizar,1000);
+  atualizar();
+}
 
-// ===== BOTÃO REVELAR RESPOSTA =====
-document.getElementById("btnResposta").addEventListener("click", () => {
-  const box = document.getElementById("respostaTexto");
-  box.classList.toggle("oculto");
-  box.textContent = "Resposta dela revelada 💕 (coloque o conteúdo real aqui depois)";
-});
+// ==== Mensagens e Versículos ====
+function configurarBotoes(bloco){
+  const btnM=document.getElementById('btnMsg');
+  const boxM=document.getElementById('msgBox');
+  const btnV=document.getElementById('btnVerso');
+  const boxV=document.getElementById('versoBox');
+  const btnR=document.getElementById('btnResposta');
 
-// ===== INICIALIZAÇÃO =====
-document.querySelectorAll(".bloco").forEach(b => iniciarSlide(b));
+  let i=0,j=0;
+  btnM.onclick=()=>{boxM.classList.remove('visually-hidden');boxM.textContent=bloco.mensagens[i];i=(i+1)%bloco.mensagens.length;}
+  btnV.onclick=()=>{boxV.classList.remove('visually-hidden');boxV.textContent=bloco.versiculos[j];j=(j+1)%bloco.versiculos.length;}
+  if(btnR){btnR.onclick=()=>{alert('Resposta dela: 💬 "Eu te amo mais ainda!"');}}
+}
+
+// ==== Inicial ====
+trocarBloco('declaracao');

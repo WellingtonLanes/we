@@ -5,7 +5,7 @@
 html,body{height:100%}
 body{
   font-family:'Patrick Hand', cursive;
-  background:#fff0f5; /* suave rosa de página */
+  background:#fff0f5;
   color:#333;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
@@ -72,7 +72,7 @@ body{
 
 .mySlides, .mySlides2 { display:none; }
 
-/* ===== Carta ===== */
+/* ===== Carta (folha de caderno) ===== */
 .carta {
   max-width:840px; margin:18px auto; padding:26px 30px; text-align:left;
   background: repeating-linear-gradient(to bottom,#fff 0,#fff 24px,#f8f8f8 25px,#f8f8f8 25px);
@@ -81,74 +81,57 @@ body{
 }
 .carta p{ margin-bottom:12px; }
 
-/* ===== White box original ===== */
+/* ===== card-like (contador) ===== */
+.card-like {
+  max-width:760px; margin:18px auto; padding:16px; background:#fff; border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.04); border:1px solid rgba(255,255,255,0.95);
+  text-align:center;
+}
+.contador .title { color:#e75480; font-weight:800; margin-bottom:6px; font-size:1.05rem; text-align:center; }
+.contador .time { font-weight:700; color:#e75480; font-size:1.05rem; text-align:center; }
+
+/* ===== White-box com botão e overlay (mensagens, versículos, resposta) ===== */
+.section { max-width:760px; margin:18px auto; text-align:center; }
+.section h2 { color:#e75480; margin-bottom:8px; font-size:1.15rem; }
+
 .white-box {
   display:flex;
   flex-direction:column;
-  justify-content:flex-start;
   gap:10px;
-  position:relative;
-  background:#fff;
+  margin:12px auto 6px;
+  padding:12px;
   border-radius:12px;
-  padding:14px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.04);
   max-width:640px;
-  margin:12px auto;
+  background:#fff;
   border:1px solid rgba(255,255,255,0.95);
-}
-
-/* Área dos botões dentro da white-box */
-.btn-container {
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  width:100%;
-  z-index:3;
-}
-
-/* Botões internos */
-.btn-container .reveal-btn {
-  padding:8px 12px;
-  font-size:0.95rem;
-  border-radius:10px;
-  background: linear-gradient(135deg,#e75480,#f78da7);
-  color:#fff;
-  border:none;
-  cursor:pointer;
-  font-weight:800;
-}
-
-/* Área do conteúdo (embaixo dos botões) */
-.content-area {
-  width:100%;
-  min-height:48px;
-  padding:8px 6px;
-  border-radius:8px;
-  font-size:1rem;
-  text-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,0.04);
+  min-height:86px;
   position:relative;
-  z-index:2;
 }
 
-/* Overlay rosa abaixo do texto */
+.btn-container { display:flex; gap:10px; justify-content:center; width:100%; z-index:2; }
+.btn-container .reveal-btn {
+  padding:8px 12px; font-size:0.95rem; border-radius:10px;
+  background: linear-gradient(135deg,#e75480,#f78da7);
+  color:#fff; border:none; cursor:pointer; font-weight:800;
+}
+
+.content-area {
+  width:100%; min-height:48px; padding:8px 6px;
+  border-radius:8px; color:#422033; font-size:1rem;
+  text-align:center; position:relative; background:transparent; z-index:1;
+}
+
 .pink-overlay {
+  top:46px; left:0; right:0; bottom:0;
   position:absolute;
-  top:46px;
-  left:0; right:0; bottom:0;
-  background: linear-gradient(180deg,#fff0f5,#ffe6ef);
   border-radius:0 0 12px 12px;
-  border:1px solid rgba(231,84,128,0.12);
-  padding:16px;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  z-index:1;
+  padding:16px; display:none;
+  align-items:center; justify-content:center;
+  text-align:center; font-size:1rem; line-height:1.4;
+  color:#422033;
 }
-
-.pink-overlay.show {
-  display:flex;
-}
+.pink-overlay.show { display:flex; }
 
 /* ===== Form ===== */
 form {
@@ -157,20 +140,15 @@ form {
 }
 .form-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
 input[type="text"], input[type="email"], textarea {
-  border:1px solid rgba(235,200,215,0.6); border-radius:10px; padding:10px 12px; width:90%; max-width:420px;
-  background:#fff;
+  border:1px solid rgba(235,200,215,0.6); border-radius:10px; padding:10px 12px; width:90%; max-width:420px; font-size:1rem; background:#fff;
 }
 textarea { min-height:110px; resize:vertical; }
-button[type="submit"] {
-  margin-top:8px; background: linear-gradient(135deg,#e75480,#f78da7);
-  color:#fff; border:none; padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800;
-}
+button[type="submit"] { margin-top:8px; background: linear-gradient(135deg,#e75480,#f78da7); color:#fff; border:none; padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800; }
 
-/* ===== Footer ===== */
+/* footer */
 .site-footer { margin-top:40px; padding:16px 12px; color:#a87a8f; text-align:center; background: linear-gradient(180deg,#fff7fa,#fff0f5); }
 
-.hidden{display:none}
-
-@media (max-width:420px) {
-  .pink-overlay { top:54px; }
-}
+/* responsive */
+@media (max-width:920px) { .polaroid{ width:340px } .photo{ height:320px } }
+@media (max-width:600px) { .polaroid{ width:280px } .photo{ height:260px } input[type="text"], input[type="email"], textarea { max-width:95%; width:95% } .menu{ gap:6px } }
+@media (max-width:420px) { .pink-overlay { top:54px; } }

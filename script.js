@@ -1,189 +1,298 @@
-/* ================== SITE DATA (JSON inside JS) ================== */
-const SITE_DATA = {
-  declaracao: { 
-    dataInicio: "2025-08-11T11:10:00",
-    fotos: [ "imagens/foto1.jpg","imagens/foto2.jpg","imagens/foto3.jpg","imagens/foto4.jpg","imagens/foto5.jpg","imagens/foto6.jpg","imagens/foto7.jpg","imagens/foto8.jpg","imagens/foto9.jpg" ],
-    datas: [ "11/08/2025","12/08/2025","13/08/2025","14/08/2025","15/08/2025","16/08/2025","17/08/2025","18/08/2025","19/08/2025" ],
-    texto: [ "Desde o primeiro dia em que te conheci, meu mundo ficou mais leve.", "Quero guardar cada momento nosso com muito carinho." ],
-    mensagens: [ "Cada lembrança contigo me faz sorrir 💕", "Tu és minha paz e alegria ✨", "Obrigado por existir, meu amor 💖" ],
-    versiculos: [ "O amor é paciente e bondoso. (1 Coríntios 13:4–7) 💞", "Nós amamos porque Ele nos amou primeiro. (1 João 4:19) 💗" ],
-    respostas: [ "Eu também te amo muito ❤️", "Tu me faz muito feliz, meu amor 💞" ]
+/* ================== Helpers ================== */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => document.querySelectorAll(sel);
+
+let slideTimer = null;
+let counterInterval = null;
+let heartsInterval = null;
+
+let currentMode = "declaracao";
+
+/* ================== Dados do site ================== */
+const data = {
+  declaracao: {
+    startDate: new Date("2024-10-02"),
+    polaroids: [
+      "imagens/foto1.jpg","imagens/foto2.jpg","imagens/foto3.jpg",
+      "imagens/foto4.jpg","imagens/foto5.jpg","imagens/foto6.jpg",
+      "imagens/foto7.jpg","imagens/foto8.jpg","imagens/foto9.jpg",
+      "imagens/foto10.jpg","imagens/foto11.jpg","imagens/foto12.jpg",
+      "imagens/foto13.jpg","imagens/foto14.jpg","imagens/foto15.jpg",
+      "imagens/foto16.jpg","imagens/foto17.jpg","imagens/foto18.jpg",
+      "imagens/foto19.jpg"
+    ],
+    textoPrincipal: 
+      "Eu sou muito grato por você…\n\n" +
+      "Cada dia contigo é uma alegria que Deus colocou no meu caminho. 💕\n" +
+      "Eu quero que você se sinta amada todos os dias.\n\n" +
+      "Obrigada por ser você.",
+    mensagens: [
+      "Você é a resposta mais bonita que Deus já mandou pra minha vida ❤️",
+      "Eu oro por você todos os dias 🙏✨",
+      "Você transforma tudo ao meu redor"
+    ],
+    versiculos: [
+      "“O amor é paciente, o amor é bondoso…” – 1 Coríntios 13:4-7",
+      "“Deus é amor.” – 1 João 4:8",
+      "“A bênção do Senhor traz riqueza…” – Provérbios 10:22"
+    ],
+    respostaDela: "Eu também te amo muito! ❤️ Obrigada por tudo que você faz por mim."
   },
+
   namoro: {
-    dataInicio: "2025-11-09T16:20:00",
-    fotos: [ "imagens/fotos10.jpg","imagens/fotos11.jpg","imagens/fotos12.jpg","imagens/fotos13.jpg","imagens/fotos14.jpg","imagens/fotos15.jpg","imagens/fotos16.jpg","imagens/fotos17.jpg","imagens/fotos18.jpg","imagens/fotos19.jpg" ],
-    datas: [ "09/11/2025","10/11/2025","11/11/2025","12/11/2025","13/11/2025","14/11/2025","15/11/2025","16/11/2025","17/11/2025","18/11/2025" ],
-    texto: [ "Cada dia do nosso namoro é um capítulo lindo da nossa história.", "Que Deus abençoe cada passo que damos juntos." ],
-    mensagens: [ "Nosso amor é lindo demais 💕", "Cada dia contigo é uma nova alegria 🌼", "Você é minha melhor companhia 🙏" ],
-    versiculos: [ "Acima de tudo, revistam-se do amor. (Colossenses 3:14) 💗", "O cordão de três dobras não se rompe facilmente. (Eclesiastes 4:12) 💒" ],
-    respostas: []
+    startDate: new Date("2024-10-15"),
+    polaroids: [
+      "imagens/foto1.jpg","imagens/foto2.jpg","imagens/foto3.jpg"
+    ],
+    textoPrincipal:
+      "Cada novo capítulo nosso é ainda mais lindo. 💕\n\n" +
+      "Nosso namoro é um presente que eu valorizo todos os dias.",
+    mensagens: [
+      "Você é meu abraço favorito 🤍",
+      "Que Deus continue abençoando nossa história 🙏✨"
+    ],
+    versiculos: [
+      "“Tudo posso naquele que me fortalece.” – Filipenses 4:13"
+    ],
+    respostaDela: "" // não mostra no namoro
   }
 };
 
-/* ================== Helpers ================== */
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
-let currentMode = 'declaracao';
-let slideTimer = null;
-let heartsInterval = null;
-let counterInterval = null;
-
-/* ================== Build UI from JSON ================== */
+/* ================== CONSTRUTOR PRINCIPAL ================== */
 function buildUI(mode) {
-  const data = SITE_DATA[mode];
-  const main = $('#main-content');
-  main.innerHTML = '';
+  const main = $("#main-content");
+  main.innerHTML = ""; 
 
-  // Slideshow
-  const slideshow = document.createElement('div');
-  slideshow.className = 'slideshow';
-  data.fotos.forEach((src,i)=>{
-    const slideWrapper = document.createElement('div');
-    slideWrapper.className = mode==='declaracao'?'mySlides':'mySlides2';
-    const polaroid = document.createElement('div');
-    polaroid.className='polaroid';
-    const r=i%3; if(r===0) polaroid.classList.add('rotate-1'); if(r===1) polaroid.classList.add('rotate-2'); if(r===2) polaroid.classList.add('rotate-3');
-    const photo = document.createElement('div'); photo.className='photo';
-    const img = document.createElement('img'); img.src=src; img.alt=`Foto ${i+1}`;
-    photo.appendChild(img);
-    const caption = document.createElement('div'); caption.className='caption';
-    caption.textContent=(data.datas&&data.datas[i])?data.datas[i]:'';
-    polaroid.appendChild(photo); polaroid.appendChild(caption);
-    slideWrapper.appendChild(polaroid);
-    slideshow.appendChild(slideWrapper);
+  const d = data[mode];
+
+  /* ===== Polaroids ===== */
+  const slide = document.createElement("div");
+  slide.className = "slideshow-container";
+
+  d.polaroids.forEach(src => {
+    const s = document.createElement("div");
+    s.className = mode === "declaracao" ? "mySlides" : "mySlides2";
+
+    const pol = document.createElement("div");
+    pol.className = "polaroid";
+
+    const img = document.createElement("img");
+    img.src = src;
+    img.style.width = "100%";
+
+    pol.appendChild(img);
+    s.appendChild(pol);
+    slide.appendChild(s);
   });
-  main.appendChild(slideshow);
 
-  // Carta
-  const carta = document.createElement('div'); carta.className='carta';
-  data.texto.forEach(p=>{ const pEl=document.createElement('p'); pEl.textContent=p; carta.appendChild(pEl); });
-  main.appendChild(carta);
+  main.appendChild(slide);
+  initSlides(mode);
 
-  // Contador
-  const cont=document.createElement('div'); cont.className='card-like contador';
-  const title=document.createElement('div'); title.className='title'; title.textContent='⏳ Tempo que nos Conhecemos';
-  const time=document.createElement('div'); time.className='time';
-  time.innerHTML=`<span id="days">0</span> dias • <span id="hours">0</span>h <span id="mins">0</span>m <span id="secs">0</span>s`;
-  cont.appendChild(title); cont.appendChild(time); main.appendChild(cont);
+  /* ===== Texto ===== */
+  const textBox = document.createElement("div");
+  textBox.className = "text-content";
+  textBox.textContent = d.textoPrincipal;
+  main.appendChild(textBox);
 
-  // Nossas Mensagens
-  buildWhiteBoxWithButtons(main,{heading:'💌 Nossas Mensagens',idSuffix:'Msg',items:data.mensagens});
+  /* ===== Contador ===== */
+  const secCont = document.createElement("section");
+  secCont.className = "section";
 
-  // Versículos
-  buildWhiteBoxWithButtons(main,{heading:'📖 Versículos Bíblicos',idSuffix:'Vers',items:data.versiculos});
+  const titleCont = document.createElement("h2");
+  titleCont.textContent = "Tempo que nos Conhecemos ⏳";
 
-  // Formulário
-  const formSec=document.createElement('section'); formSec.className='section';
-  const formTitle=document.createElement('h2'); formTitle.textContent='💬 Enviar uma mensagem';
-  const form=document.createElement('form'); form.id='msgForm'; form.method='POST'; form.action='https://formspree.io/f/xovkwzej';
-  form.innerHTML=`
-    <div class="form-row">
-      <input type="text" name="name" placeholder="Seu nome" required />
-      <input type="email" name="email" placeholder="Seu e-mail" required />
+  const boxCont = document.createElement("div");
+  boxCont.className = "counter-box";
+
+  boxCont.innerHTML = `
+    <div class="counter-flex">
+      <div class="counter-item"><span id="days">0</span>Dias</div>
+      <div class="counter-item"><span id="hours">0</span>Horas</div>
+      <div class="counter-item"><span id="mins">0</span>Min</div>
+      <div class="counter-item"><span id="secs">0</span>Seg</div>
     </div>
-    <textarea name="message" placeholder="Escreva sua mensagem..." required></textarea>
-    <button type="submit">Enviar 💌</button>
-    <div id="formStatus" class="box hidden" aria-live="polite"></div>
   `;
-  formSec.appendChild(formTitle); formSec.appendChild(form); main.appendChild(formSec);
 
-  // Resposta dela
-  if(mode==='declaracao'){
-    buildWhiteBoxWithButtons(main,{heading:'💘 Mensagem dela',idSuffix:'Resp',items:data.respostas});
+  secCont.appendChild(titleCont);
+  secCont.appendChild(boxCont);
+  main.appendChild(secCont);
+  initCounter(d.startDate);
+
+  /* ===== Nossas Mensagens ===== */
+  buildWhiteBox("Nossas Mensagens 💌", d.mensagens, main);
+
+  /* ===== Versículos ===== */
+  buildWhiteBox("Versículos Bíblicos 📖", d.versiculos, main);
+
+  /* ===== Formulário ===== */
+  const formSec = document.createElement("section");
+  formSec.className = "section";
+
+  const formTitle = document.createElement("h2");
+  formTitle.textContent = "Enviar uma mensagem 💬";
+
+  const formBox = document.createElement("div");
+  formBox.className = "white-box";
+
+  formBox.innerHTML = `
+    <form id="msgForm" action="https://formspree.io/f/xjkbzkjo" method="POST">
+      <label>Seu nome:</label>
+      <input type="text" name="nome" required>
+
+      <label>Sua mensagem:</label>
+      <textarea name="mensagem" rows="4" required></textarea>
+
+      <button type="submit">Enviar ❤️</button>
+      <p id="formStatus"></p>
+    </form>
+  `;
+
+  formSec.appendChild(formTitle);
+  formSec.appendChild(formBox);
+  main.appendChild(formSec);
+  initForm();
+
+  /* ===== Resposta dela (somente declaração) ===== */
+  if (d.respostaDela.trim() !== "") {
+    buildWhiteBox("Resposta dela 💘", [d.respostaDela], main);
   }
 
-  // initialize slides, counter, interactions
-  initSlides(mode);
-  initCounter(new Date(data.dataInicio));
-  initInteractions(mode,data);
-
-  // Form submit
-  const frm=$('#main-content form');
-  if(frm){frm.addEventListener('submit',async(e)=>{
-    e.preventDefault();
-    const status=$('#formStatus'); status.classList.add('hidden'); status.textContent='';
-    const formData=new FormData(frm);
-    try{
-      const resp=await fetch(frm.action,{method:'POST',body:formData,headers:{'Accept':'application/json'}});
-      if(resp.ok){ status.textContent='Mensagem enviada com sucesso! ❤️'; frm.reset(); } 
-      else { status.textContent='Ops, ocorreu um erro 😢'; }
-    } catch(err){ status.textContent='Erro ao enviar, tente novamente 😢'; }
-    status.classList.remove('hidden');
-  }});
+  initHearts();
 }
 
-/* ================== White box builder ================== */
-function buildWhiteBoxWithButtons(parent,{heading,idSuffix,items=[]}){
-  const sec=document.createElement('section'); sec.className='section';
-  const h2=document.createElement('h2'); h2.textContent=heading; sec.appendChild(h2);
-  if(items.length===0){ parent.appendChild(sec); return; }
+/* ================== White Box (Reveal) ================== */
+function buildWhiteBox(titulo, lista, parent) {
+  const sec = document.createElement("section");
+  sec.className = "section";
 
-  const whiteBox=document.createElement('div'); whiteBox.className='white-box';
-  const btnContainer=document.createElement('div'); btnContainer.className='btn-container';
-  const contentArea=document.createElement('div'); contentArea.className='content-area';
-  const pinkOverlay=document.createElement('div'); pinkOverlay.className='pink-overlay';
+  const h = document.createElement("h2");
+  h.textContent = titulo;
 
-  items.forEach((txt,i)=>{
-    const btn=document.createElement('button'); btn.className='reveal-btn'; btn.textContent=`Mostrar ${i+1}`;
-    btn.addEventListener('click',()=>{ pinkOverlay.textContent=txt; pinkOverlay.classList.add('show'); });
-    btnContainer.appendChild(btn);
+  const box = document.createElement("div");
+  box.className = "white-box";
+
+  const overlay = document.createElement("div");
+  overlay.className = "pink-overlay";
+
+  const btns = document.createElement("div");
+  btns.className = "btn-container";
+
+  lista.forEach((txt, i) => {
+    const b = document.createElement("button");
+    b.className = "reveal-btn";
+    b.textContent = `Mostrar ${i + 1}`;
+    b.onclick = () => {
+      overlay.textContent = txt;
+      overlay.classList.add("show");
+    };
+    btns.appendChild(b);
   });
 
-  whiteBox.appendChild(btnContainer);
-  whiteBox.appendChild(contentArea);
-  whiteBox.appendChild(pinkOverlay);
-  sec.appendChild(whiteBox);
+  overlay.onclick = () => overlay.classList.remove("show");
+
+  box.appendChild(btns);
+  box.appendChild(overlay);
+  sec.appendChild(h);
+  sec.appendChild(box);
   parent.appendChild(sec);
 }
 
+/* ================== Formulário ================== */
+function initForm() {
+  const form = $("#msgForm");
+  if (!form) return;
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const status = $("#formStatus");
+    status.textContent = "Enviando…";
+
+    const fd = new FormData(form);
+
+    try {
+      await fetch(form.action, {
+        method: "POST",
+        body: fd,
+        headers: { Accept: "application/json" }
+      });
+
+      status.textContent = "Mensagem enviada com sucesso! ❤️";
+      form.reset();
+    } catch {
+      status.textContent = "Erro ao enviar 😢";
+    }
+  });
+}
+
 /* ================== Slides ================== */
-function initSlides(mode){
-  const slides=mode==='declaracao'?$$('.mySlides'):$$('.mySlides2');
-  let idx=0;
-  slides.forEach(s=>s.style.display='none');
-  function showSlide(){ slides.forEach(s=>s.style.display='none'); slides[idx].style.display='flex'; idx=(idx+1)%slides.length; }
-  showSlide(); clearInterval(slideTimer); slideTimer=setInterval(showSlide,5000);
+function initSlides(mode) {
+  const slides = mode === "declaracao" ? $$(".mySlides") : $$(".mySlides2");
+  let idx = 0;
+
+  slides.forEach(s => s.style.display = "none");
+
+  function show() {
+    slides.forEach(s => s.style.display = "none");
+    slides[idx].style.display = "flex";
+    idx = (idx + 1) % slides.length;
+  }
+
+  show();
+
+  clearInterval(slideTimer);
+  slideTimer = setInterval(show, 5000);
 }
 
 /* ================== Counter ================== */
-function initCounter(startDate){
-  const daysEl=$('#days'), hoursEl=$('#hours'), minsEl=$('#mins'), secsEl=$('#secs');
-  if(counterInterval) clearInterval(counterInterval);
-  function updateCounter(){
-    const now=new Date(); let diff=Math.floor((now-startDate)/1000);
-    const d=Math.floor(diff/86400); diff%=86400; const h=Math.floor(diff/3600); diff%=3600; const m=Math.floor(diff/60); const s=diff%60;
-    daysEl.textContent=d; hoursEl.textContent=h; minsEl.textContent=m; secsEl.textContent=s;
+function initCounter(date) {
+  if (counterInterval) clearInterval(counterInterval);
+
+  function update() {
+    const diff = Math.floor((new Date() - date) / 1000);
+    const d = Math.floor(diff / 86400);
+    const h = Math.floor((diff % 86400) / 3600);
+    const m = Math.floor((diff % 3600) / 60);
+    const s = diff % 60;
+
+    $("#days").textContent = d;
+    $("#hours").textContent = h;
+    $("#mins").textContent = m;
+    $("#secs").textContent = s;
   }
-  updateCounter(); counterInterval=setInterval(updateCounter,1000);
+
+  update();
+  counterInterval = setInterval(update, 1000);
 }
 
-/* ================== Interactions ================== */
-function initInteractions(mode,data){
-  // hearts animation
-  if(heartsInterval) clearInterval(heartsInterval);
-  const coracoes=$('#coracoes');
-  heartsInterval=setInterval(()=>{ 
-    const h=document.createElement('div'); h.className='heart'; h.textContent='❤️'; 
-    h.style.left=Math.random()*window.innerWidth+'px'; h.style.fontSize=(12+Math.random()*18)+'px';
-    h.style.animation=`floatHeart ${4+Math.random()*3}s linear forwards`; coracoes.appendChild(h); 
-    setTimeout(()=>{ coracoes.removeChild(h); },7000); 
-  },300);
+/* ================== Corações ================== */
+function initHearts() {
+  if (heartsInterval) clearInterval(heartsInterval);
 
-  // floating hearts CSS
-  if(!document.getElementById('heartAnim')){
-    const style=document.createElement('style'); style.id='heartAnim';
-    style.innerHTML=`@keyframes floatHeart{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(-320px) rotate(360deg);opacity:0;}}`;
-    document.head.appendChild(style);
-  }
+  const c = $("#coracoes");
+
+  heartsInterval = setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.textContent = "❤️";
+    h.style.left = Math.random() * window.innerWidth + "px";
+    h.style.fontSize = (14 + Math.random() * 20) + "px";
+    h.style.animationDuration = (4 + Math.random() * 3) + "s";
+    c.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+  }, 350);
 }
 
-/* ================== Menu switch ================== */
-$$('.menu-btn').forEach(btn=>btn.addEventListener('click',()=>{
-  if(btn.classList.contains('disabled')||btn.classList.contains('active')) return;
-  $$('.menu-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  currentMode=btn.dataset.mode; buildUI(currentMode);
-}));
+/* ================== Menu ================== */
+$$(".menu-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (btn.classList.contains("disabled")) return;
+    $$(".menu-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentMode = btn.dataset.mode;
+    buildUI(currentMode);
+  });
+});
 
-/* ================== Init ================== */
-document.addEventListener('DOMContentLoaded',()=>{ buildUI(currentMode); });
+/* ================== INIT ================== */
+document.addEventListener("DOMContentLoaded", () => buildUI(currentMode));

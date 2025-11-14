@@ -172,3 +172,78 @@ button[type="submit"] { margin-top:8px; background: linear-gradient(135deg,#e754
 /* responsive */
 @media (max-width:920px) { .polaroid{ width:340px } .photo{ height:320px } }
 @media (max-width:600px) { .polaroid{ width:280px } .photo{ height:260px } input[type="text"], input[type="email"], textarea { max-width:95%; width:95% } .menu{ gap:6px } }
+
+
+/* ===================== ADIÇÕES PARA BOTÕES DENTRO DA WHITE-BOX =====================
+   - Mantive seu visual exatamente igual; apenas adicionei elementos de layout
+   - O overlay foi ajustado para não cobrir os botões (top offset)
+*/
+
+/* container que ficará dentro da white-box: botões + área de conteúdo */
+.white-box {
+  /* manter propriedades originais (já acima) */
+  display:flex;
+  flex-direction:column;
+  padding:12px;
+  gap:10px;
+  min-height:86px;
+}
+
+/* container dos botões (fixo no topo da white-box) */
+.btn-container {
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  width:100%;
+  z-index:2; /* garante que fique acima do overlay */
+}
+
+/* botões internos usados na white-box (mesma aparência do reveal-btn) */
+.btn-container .reveal-btn {
+  padding:8px 12px;
+  font-size:0.95rem;
+  border-radius:10px;
+  background: linear-gradient(135deg,#e75480,#f78da7);
+  color:#fff;
+  border:none;
+  cursor:pointer;
+  font-weight:800;
+}
+
+/* área onde o conteúdo será mostrado (embaixo dos botões) */
+.content-area {
+  width:100%;
+  min-height:48px;
+  padding:8px 6px;
+  border-radius:8px;
+  color:#422033;
+  font-size:1rem;
+  text-align:center;
+  align-self:center;
+  z-index:1;
+  position:relative;
+  background:transparent;
+}
+
+/* ajustar o overlay para cobrir apenas a área de conteúdo (não os botões) */
+.pink-overlay {
+  /* antes: top:0; left:0; right:0; bottom:0; */
+  top:46px; /* deixa 46px de espaço superior para os botões */
+  left:0; right:0; bottom:0;
+  border-radius:0 0 12px 12px; /* mantém borda arredondada na parte inferior */
+  padding:16px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+/* quando visible */
+.pink-overlay.show {
+  display:flex;
+}
+
+/* quando a caixa for pequena em telas mobile, diminuir offset do overlay */
+@media (max-width:420px) {
+  .pink-overlay { top:54px; } /* em mobile os botões empilham e ocupam mais altura */
+}

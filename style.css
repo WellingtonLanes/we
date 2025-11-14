@@ -1,248 +1,111 @@
-/* ===== Base / fonte ===== */
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 
-* {
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html, body {
-  height:100%;
-}
-
-body {
-  font-family:'Patrick Hand', cursive;
+/* BASE */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Patrick Hand',cursive;
   background:#fff0f5;
   color:#333;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  padding-bottom:40px;
 }
 
-/* ===== Header / Menu ===== */
-.site-header {
-  text-align:center;
-  padding:20px 10px;
+/* HEADER */
+.site-header{text-align:center;padding:20px}
+.menu{margin-top:10px;display:flex;justify-content:center;gap:10px}
+.menu-btn{
+  padding:8px 14px;border:none;border-radius:10px;
+  background:#ffbcd1;cursor:pointer;font-size:1rem
+}
+.menu-btn.active{background:#ff9fbe;color:#fff}
+.menu-btn.disabled{opacity:.4;cursor:not-allowed}
+
+/* MAIN */
+.loading{text-align:center;margin-top:20px}
+
+/* SLIDES / POLAROIDS */
+.slideshow{width:100%;text-align:center;margin:20px 0}
+.mySlides,.mySlides2{display:none}
+.polaroid{
+  background:white;padding:10px;border-radius:10px;
+  display:inline-block;box-shadow:0 4px 8px rgba(0,0,0,0.1);
+  margin:10px;transform:rotate(0deg)
+}
+.rotate-1{transform:rotate(-3deg)}
+.rotate-2{transform:rotate(2deg)}
+.rotate-3{transform:rotate(-1deg)}
+.polaroid img{width:220px;height:auto;border-radius:6px}
+.caption{text-align:center;margin-top:5px;font-size:1rem}
+
+/* CARTA */
+.carta{
+  background:white;padding:20px;border-radius:12px;
+  margin:20px auto;width:90%;max-width:700px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  line-height:1.6;font-size:1.2rem
 }
 
-.menu {
-  margin-top:10px;
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
+/* CONTADOR */
+.card-like{
+  background:white;padding:20px;border-radius:12px;
+  margin:20px auto;width:90%;max-width:600px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1)
+}
+.card-like .title{text-align:center;font-size:1.4rem;margin-bottom:10px}
+.time{text-align:center;font-size:1.2rem}
+
+/* SECTION TITLES */
+.section h2{
+  font-size:1.4rem;margin-bottom:10px;text-align:center
 }
 
-.menu-btn {
-  background:#ffb6ce;
-  border:none;
-  padding:10px 18px;
-  border-radius:12px;
-  cursor:pointer;
-  font-size:1.2rem;
-  transition:.2s;
+/* WHITE BOXES (mensagens / versículos / respostas) */
+.white-box{
+  background:#fff;border-radius:14px;padding:20px;
+  margin:20px auto;width:90%;max-width:600px;
+  box-shadow:0 0 10px rgba(0,0,0,0.08);
+  position:relative;overflow:hidden
 }
 
-.menu-btn:hover { background:#ff9fbe; }
-.menu-btn.active { background:#ff86ad; }
-.menu-btn.disabled {
-  background:#ddd;
-  color:#888;
-  cursor:not-allowed;
+.btn-container{display:flex;justify-content:center;margin-bottom:12px}
+
+.reveal-btn{
+  background:#ffbcd1;border:none;padding:10px 18px;font-size:1.1rem;
+  cursor:pointer;border-radius:10px;transition:.2s
 }
+.reveal-btn:hover{background:#ff9fbe}
 
-/* ===== Seções gerais ===== */
-.section {
-  width:90%;
-  max-width:700px;
-  margin:20px auto;
-  text-align:center;
+.content-area{
+  display:none;text-align:center;font-size:1.25rem;padding-top:10px
 }
+.white-box.showing .content-area{display:block}
 
-.section h2 {
-  font-size:1.8rem;
-  margin-bottom:10px;
+/* remove overlay pink antigo */
+.pink-overlay{display:none!important}
+
+/* FORMULÁRIO */
+form{
+  background:#fff;padding:20px;border-radius:14px;
+  width:90%;max-width:600px;margin:20px auto;
+  box-shadow:0 0 10px rgba(0,0,0,0.1)
 }
-
-/* ===== Polaroids ===== */
-.slideshow-container {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  position:relative;
-  margin:auto;
+.form-row{display:flex;gap:10px;margin-bottom:12px}
+.form-row input{
+  flex:1;padding:10px;border:1px solid #ccc;border-radius:10px;
+  font-size:1rem;font-family:'Patrick Hand',cursive
 }
-
-.mySlides, .mySlides2 {
-  display:none;
-  justify-content:center;
-  align-items:center;
+textarea{
+  width:100%;height:120px;padding:10px;border:1px solid #ccc;
+  border-radius:10px;font-size:1rem;font-family:'Patrick Hand',cursive;
+  margin-bottom:12px
 }
-
-.polaroid {
-  background:white;
-  padding:10px;
-  border-radius:10px;
-  box-shadow:0 4px 8px rgba(0,0,0,0.2);
-  max-width:260px;
+button[type=submit]{
+  width:100%;padding:12px;font-size:1.2rem;border:none;
+  border-radius:12px;background:#ffbcd1;cursor:pointer;
+  transition:.2s;font-family:'Patrick Hand',cursive
 }
+button[type=submit]:hover{background:#ff9fbe}
 
-/* ===== Carta (texto principal) ===== */
-.text-content {
-  margin:15px auto;
-  background:white;
-  padding:20px;
-  border-radius:20px;
-  width:90%;
-  max-width:700px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-  line-height:1.7;
-  font-size:1.4rem;
-}
-
-/* ===== White Box (mensagens, versículos, resposta dela) ===== */
-.white-box {
-  background:white;
-  border-radius:20px;
-  padding:20px;
-  width:100%;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-  position:relative;
-}
-
-.btn-container {
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-bottom:10px;
-}
-
-.reveal-btn {
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  background:#ffb6ce;
-  cursor:pointer;
-  font-size:1.2rem;
-}
-
-.reveal-btn:hover {
-  background:#ff9fbe;
-}
-
-.content-area {
-  display:none;
-  margin-top:10px;
-  white-space:pre-line;
-}
-
-/* Overlay rosa quando clica */
-.pink-overlay {
-  position:absolute;
-  inset:0;
-  background:rgba(255,182,206,0.92);
-  border-radius:20px;
-  padding:20px;
-  font-size:1.4rem;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-
-.pink-overlay.show {
-  display:flex;
-}
-
-/* ===== Corações animados ===== */
-#coracoes {
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  overflow:hidden;
-}
-
-.heart {
-  position:absolute;
-  bottom:-20px;
-  animation:floatHeart 6s linear forwards;
-}
-
-/* ===== Contador ===== */
-.counter-box {
-  background:white;
-  padding:20px;
-  border-radius:20px;
-  width:100%;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-
-.counter-flex {
-  display:flex;
-  justify-content:space-between;
-  text-align:center;
-  margin-top:10px;
-}
-
-.counter-item span {
-  font-size:1.8rem;
-  display:block;
-}
-
-/* ===== Rodapé ===== */
-.site-footer {
-  margin-top:40px;
-  text-align:center;
-  opacity:0.7;
-}
-
-/* ===================================================================== */
-/* ==========  AQUI ESTÁ O AJUSTE DO FORMULÁRIO (COM FONTE CERTA) ====== */
-/* ===================================================================== */
-
-form label,
-form input,
-form textarea,
-form button {
-    font-family: 'Patrick Hand', cursive !important;
-    font-size: 1.2rem;
-}
-
-/* Input e textarea iguais ao resto do layout */
-form input,
-form textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ffd6e8;
-    border-radius: 12px;
-    background: #fff;
-    margin-top: 6px;
-    outline: none;
-}
-
-/* Botão alinhado e padronizado */
-form button {
-    width: 100%;
-    padding: 12px;
-    background: #ffb6ce;
-    border: none;
-    border-radius: 12px;
-    color: #333;
-    margin-top: 15px;
-    cursor: pointer;
-    transition: .2s;
-}
-
-form button:hover {
-    background: #ff9fbe;
-}
-
-/* Mensagem de status */
-#formStatus {
-    margin-top: 10px;
-    font-size: 1.2rem;
+/* HEARTS */
+#coracoes{position:fixed;top:0;left:0;pointer-events:none;z-index:9999}
+.heart{
+  position:fixed;opacity:1;transition:transform linear,opacity linear
 }

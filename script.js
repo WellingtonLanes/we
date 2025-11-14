@@ -1,6 +1,4 @@
-/* ================== SITE DATA (JSON inside JS) ================== 
-   Edite fotos, datas, textos, mensagens e versículos aqui.
-*/
+/* ================== SITE DATA ================== */
 const SITE_DATA = {
   declaracao: {
     dataInicio: "2025-08-11T11:10:00",
@@ -32,7 +30,6 @@ const SITE_DATA = {
       "Tu me faz muito feliz, meu amor 💞"
     ]
   },
-
   namoro: {
     dataInicio: "2025-11-09T16:20:00",
     fotos: [
@@ -63,86 +60,85 @@ const SITE_DATA = {
 };
 
 /* ================== Helpers ================== */
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
 
 let currentMode = 'declaracao';
 let slideTimer = null;
 let heartsInterval = null;
 let counterInterval = null;
 
-/* ================== Build UI from JSON ================== */
-function buildUI(mode) {
+/* ================== Build White Box ================== */
+function buildWhiteBox(parent, heading, items) {
+  if(!items || !items.length) return;
+  const section = document.createElement('section');
+  section.className = 'section';
+  const h2 = document.createElement('h2'); h2.textContent = heading;
+  section.appendChild(h2);
+
+  items.forEach(item => {
+    const wb = document.createElement('div'); wb.className = 'white-box';
+    const content = document.createElement('div'); content.className = 'content-area';
+    const overlay = document.createElement('div'); overlay.className = 'pink-overlay'; overlay.textContent = item;
+    const btn = document.createElement('button'); btn.className = 'reveal-btn'; btn.textContent = 'Mostrar';
+    btn.addEventListener('click', () => overlay.classList.toggle('show'));
+
+    wb.appendChild(content); wb.appendChild(overlay); wb.appendChild(btn);
+    section.appendChild(wb);
+  });
+
+  parent.appendChild(section);
+}
+
+/* ================== Build UI ================== */
+function buildUI(mode){
   const data = SITE_DATA[mode];
   const main = $('#main-content');
   main.innerHTML = '';
 
-  /* --- SLIDESHOW (polaroids) --- */
-  const slideshow = document.createElement('div');
-  slideshow.className = 'slideshow';
+  /* --- Slideshow --- */
+  const slideshow = document.createElement('div'); slideshow.className='slideshow';
+  data.fotos.forEach((src,i)=>{
+    const slide = document.createElement('div'); slide.className=(mode==='declaracao'? 'mySlides':'mySlides2');
+    const polaroid = document.createElement('div'); polaroid.className='polaroid';
+    polaroid.classList.add(i%3===0?'rotate-1':i%3===1?'rotate-2':'rotate-3');
 
-  data.fotos.forEach((src, i) => {
-    const slideWrapper = document.createElement('div');
-    slideWrapper.className = mode === 'declaracao' ? 'mySlides' : 'mySlides2';
-
-    const polaroid = document.createElement('div');
-    polaroid.className = 'polaroid';
-    const r = i % 3;
-    if (r === 0) polaroid.classList.add('rotate-1');
-    if (r === 1) polaroid.classList.add('rotate-2');
-    if (r === 2) polaroid.classList.add('rotate-3');
-
-    const photo = document.createElement('div'); photo.className = 'photo';
-    const img = document.createElement('img'); 
-    img.src = src; 
-    img.alt = `Foto ${i+1}`;
+    const photo = document.createElement('div'); photo.className='photo';
+    const img = document.createElement('img'); img.src=src; img.alt=`Foto ${i+1}`;
     photo.appendChild(img);
 
-    const caption = document.createElement('div'); caption.className = 'caption';
-    caption.textContent = (data.datas && data.datas[i]) ? data.datas[i] : '';
-
-    polaroid.appendChild(photo);
-    polaroid.appendChild(caption);
-    slideWrapper.appendChild(polaroid);
-    slideshow.appendChild(slideWrapper);
+    const caption = document.createElement('div'); caption.className='caption';
+    caption.textContent = data.datas[i] || '';
+    polaroid.appendChild(photo); polaroid.appendChild(caption);
+    slide.appendChild(polaroid); slideshow.appendChild(slide);
   });
-
   main.appendChild(slideshow);
 
-  /* --- CARTA (folha de caderno) --- */
-  const carta = document.createElement('div'); carta.className = 'carta';
-  data.texto.forEach(p => {
-    const pEl = document.createElement('p'); pEl.textContent = p; carta.appendChild(pEl);
+  /* --- Carta --- */
+  const carta = document.createElement('div'); carta.className='carta';
+  data.texto.forEach(p=>{
+    const pEl = document.createElement('p'); pEl.textContent=p;
+    carta.appendChild(pEl);
   });
   main.appendChild(carta);
 
-  /* --- CONTADOR --- */
-  const cont = document.createElement('div'); cont.className = 'card-like contador';
-  const title = document.createElement('div'); title.className = 'title'; title.textContent = '⏳ Nossos tempo juntos';
-  const time = document.createElement('div'); time.className = 'time';
-  time.innerHTML = `<span id="days">0</span> dias • <span id="hours">0</span>h <span id="mins">0</span>m <span id="secs">0</span>s`;
-  cont.appendChild(title); cont.appendChild(time);
-  main.appendChild(cont);
+  /* --- Contador --- */
+  const cont = document.createElement('div'); cont.className='card-like contador';
+  const title = document.createElement('div'); title.className='title'; title.textContent='⏳ Nossos tempo juntos';
+  const time = document.createElement('div'); time.className='time';
+  time.innerHTML=`<span id="days">0</span> dias • <span id="hours">0</span>h <span id="mins">0</span>m <span id="secs">0</span>s`;
+  cont.appendChild(title); cont.appendChild(time); main.appendChild(cont);
 
-  /* --- MENSAGENS --- */
-  buildWhiteBoxWithButtons(main, {
-    heading: '💌 Nossas Mensagens',
-    idSuffix: 'Msg',
-    items: data.mensagens
-  });
+  /* --- Mensagens --- */
+  buildWhiteBox(main,'💌 Nossas Mensagens',data.mensagens);
+  buildWhiteBox(main,'📖 Versículos Bíblicos',data.versiculos);
+  if(data.respostas && data.respostas.length) buildWhiteBox(main,'💘 Mensagem dela',data.respostas);
 
-  /* --- VERSÍCULOS --- */
-  buildWhiteBoxWithButtons(main, {
-    heading: '📖 Versículos Bíblicos',
-    idSuffix: 'Vers',
-    items: data.versiculos
-  });
-
-  /* --- FORMULÁRIO --- */
-  const formSec = document.createElement('section'); formSec.className = 'section';
-  const formTitle = document.createElement('h2'); formTitle.textContent = '💬 Enviar uma mensagem';
-  const form = document.createElement('form'); form.id = 'msgForm'; form.method = 'POST'; form.action = 'https://formspree.io/f/xovkwzej';
-  form.innerHTML = `
+  /* --- Formulário --- */
+  const formSec = document.createElement('section'); formSec.className='section';
+  const formTitle = document.createElement('h2'); formTitle.textContent='💬 Enviar uma mensagem';
+  const form = document.createElement('form'); form.method='POST'; form.action='https://formspree.io/f/xovkwzej';
+  form.innerHTML=`
     <div class="form-row">
       <input type="text" name="name" placeholder="Seu nome" required />
       <input type="email" name="email" placeholder="Seu e-mail" required />
@@ -153,108 +149,68 @@ function buildUI(mode) {
   `;
   formSec.appendChild(formTitle); formSec.appendChild(form); main.appendChild(formSec);
 
-  /* --- MENSAGEM DELA --- */
-  if (mode === 'declaracao') {
-    buildWhiteBoxWithButtons(main, {
-      heading: '💘 Mensagem dela',
-      idSuffix: 'Resp',
-      items: data.respostas
-    });
-  }
-
   startSlides(mode);
   startCounter(data.dataInicio);
 }
 
-/* ================== White box helper ================== */
-function buildWhiteBoxWithButtons(parent, { heading, idSuffix, items }) {
-  const section = document.createElement('section'); section.className = 'section';
-  const h2 = document.createElement('h2'); h2.textContent = heading; section.appendChild(h2);
-
-  items.forEach((item, idx) => {
-    const wb = document.createElement('div'); wb.className = 'white-box';
-
-    const content = document.createElement('div'); content.className = 'content-area'; content.textContent = '';
-    const overlay = document.createElement('div'); overlay.className = 'pink-overlay'; overlay.textContent = item;
-
-    const btn = document.createElement('button'); btn.className = 'reveal-btn'; btn.textContent = 'Mostrar';
-    btn.addEventListener('click', () => overlay.classList.toggle('show'));
-
-    wb.appendChild(content);
-    wb.appendChild(overlay);
-    wb.appendChild(btn);
-    section.appendChild(wb);
-  });
-
-  parent.appendChild(section);
-}
-
-/* ================== SLIDES ================== */
+/* ================== Slides ================== */
 let slideIndex = 0;
-function startSlides(mode) {
+function startSlides(mode){
   const slides = $$(mode==='declaracao'?'.mySlides':'.mySlides2');
   if(!slides.length) return;
   slides.forEach(s=>s.style.display='none');
-  slideIndex = 0;
-  slides[slideIndex].style.display='flex';
+  slideIndex=0; slides[slideIndex].style.display='flex';
   if(slideTimer) clearInterval(slideTimer);
-  slideTimer = setInterval(() => {
+  slideTimer = setInterval(()=>{
     slides[slideIndex].style.display='none';
     slideIndex = (slideIndex+1) % slides.length;
     slides[slideIndex].style.display='flex';
   },5000);
 }
 
-/* ================== COUNTER ================== */
-function startCounter(startDate) {
+/* ================== Counter ================== */
+function startCounter(startDate){
   if(counterInterval) clearInterval(counterInterval);
-  const start = new Date(startDate).getTime();
+  const start=new Date(startDate).getTime();
   counterInterval = setInterval(()=>{
     const now = Date.now();
-    let diff = Math.floor((now-start)/1000);
-    const days = Math.floor(diff/86400); diff%=86400;
-    const hours = Math.floor(diff/3600); diff%=3600;
-    const mins = Math.floor(diff/60); const secs = diff%60;
-    $('#days').textContent = days;
-    $('#hours').textContent = hours;
-    $('#mins').textContent = mins;
-    $('#secs').textContent = secs;
+    let diff=Math.floor((now-start)/1000);
+    const days=Math.floor(diff/86400); diff%=86400;
+    const hours=Math.floor(diff/3600); diff%=3600;
+    const mins=Math.floor(diff/60); const secs=diff%60;
+    $('#days').textContent=days; $('#hours').textContent=hours;
+    $('#mins').textContent=mins; $('#secs').textContent=secs;
   },1000);
 }
 
-/* ================== Hearts animation ================== */
+/* ================== Hearts ================== */
 function createHeart(){
-  const d = document.createElement('div'); d.className='heart';
-  d.style.left = Math.random()*window.innerWidth+'px';
-  d.style.fontSize = (12 + Math.random()*14)+'px';
-  d.style.color = '#f78da7';
-  d.textContent = '❤';
-  d.style.transition = `transform 3s linear, opacity 3s linear`;
+  const d=document.createElement('div'); d.className='heart';
+  d.style.left=Math.random()*window.innerWidth+'px';
+  d.style.fontSize=(12+Math.random()*14)+'px'; d.style.color='#f78da7';
+  d.textContent='❤';
   document.getElementById('coracoes').appendChild(d);
-  setTimeout(()=>{
-    d.style.transform = `translateY(${window.innerHeight+40}px) rotate(${Math.random()*60-30}deg)`;
-    d.style.opacity = 0;
-  },10);
+  setTimeout(()=>{ d.style.transform=`translateY(${window.innerHeight+40}px) rotate(${Math.random()*60-30}deg)`; d.style.opacity=0; },10);
   setTimeout(()=>d.remove(),3100);
 }
 function startHearts(){
   if(heartsInterval) clearInterval(heartsInterval);
-  heartsInterval = setInterval(createHeart,400);
+  heartsInterval=setInterval(createHeart,400);
 }
 
-/* ================== Menu buttons ================== */
+/* ================== Menu ================== */
 $$('.menu-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     if(btn.classList.contains('disabled')) return;
     $$('.menu-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
-    currentMode = btn.dataset.mode;
+    currentMode=btn.dataset.mode;
     buildUI(currentMode);
   });
 });
 
 /* ================== Init ================== */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', ()=>{
   buildUI(currentMode);
   startHearts();
 });

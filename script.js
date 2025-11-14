@@ -99,4 +99,91 @@ function buildUI(mode) {
 
   // Form submit
   const frm=$('#main-content form');
-  if(frm){frm.addEventListener('submit',async(e
+  if(frm){frm.addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    const status=$('#formStatus'); status.classList.add('hidden'); status.textContent='';
+    const formData=new FormData(frm);
+    try{
+      const resp=await fetch(frm.action,{method:'POST',body:formData,headers:{'Accept':'application/json'}});
+      if(resp.ok){ status.textContent='Mensagem enviada com sucesso! ❤️'; frm.reset(); } 
+      else { status.textContent='Ops, ocorreu um erro 😢'; }
+    } catch(err){ status.textContent='Erro ao enviar, tente novamente 😢'; }
+    status.classList.remove('hidden');
+  }});
+}
+
+/* ================== White box builder ================== */
+function buildWhiteBoxWithButtons(parent,{heading,idSuffix,items=[]}){
+  const sec=document.createElement('section'); sec.className='section';
+  const h2=document.createElement('h2'); h2.textContent=heading; sec.appendChild(h2);
+  if(items.length===0){ parent.appendChild(sec); return; }
+
+  const whiteBox=document.createElement('div'); whiteBox.className='white-box';
+  const btnContainer=document.createElement('div'); btnContainer.className='btn-container';
+  const contentArea=document.createElement('div'); contentArea.className='content-area';
+  const pinkOverlay=document.createElement('div'); pinkOverlay.className='pink-overlay';
+
+  items.forEach((txt,i)=>{
+    const btn=document.createElement('button'); btn.className='reveal-btn'; btn.textContent=`Mostrar ${i+1}`;
+    btn.addEventListener('click',()=>{ pinkOverlay.textContent=txt; pinkOverlay.classList.add('show'); });
+    btnContainer.appendChild(btn);
+  });
+
+  whiteBox.appendChild(btnContainer);
+  whiteBox.appendChild(contentArea);
+  whiteBox.appendChild(pinkOverlay);
+  sec.appendChild(whiteBox);
+  parent.appendChild(sec);
+}
+
+/* ================== Slides ================== */
+function initSlides(mode){
+  const slides=mode==='declaracao'?$$('.mySlides'):$$('.mySlides2');
+  let idx=0;
+  slides.forEach(s=>s.style.display='none');
+  function showSlide(){ slides.forEach(s=>s.style.display='none'); slides[idx].style.display='flex'; idx=(idx+1)%slides.length; }
+  showSlide(); clearInterval(slideTimer); slideTimer=setInterval(showSlide,5000);
+}
+
+/* ================== Counter ================== */
+function initCounter(startDate){
+  const daysEl=$('#days'), hoursEl=$('#hours'), minsEl=$('#mins'), secsEl=$('#secs');
+  if(counterInterval) clearInterval(counterInterval);
+  function updateCounter(){
+    const now=new Date(); let diff=Math.floor((now-startDate)/1000);
+    const d=Math.floor(diff/86400); diff%=86400; const h=Math.floor(diff/3600); diff%=3600; const m=Math.floor(diff/60); const s=diff%60;
+    daysEl.textContent=d; hoursEl.textContent=h; minsEl.textContent=m; secsEl.textContent=s;
+  }
+  updateCounter(); counterInterval=setInterval(updateCounter,1000);
+}
+
+/* ================== Interactions ================== */
+function initInteractions(mode,data){
+  // hearts animation
+  if(heartsInterval) clearInterval(heartsInterval);
+  const coracoes=$('#coracoes');
+  heartsInterval=setInterval(()=>{ 
+    const h=document.createElement('div'); h.className='heart'; h.textContent='❤️'; 
+    h.style.left=Math.random()*window.innerWidth+'px'; h.style.fontSize=(12+Math.random()*18)+'px';
+    h.style.animation=`floatHeart ${4+Math.random()*3}s linear forwards`; coracoes.appendChild(h); 
+    setTimeout(()=>{ coracoes.removeChild(h); },7000); 
+  },300);
+
+  // floating hearts CSS
+  if(!document.getElementById('heartAnim')){
+    const style=document.createElement('style'); style.id='heartAnim';
+    style.innerHTML=`@keyframes floatHeart{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(-320px) rotate(360deg);opacity:0;}}`;
+    document.head.appendChild(style);
+  }
+}
+
+/* ================== Menu switch ================== */
+$$('.menu-btn').forEach(btn=>btn.addEventListener('click',()=>{
+  if(btn.classList.contains('disabled')||btn.classList.contains('active')) return;
+  $$('.menu-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentMode=btn.dataset.mode; buildUI(currentMode);
+}));
+
+/* ================== Init ================== */
+document.addEventListener('DOMContentLoaded',()=>{ buildUI(currentMode); });

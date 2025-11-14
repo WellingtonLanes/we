@@ -53,29 +53,26 @@ body{
 
 .photo {
   width:100%;
-  height:350px;            /* fixed height */
+  height:350px;
   overflow:hidden;
   display:flex; align-items:center; justify-content:center;
   background:#f8f8f8; border-radius:8px;
 }
 .photo img { max-height:100%; max-width:100%; object-fit:contain; display:block; }
 
-/* caption (white bottom area) */
 .caption {
   margin-top:12px; width:100%; text-align:center;
   padding:10px 6px; background:#fff; border-radius:8px;
   font-weight:700; color:#6a2a3a; box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
-/* rotation classes */
 .rotate-1 { transform: rotate(-2deg); }
 .rotate-2 { transform: rotate(2.5deg); }
 .rotate-3 { transform: rotate(-1.2deg); }
 
-/* hide slide wrappers default; JS shows current */
 .mySlides, .mySlides2 { display:none; }
 
-/* ===== Carta (folha de caderno - opção A) ===== */
+/* ===== Carta ===== */
 .carta {
   max-width:840px; margin:18px auto; padding:26px 30px; text-align:left;
   background: repeating-linear-gradient(to bottom,#fff 0,#fff 24px,#f8f8f8 25px,#f8f8f8 25px);
@@ -84,121 +81,32 @@ body{
 }
 .carta p{ margin-bottom:12px; }
 
-/* ===== card-like (white border look) - used as "white box" base ===== */
-.card-like {
-  max-width:760px; margin:18px auto; padding:16px; background:#fff; border-radius:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.04); border:1px solid rgba(255,255,255,0.95);
-  text-align:center;
-}
-.contador .title { color:#e75480; font-weight:800; margin-bottom:6px; font-size:1.05rem; text-align:center; }
-.contador .time { font-weight:700; color:#e75480; font-size:1.05rem; text-align:center; }
-
-/* ===== sections messages/verses ===== */
-.section { max-width:760px; margin:18px auto; text-align:center; }
-.section h2 { color:#e75480; margin-bottom:8px; font-size:1.15rem; }
-
-/* reveal button style */
-.reveal-btn {
-  background: linear-gradient(135deg,#e75480,#f78da7);
-  color:#fff; border:none; padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800;
-}
-
-/* ===== White box base (always visible) =====
-   This is the box that is shown before clicking (same style as contador)
-*/
+/* ===== White box original ===== */
 .white-box {
-  display:block;
-  margin:12px auto 6px;
-  padding:14px 16px;
-  border-radius:12px;
-  max-width:640px;
-  background:#fff;
-  border:1px solid rgba(255,255,255,0.95);
-  box-shadow:0 6px 18px rgba(0,0,0,0.04);
-  min-height:60px; /* visual placeholder */
-  position:relative; /* container for pink overlay */
-}
-
-/* ===== Pink overlay that appears ON TOP of the white box after click =====
-   It's positioned absolute to cover the white box exactly
-*/
-.pink-overlay {
-  position:absolute;
-  top:0; left:0; right:0; bottom:0;
-  background: linear-gradient(180deg,#fff0f5,#ffe6ef);
-  border-radius:12px;
-  border:1px solid rgba(231,84,128,0.12);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:14px;
-  text-align:center;
-  color:#422033;
-  font-size:1rem;
-  line-height:1.4;
-  opacity:0;
-  transform:translateY(6px);
-  transition: opacity .25s ease, transform .25s ease;
-  pointer-events:auto;
-}
-.pink-overlay.show {
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* ===== Form ===== */
-form {
-  max-width:760px; margin:22px auto; padding:18px; background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04);
-  border:1px solid rgba(255,255,255,0.95); text-align:center;
-}
-.form-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
-input[type="text"], input[type="email"], textarea {
-  border:1px solid rgba(235,200,215,0.6); border-radius:10px; padding:10px 12px; width:90%; max-width:420px; font-size:1rem;
-  background:#fff;
-}
-textarea { min-height:110px; resize:vertical; }
-button[type="submit"] { margin-top:8px; background: linear-gradient(135deg,#e75480,#f78da7); color:#fff; border:none; padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800; }
-
-/* resposta area (only declaration) */
-.resposta { max-width:760px; margin:14px auto; text-align:center; }
-
-/* footer */
-.site-footer { margin-top:40px; padding:16px 12px; color:#a87a8f; text-align:center; background: linear-gradient(180deg,#fff7fa,#fff0f5); }
-
-/* helper */
-.hidden{display:none}
-
-/* responsive */
-@media (max-width:920px) { .polaroid{ width:340px } .photo{ height:320px } }
-@media (max-width:600px) { .polaroid{ width:280px } .photo{ height:260px } input[type="text"], input[type="email"], textarea { max-width:95%; width:95% } .menu{ gap:6px } }
-
-
-/* ===================== ADIÇÕES PARA BOTÕES DENTRO DA WHITE-BOX =====================
-   - Mantive seu visual exatamente igual; apenas adicionei elementos de layout
-   - O overlay foi ajustado para não cobrir os botões (top offset)
-*/
-
-/* container que ficará dentro da white-box: botões + área de conteúdo */
-.white-box {
-  /* manter propriedades originais (já acima) */
   display:flex;
   flex-direction:column;
-  padding:12px;
+  justify-content:flex-start;
   gap:10px;
-  min-height:86px;
+  position:relative;
+  background:#fff;
+  border-radius:12px;
+  padding:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.04);
+  max-width:640px;
+  margin:12px auto;
+  border:1px solid rgba(255,255,255,0.95);
 }
 
-/* container dos botões (fixo no topo da white-box) */
+/* Área dos botões dentro da white-box */
 .btn-container {
   display:flex;
   gap:10px;
   justify-content:center;
   width:100%;
-  z-index:2; /* garante que fique acima do overlay */
+  z-index:3;
 }
 
-/* botões internos usados na white-box (mesma aparência do reveal-btn) */
+/* Botões internos */
 .btn-container .reveal-btn {
   padding:8px 12px;
   font-size:0.95rem;
@@ -210,40 +118,59 @@ button[type="submit"] { margin-top:8px; background: linear-gradient(135deg,#e754
   font-weight:800;
 }
 
-/* área onde o conteúdo será mostrado (embaixo dos botões) */
+/* Área do conteúdo (embaixo dos botões) */
 .content-area {
   width:100%;
   min-height:48px;
   padding:8px 6px;
   border-radius:8px;
-  color:#422033;
   font-size:1rem;
   text-align:center;
-  align-self:center;
-  z-index:1;
   position:relative;
-  background:transparent;
+  z-index:2;
 }
 
-/* ajustar o overlay para cobrir apenas a área de conteúdo (não os botões) */
+/* Overlay rosa abaixo do texto */
 .pink-overlay {
-  /* antes: top:0; left:0; right:0; bottom:0; */
-  top:46px; /* deixa 46px de espaço superior para os botões */
+  position:absolute;
+  top:46px;
   left:0; right:0; bottom:0;
-  border-radius:0 0 12px 12px; /* mantém borda arredondada na parte inferior */
+  background: linear-gradient(180deg,#fff0f5,#ffe6ef);
+  border-radius:0 0 12px 12px;
+  border:1px solid rgba(231,84,128,0.12);
   padding:16px;
   display:none;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   text-align:center;
+  z-index:1;
 }
 
-/* quando visible */
 .pink-overlay.show {
   display:flex;
 }
 
-/* quando a caixa for pequena em telas mobile, diminuir offset do overlay */
+/* ===== Form ===== */
+form {
+  max-width:760px; margin:22px auto; padding:18px; background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04);
+  border:1px solid rgba(255,255,255,0.95); text-align:center;
+}
+.form-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
+input[type="text"], input[type="email"], textarea {
+  border:1px solid rgba(235,200,215,0.6); border-radius:10px; padding:10px 12px; width:90%; max-width:420px;
+  background:#fff;
+}
+textarea { min-height:110px; resize:vertical; }
+button[type="submit"] {
+  margin-top:8px; background: linear-gradient(135deg,#e75480,#f78da7);
+  color:#fff; border:none; padding:10px 18px; border-radius:12px; cursor:pointer; font-weight:800;
+}
+
+/* ===== Footer ===== */
+.site-footer { margin-top:40px; padding:16px 12px; color:#a87a8f; text-align:center; background: linear-gradient(180deg,#fff7fa,#fff0f5); }
+
+.hidden{display:none}
+
 @media (max-width:420px) {
-  .pink-overlay { top:54px; } /* em mobile os botões empilham e ocupam mais altura */
+  .pink-overlay { top:54px; }
 }

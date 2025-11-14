@@ -1,4 +1,4 @@
-/* ================== SITE DATA (JSON inside JS) ==================
+/* ================== SITE DATA (JSON inside JS) ================== 
    Edite fotos, datas, textos, mensagens e versículos aqui.
 */
 const SITE_DATA = {
@@ -124,32 +124,18 @@ function buildUI(mode) {
   main.appendChild(cont);
 
   /* --- MENSAGENS (white box always visible) --- */
-  const msgSection = document.createElement('div'); msgSection.className = 'section';
-  const msgTitle = document.createElement('h2'); msgTitle.textContent = '💌 Nossas Mensagens';
-  const whiteBoxMsg = document.createElement('div'); whiteBoxMsg.className = 'white-box'; whiteBoxMsg.id = 'whiteMsg';
-  // The white box always visible (placeholder)
-  whiteBoxMsg.innerHTML = `<div style="font-size:0.95rem;color:#8a5a66;">&nbsp;</div>`; // empty placeholder
-  // create pink overlay inside white box (hidden)
-  const overlayMsg = document.createElement('div'); overlayMsg.className = 'pink-overlay'; overlayMsg.id = 'overlayMsg';
-  overlayMsg.style.display = 'none';
-  whiteBoxMsg.appendChild(overlayMsg);
-
-  const msgBtn = document.createElement('button'); msgBtn.className = 'reveal-btn'; msgBtn.id = 'btnMsg'; msgBtn.textContent = '💌 Mostrar mensagem';
-  msgSection.appendChild(msgTitle); msgSection.appendChild(whiteBoxMsg); msgSection.appendChild(msgBtn);
-  main.appendChild(msgSection);
+  buildWhiteBoxWithButtons(main, {
+    heading: '💌 Nossas Mensagens',
+    idSuffix: 'Msg',
+    items: data.mensagens
+  });
 
   /* --- VERSÍCULOS (white box always visible) --- */
-  const vSection = document.createElement('div'); vSection.className = 'section';
-  const vTitle = document.createElement('h2'); vTitle.textContent = '📖 Versículos Bíblicos';
-  const whiteBoxV = document.createElement('div'); whiteBoxV.className = 'white-box'; whiteBoxV.id = 'whiteV';
-  whiteBoxV.innerHTML = `<div style="font-size:0.95rem;color:#8a5a66;">&nbsp;</div>`;
-  const overlayV = document.createElement('div'); overlayV.className = 'pink-overlay'; overlayV.id = 'overlayV';
-  overlayV.style.display = 'none';
-  whiteBoxV.appendChild(overlayV);
-
-  const vBtn = document.createElement('button'); vBtn.className = 'reveal-btn'; vBtn.id = 'btnVers'; vBtn.textContent = '📖 Mostrar versículo';
-  vSection.appendChild(vTitle); vSection.appendChild(whiteBoxV); vSection.appendChild(vBtn);
-  main.appendChild(vSection);
+  buildWhiteBoxWithButtons(main, {
+    heading: '📖 Versículos Bíblicos',
+    idSuffix: 'Vers',
+    items: data.versiculos
+  });
 
   /* --- FORMULÁRIO (centralizado) --- */
   const formSec = document.createElement('section'); formSec.className = 'section';
@@ -164,20 +150,15 @@ function buildUI(mode) {
     <button type="submit">Enviar 💌</button>
     <div id="formStatus" class="box hidden" aria-live="polite"></div>
   `;
-  formSec.appendChild(formTitle); formSec.appendChild(form);
-  main.appendChild(formSec);
+  formSec.appendChild(formTitle); formSec.appendChild(form); main.appendChild(formSec);
 
   /* --- BOTÃO REVELAR RESPOSTA DELA (somente DECLARAÇÃO) --- */
   if (mode === 'declaracao') {
-    const respSec = document.createElement('div'); respSec.className = 'section resposta';
-    const respBtn = document.createElement('button'); respBtn.className = 'reveal-btn'; respBtn.id = 'btnResp'; respBtn.textContent = '💘 Revelar mensagem dela';
-    const whiteResp = document.createElement('div'); whiteResp.className = 'white-box'; whiteResp.id = 'whiteResp';
-    whiteResp.innerHTML = `<div style="font-size:0.95rem;color:#8a5a66;">&nbsp;</div>`;
-    const overlayResp = document.createElement('div'); overlayResp.className = 'pink-overlay'; overlayResp.id = 'overlayResp';
-    overlayResp.style.display = 'none';
-    whiteResp.appendChild(overlayResp);
-    respSec.appendChild(whiteResp); respSec.appendChild(respBtn);
-    main.appendChild(respSec);
+    buildWhiteBoxWithButtons(main, {
+      heading: '💘 Mensagem dela',
+      idSuffix: 'Resp',
+      items: data.respostas
+    });
   }
 
   /* initialize interactions and functional parts */
@@ -191,19 +172,67 @@ function buildUI(mode) {
     frm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const st = $('#formStatus');
-      st.classList.remove('hidden'); st.style.display = 'block';
-      st.textContent = 'Enviando...';
+      if (st) {
+        st.classList.remove('hidden'); st.style.display = 'block';
+        st.textContent = 'Enviando...';
+      }
       const fd = new FormData(frm);
       try {
         const res = await fetch(frm.action, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
-        if (res.ok) { st.textContent = 'Mensagem enviada 💌'; frm.reset(); }
-        else { st.textContent = 'Erro ao enviar — tente novamente'; }
+        if (res.ok) { if (st) st.textContent = 'Mensagem enviada 💌'; frm.reset(); }
+        else { if (st) st.textContent = 'Erro ao enviar — tente novamente'; }
       } catch (err) {
-        st.textContent = 'Erro de conexão.';
+        if (st) st.textContent = 'Erro de conexão.';
       }
-      setTimeout(()=> { st.textContent=''; st.classList.add('hidden'); st.style.display='none'; }, 3500);
+      setTimeout(()=> { if (st) { st.textContent=''; st.classList.add('hidden'); st.style.display='none'; } }, 3500);
     });
   }
+}
+
+/* ========== helper to build the white-box that contains buttons on top and content below ========== */
+function buildWhiteBoxWithButtons(parent, { heading, idSuffix, items }) {
+  const section = document.createElement('div'); section.className = 'section';
+  const h2 = document.createElement('h2'); h2.textContent = heading;
+
+  const whiteBox = document.createElement('div'); whiteBox.className = 'white-box'; whiteBox.id = `white${idSuffix}`;
+
+  // button container (top)
+  const btnContainer = document.createElement('div'); btnContainer.className = 'btn-container';
+  // the main button (one button toggles through items)
+  const btn = document.createElement('button'); btn.className = 'reveal-btn'; btn.id = `btn${idSuffix}`;
+  // show label shorter
+  btn.textContent = heading;
+  btnContainer.appendChild(btn);
+
+  // content area (below the buttons)
+  const contentArea = document.createElement('div'); contentArea.className = 'content-area';
+  contentArea.innerHTML = `<div style="font-size:0.95rem;color:#8a5a66;">&nbsp;</div>`;
+
+  // overlay (pink) that will show message text (positioned below buttons via CSS top offset)
+  const overlay = document.createElement('div'); overlay.className = 'pink-overlay'; overlay.id = `overlay${idSuffix}`;
+  overlay.style.display = 'none';
+
+  // assemble
+  whiteBox.appendChild(btnContainer);
+  whiteBox.appendChild(contentArea);
+  whiteBox.appendChild(overlay);
+
+  section.appendChild(h2);
+  section.appendChild(whiteBox);
+  parent.appendChild(section);
+
+  // setup click rotation index
+  let idx = 0;
+  btn.addEventListener('click', () => {
+    if (!items || !items.length) {
+      overlay.textContent = '💬';
+    } else {
+      overlay.textContent = items[idx % items.length];
+      idx++;
+    }
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.classList.add('show'));
+  });
 }
 
 /* ================== Slides (4s each) ================== */
@@ -249,43 +278,8 @@ function initCounter(startDate) {
 
 /* ================== Interactions (white box + pink overlay) ================== */
 function initInteractions(mode, data) {
-  // messages
-  const btnMsg = $('#btnMsg'), overlayMsg = $('#overlayMsg');
-  if (btnMsg && overlayMsg) {
-    let i = 0;
-    btnMsg.onclick = () => {
-      overlayMsg.textContent = data.mensagens[i % data.mensagens.length];
-      overlayMsg.style.display = 'flex';
-      // add class to animate show
-      requestAnimationFrame(()=> overlayMsg.classList.add('show'));
-      i++;
-    };
-  }
-
-  // versiculos
-  const btnVers = $('#btnVers'), overlayV = $('#overlayV');
-  if (btnVers && overlayV) {
-    let j = 0;
-    btnVers.onclick = () => {
-      overlayV.textContent = data.versiculos[j % data.versiculos.length];
-      overlayV.style.display = 'flex';
-      requestAnimationFrame(()=> overlayV.classList.add('show'));
-      j++;
-    };
-  }
-
-  // resposta dela (declaracao only)
-  const btnResp = $('#btnResp'), overlayResp = $('#overlayResp');
-  if (btnResp && overlayResp) {
-    let k = 0;
-    btnResp.onclick = () => {
-      const text = (data.respostas && data.respostas.length) ? data.respostas[k % data.respostas.length] : '💬';
-      overlayResp.textContent = text;
-      overlayResp.style.display = 'flex';
-      requestAnimationFrame(()=> overlayResp.classList.add('show'));
-      k++;
-    };
-  }
+  // nothing extra needed here because each white-box handles its own click via buildWhiteBoxWithButtons
+  // but if you want to programmatically trigger things or reset overlays, you can do it here.
 }
 
 /* ================== Menu switching ================== */

@@ -126,7 +126,7 @@ body {
 }
 
 .contador .time {
-  background:#ffd1e1; /* rosa somente no tempo */
+  background:#ffd1e1;
   padding:12px 20px;
   border-radius:12px;
   display:inline-block;
@@ -271,3 +271,4 @@ footer {
   from { transform:translateY(0); opacity:1; }
   to   { transform:translateY(-120vh); opacity:0; }
 }
+

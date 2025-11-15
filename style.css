@@ -53,13 +53,14 @@ body {
   position:relative;
 }
 
-.menu button.disabled::after {
+.menu button.disabled:hover::after {
   content: "⏳"; /* ampulheta */
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%, -50%);
   font-size:1.2rem;
+  pointer-events:none;
 }
 
 /* POLAROIDS */
@@ -276,6 +277,7 @@ footer {
     opacity:0;
   }
 }
+
 
 
 

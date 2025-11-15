@@ -93,6 +93,7 @@ function createRevealBox(parent, title, items) {
   });
 
   parent.appendChild(sec);
+  return sec;
 }
 
 /* ================== BUILD UI ================== */
@@ -178,7 +179,21 @@ function buildUI(mode) {
 
   /* ====== RESPOSTA DELA (somente declaração) ====== */
   if (mode === "declaracao") {
-    createRevealBox(main, "💘 Resposta dela", data.respostas);
+    const respostaSec = createRevealBox(main, "💘 Resposta dela", data.respostas);
+
+    // Botão de flor aparece abaixo da resposta dela
+    const flowerBtn = document.createElement('button');
+    flowerBtn.textContent = 'Clique para flor 🌼';
+    flowerBtn.style.marginTop = '12px';
+    flowerBtn.style.fontSize = '1.2rem';
+    flowerBtn.style.padding = '10px 18px';
+    flowerBtn.style.border = 'none';
+    flowerBtn.style.borderRadius = '12px';
+    flowerBtn.style.background = '#ffd1e1';
+    flowerBtn.style.cursor = 'pointer';
+    flowerBtn.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+    flowerBtn.addEventListener('click', createFlower);
+    respostaSec.querySelector('.white-box').appendChild(flowerBtn);
   }
 
   initSlides(mode);
@@ -203,17 +218,24 @@ function initSlides(mode) {
 
 /* ====== CONTADOR ====== */
 function initCounter(start) {
+  const daysSpan = $("#days");
+  const hoursSpan = $("#hours");
+  const minsSpan = $("#mins");
+  const secsSpan = $("#secs");
+
   const update = () => {
     const diff = Date.now() - start.getTime();
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff / 3600000) % 24);
     const m = Math.floor((diff / 60000) % 60);
     const s = Math.floor((diff / 1000) % 60);
-    $("#days").textContent = d;
-    $("#hours").textContent = h;
-    $("#mins").textContent = m;
-    $("#secs").textContent = s;
+
+    daysSpan.textContent = d;
+    hoursSpan.textContent = h;
+    minsSpan.textContent = m;
+    secsSpan.textContent = s;
   };
+
   update(); // atualiza na hora do carregamento
   setInterval(update, 1000);
 }
@@ -244,33 +266,16 @@ setInterval(() => {
   setTimeout(() => c.remove(), 6000);
 }, 500);
 
-/* ====== FLOR AO CLICAR BOTÃO ====== */
+/* ====== CRIAR FLOR BRANCA ====== */
 function createFlower() {
   const flower = document.createElement('div');
-  flower.textContent = '🌸';
+  flower.textContent = '🌼'; // flor branca
   flower.style.position = 'fixed';
   flower.style.fontSize = '80px';
-  flower.style.left = Math.random() * 80 + 'vw';
+  flower.style.left = Math.random() * 70 + 'vw';
   flower.style.top = Math.random() * 60 + 'vh';
   flower.style.zIndex = 9999;
   flower.style.pointerEvents = 'none';
   document.body.appendChild(flower);
   setTimeout(() => flower.remove(), 3000);
 }
-
-// Botão de flor
-const flowerBtn = document.createElement('button');
-flowerBtn.textContent = 'Clique aqui 🌼';
-flowerBtn.style.position = 'fixed';
-flowerBtn.style.bottom = '20px';
-flowerBtn.style.left = '50%';
-flowerBtn.style.transform = 'translateX(-50%)';
-flowerBtn.style.fontSize = '1.2rem';
-flowerBtn.style.padding = '10px 18px';
-flowerBtn.style.border = 'none';
-flowerBtn.style.borderRadius = '12px';
-flowerBtn.style.background = '#ffd1e1';
-flowerBtn.style.cursor = 'pointer';
-flowerBtn.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
-flowerBtn.addEventListener('click', createFlower);
-document.body.appendChild(flowerBtn);

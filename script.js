@@ -305,32 +305,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ================== FUNÇÃO CRIAR FLOR (uma flor por clique, espalhada) ================== */
 /* Usando a margarida que você escolheu (link estável) */
-function soltarFlor() {
+function createFlower() {
     try {
-        // cria a imagem
         const flor = document.createElement("img");
-        flor.src = "imagens/flor.png"; // <-- sua flor local
+        flor.src = "imagens/flor.png"; // arquivo que você adicionou
         flor.classList.add("temp-flower-img");
 
-        // garante que a imagem existe (evita travar o site)
         flor.onerror = () => {
-            console.warn("❌ Erro ao carregar imagens/flor.png");
+            console.warn("❌ Erro ao carregar imagens/flor.png — verifique o nome e a pasta.");
             flor.remove();
         };
 
+        // posição aleatória espalhada pela página
+        const largura = Math.max(document.documentElement.clientWidth, window.innerWidth);
+        const altura = Math.max(document.documentElement.clientHeight, window.innerHeight);
 
-    // posição aleatória - espalhada pela página (inclui rolagem)
-    const x = Math.random() * (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 80);
-    const y = window.scrollY + Math.random() * (Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 120);
+        const x = Math.random() * (largura - 80);
+        const y = window.scrollY + Math.random() * (altura - 120);
 
-    flor.style.left = x + 'px';
-    flor.style.top = y + 'px';
-    flor.style.opacity = '1';
-    flor.style.transform = `rotate(${(Math.random()*40 - 20)}deg) scale(${0.9 + Math.random()*0.4})`;
+        flor.style.left = x + "px";
+        flor.style.top = y + "px";
+        flor.style.opacity = "1";
+        flor.style.transform = `rotate(${(Math.random()*40 - 20)}deg) scale(${0.9 + Math.random()*0.4})`;
 
-    document.body.appendChild(flor);
+        document.body.appendChild(flor);
 
-     // desaparecer suave
+        // desaparecer suave
         setTimeout(() => {
             flor.classList.add("temp-flower-hide");
             setTimeout(() => flor.remove(), 900);

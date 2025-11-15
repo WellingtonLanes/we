@@ -239,5 +239,38 @@ setInterval(() => {
   setTimeout(() => c.remove(), 6000);
 }, 400);
 
+function soltarBuque() {
+  const buqueContainer = document.createElement("div");
+  buqueContainer.style.position = "fixed";
+  buqueContainer.style.top = "50%";
+  buqueContainer.style.left = "50%";
+  buqueContainer.style.transform = "translate(-50%, -50%)";
+  buqueContainer.style.zIndex = 9999;
+  document.body.appendChild(buqueContainer);
 
+  const totalFlores = 7; // número de flores no buquê
+
+  for (let i = 0; i < totalFlores; i++) {
+    const flor = document.createElement("div");
+    flor.className = "flower-buque";
+    flor.style.backgroundImage = "url('imagens/flor-branca.png')";
+    flor.style.backgroundSize = "contain";
+    flor.style.backgroundRepeat = "no-repeat";
+    flor.style.width = 50 + Math.random()*40 + "px"; // tamanhos variados
+    flor.style.height = 50 + Math.random()*40 + "px";
+    flor.style.position = "absolute";
+    flor.style.top = (Math.random()*40 - 20) + "px"; // pequenas variações
+    flor.style.left = (Math.random()*40 - 20) + "px";
+    flor.style.transform = `rotate(${Math.random()*45 - 22}deg)`; // leve rotação
+    buqueContainer.appendChild(flor);
+  }
+
+  // desaparece após 3 segundos
+  setTimeout(() => {
+    buqueContainer.remove();
+  }, 3000);
+}
+
+// botão chama o buquê
+document.getElementById("btnFlor").addEventListener("click", soltarBuque);
 

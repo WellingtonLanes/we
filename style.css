@@ -221,6 +221,10 @@ form button:hover {
   text-align:center;
 }
 
+#formStatus.hidden {
+  display: none !important;
+}
+
 /* FOOTER */
 footer {
   text-align:center;
@@ -253,6 +257,7 @@ footer {
     opacity:0;
   }
 }
+
 
 
 

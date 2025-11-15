@@ -115,20 +115,17 @@ footer {
 
 /* Polaroid card — clássico */
 .polaroid{
-  width:480px;                /* reduzi a largura lateral */
-  max-width:90%;
+  width:480px;
+  max-width:95%;
   background:#fffdf7;
-  
-  /* BORDAS AJUSTADAS */
-  padding:12px 6px 28px 6px;  /* laterais menores (6px), embaixo grande (28px) */
 
-  border:2px solid #d8c4b0;   /* borda fina, agora proporcional */
-  border-top-width:2px;
-  border-left-width:2px;
-  border-right-width:2px;
-  border-bottom-width:12px;   /* borda maior estilo polaroid clássico */
+  /* laterais pequenas e fundo grande, agora SEM quebrar layout */
+  padding:10px 10px 26px 10px;
 
-  border-radius:8px;
+  border:2px solid #d8c4b0;
+  border-bottom-width:12px; 
+  border-radius:10px;
+
   box-shadow:0 10px 22px rgba(0,0,0,0.12);
   text-align:center;
   transform:rotate(-1deg);
@@ -136,34 +133,29 @@ footer {
   overflow:hidden;
 }
 
+.photo{
+  width:100%;
+  height:0;
+  padding-top:70%; /* garante altura estável */
+  position:relative;
+  overflow:hidden;
+  background:#fefcf7;
+}
+
+.photo img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+}
 /* rotações */
 .polaroid.rotate-1{ transform:rotate(-3deg); }
 .polaroid.rotate-2{ transform:rotate(2deg); }
 .polaroid.rotate-3{ transform:rotate(-1deg); }
 
 .polaroid:hover{ transform:rotate(0deg) scale(1.02); box-shadow:0 18px 40px rgba(0,0,0,0.22); }
-
-/* area da foto: mais alta (4:3-ish) para imagens grandes */
-.photo{
-  width:100%;
-  height:0;
-  padding-top:66.66%; /* 3:2 área — mais alta que antes */
-  position:relative;
-  overflow:hidden;
-  border-radius:6px;
-  background:#fefcf7;
-}
-
-/* imagens NÃO cortam (contain) e centralizam — evita rostos cortados */
-.photo img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;  /* evita cortar a imagem */
-  object-position:center center;
-  display:block;
-}
 
 /* legenda */
 .caption{
@@ -347,6 +339,7 @@ form button{
 
 /* small util */
 .hidden{ display:none !important; }
+
 
 
 

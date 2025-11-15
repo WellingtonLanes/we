@@ -173,9 +173,9 @@ function buildUI(mode) {
   const flowerBtnSec = document.createElement('section');
   flowerBtnSec.className = 'section';
   const inner = document.createElement('div');
-  inner.className = 'white-box';
   inner.style.textAlign = 'center';
   inner.innerHTML = `<button id="flower-btn" class="flower-button">Clique aqui 🌼</button>`;
+  inner.className = '';
   flowerBtnSec.appendChild(inner);
   main.appendChild(flowerBtnSec);
 
@@ -333,3 +333,4 @@ function createFlower() {
     console.error('Erro ao criar flor:', e);
   }
 }
+

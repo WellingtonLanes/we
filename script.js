@@ -305,31 +305,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ================== FUNÇÃO CRIAR FLOR (uma flor por clique, espalhada) ================== */
 /* Usando a margarida que você escolheu (link estável) */
-function createFlower() {
-    const flor = document.createElement("img");
-    flor.src = "imagens/flor.png";  // <-- usa sua imagem local
-    flor.classList.add("temp-flower-img");
+function soltarFlor() {
+    try {
+        // cria a imagem
+        const flor = document.createElement("img");
+        flor.src = "imagens/flor.png"; // <-- sua flor local
+        flor.classList.add("temp-flower-img");
+
+        // garante que a imagem existe (evita travar o site)
+        flor.onerror = () => {
+            console.warn("❌ Erro ao carregar imagens/flor.png");
+            flor.remove();
+        };
 
 
     // posição aleatória - espalhada pela página (inclui rolagem)
     const x = Math.random() * (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 80);
     const y = window.scrollY + Math.random() * (Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 120);
 
-    f.style.left = x + 'px';
-    f.style.top = y + 'px';
-    f.style.opacity = '1';
-    f.style.transform = `rotate(${(Math.random()*40 - 20)}deg) scale(${0.9 + Math.random()*0.4})`;
+    flor.style.left = x + 'px';
+    flor.style.top = y + 'px';
+    flor.style.opacity = '1';
+    flor.style.transform = `rotate(${(Math.random()*40 - 20)}deg) scale(${0.9 + Math.random()*0.4})`;
 
-    document.body.appendChild(f);
+    document.body.appendChild(flor);
 
-    // after short delay, add hide class to animate out (CSS transitions)
-    setTimeout(() => {
-      f.classList.add('temp-flower-hide');
-      setTimeout(() => { try { f.remove(); } catch(e){/*ignore*/} }, 700);
-    }, 2800);
-  } catch (e) {
-    console.error('Erro ao criar flor:', e);
-  }
+     // desaparecer suave
+        setTimeout(() => {
+            flor.classList.add("temp-flower-hide");
+            setTimeout(() => flor.remove(), 900);
+        }, 1200);
+
+    } catch (e) {
+        console.error("Erro ao gerar a flor:", e);
+    }
 }
+
 
 

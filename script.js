@@ -174,14 +174,19 @@ function buildUI(mode) {
      Create a flower button that is part of the main flow (not fixed).
      It will appear in both modes (added at end of main) and is centered.
   */
-  const flowerBtnSec = document.createElement('section');
-  flowerBtnSec.className = 'section';
-  const inner = document.createElement('div');
-  inner.className = 'white-box';
-  inner.style.textAlign = 'center';
-  inner.innerHTML = `<button class="flower-button">Clique aqui 🌼</button>`;
-  flowerBtnSec.appendChild(inner);
-  main.appendChild(flowerBtnSec);
+  flowerBtn.textContent = "Clique aqui 🌼";
+  flowerBtn.style.padding = '10px 18px';
+  flowerBtn.style.border = '2px solid #ffb6d5';
+  flowerBtn.style.borderRadius = '12px';
+  flowerBtn.style.fontSize = '1.2rem';
+  flowerBtn.style.background = 'transparent';
+  flowerBtn.style.color = '#ff75a8';
+  flowerBtn.style.fontWeight = 'bold';
+  flowerBtn.style.cursor = 'pointer';
+  flowerBtn.style.boxShadow = '0 3px 8px rgba(0,0,0,0.12)';
+  flowerBtn.style.transition = '0.2s';
+  flowerBtn.onmouseover = () => flowerBtn.style.transform = 'scale(1.05)';
+  flowerBtn.onmouseout  = () => flowerBtn.style.transform = 'scale(1)';
 
   // attach event to the button
   const btn = flowerBtnSec.querySelector('.flower-button');
@@ -337,13 +342,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ====== FLORES ESPALHADAS ====== */
 function createFlower() {
-  // cria de 6 a 10 flores aleatórias
-  const quantidade = 6 + Math.floor(Math.random() * 5);
-
-  for (let i = 0; i < quantidade; i++) {
-    const f = document.createElement('div');
-    f.className = 'temp-flower';
-    f.textContent = '🌼';
+  const flower = document.createElement('img');
+  flower.src = "https://png.pngtree.com/png-vector/20240207/ourmid/pngtree-white-daisy-flower-clipart-png-image_11712295.png";
+  flower.style.position = 'fixed';
+  flower.style.width = '80px';
+  flower.style.left = Math.random() * 90 + 'vw';
+  flower.style.top = Math.random() * 80 + 'vh';
+  flower.style.zIndex = 9999;
+  flower.style.pointerEvents = 'none';
+  flower.style.transform = "rotate(" + (Math.random()*40 - 20) + "deg)";
+  document.body.appendChild(flower);
+  setTimeout(() => flower.remove(), 3500);
+}
 
     // posição completamente aleatória no body
     const x = Math.random() * window.innerWidth;
@@ -362,4 +372,5 @@ function createFlower() {
     setTimeout(() => f.remove(), 3000);
   }
 }
+
 

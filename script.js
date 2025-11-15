@@ -266,7 +266,26 @@ setInterval(() => {
   setTimeout(() => c.remove(), 6000);
 }, 500);
 
-/* ====== CRIAR FLOR BRANCA ====== */
+/* ====== BOTÃO DE FLOR CENTRALIZADO ====== */
+function createFlowerButton(parent) {
+  const flowerBtn = document.createElement('button');
+  flowerBtn.textContent = 'Clique aqui 🌼';
+  flowerBtn.style.display = 'block';
+  flowerBtn.style.margin = '20px auto'; // centraliza
+  flowerBtn.style.fontSize = '1.2rem';
+  flowerBtn.style.padding = '10px 18px';
+  flowerBtn.style.border = 'none';
+  flowerBtn.style.borderRadius = '12px';
+  flowerBtn.style.background = '#ffd1e1';
+  flowerBtn.style.cursor = 'pointer';
+  flowerBtn.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+
+  flowerBtn.addEventListener('click', createFlower);
+
+  parent.appendChild(flowerBtn);
+}
+
+/* ====== FUNÇÃO CRIAR FLOR ====== */
 function createFlower() {
   const flower = document.createElement('div');
   flower.textContent = '🌼'; // flor branca
@@ -279,3 +298,4 @@ function createFlower() {
   document.body.appendChild(flower);
   setTimeout(() => flower.remove(), 3000);
 }
+

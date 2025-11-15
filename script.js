@@ -228,7 +228,8 @@ setInterval(() => {
   c.textContent = '💗';
   c.style.fontSize = (12 + Math.random()*22) + 'px';
   c.style.left = Math.random()*95 + 'vw';
-  c.style.top = '-5vh';
+  c.style.animationDuration = (3 + Math.random()*3) + 's'; // 3 a 6 segundos
   document.querySelector('#coracoes').appendChild(c);
-  setTimeout(() => c.remove(), 7000);
+  setTimeout(() => c.remove(), 6000);
 }, 400);
+

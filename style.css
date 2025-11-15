@@ -98,13 +98,13 @@ body {
 .contador {
   width:90%;
   max-width:650px;
-  background:#ffe4ec; /* fundo rosa suave */
+  background:#ffe4ec; /* caixa rosa */
   margin:20px auto;
   padding:25px;
-  border-radius:20px;
+  border-radius:15px;
   text-align:center;
-  box-shadow:0 6px 15px rgba(0,0,0,0.15);
-  font-size:1.3rem;
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  font-size:1.4rem;
   color:#b71c1c;
 }
 
@@ -253,4 +253,5 @@ footer {
     opacity:0;
   }
 }
+
 

@@ -62,7 +62,38 @@ const SITE_DATA = {
 
 const $ = s => document.querySelector(s);
 
-let counterInterval; // guarda o intervalo do contador
+/* ================== FUNÇÃO CREATE REVEAL BOX ================== */
+function createRevealBox(parent, title, items) {
+  const sec = document.createElement('section');
+  sec.className = 'section';
+
+  // Texto do botão separado do título
+  let btnText = "";
+  if (title.includes("Mensagens")) btnText = "Mostrar Mensagens";
+  else if (title.includes("Versículos")) btnText = "Mostrar Versículos";
+  else if (title.includes("Resposta")) btnText = "Mostrar Resposta";
+  else btnText = "Mostrar Conteúdo";
+
+  sec.innerHTML = `
+    <h2>${title}</h2>
+    <div class="white-box">
+      <button class="reveal-btn">${btnText}</button>
+      <div class="pink-overlay"></div>
+    </div>
+  `;
+
+  const overlay = sec.querySelector('.pink-overlay');
+  const btn = sec.querySelector('.reveal-btn');
+
+  let index = 0;
+  btn.addEventListener('click', () => {
+    overlay.style.display = 'flex';
+    overlay.textContent = items.length ? items[index % items.length] : "💌";
+    index++;
+  });
+
+  parent.appendChild(sec);
+}
 
 /* ================== BUILD UI ================== */
 function buildUI(mode) {
@@ -76,16 +107,20 @@ function buildUI(mode) {
   data.fotos.forEach((src, i) => {
     const wrap = document.createElement('div');
     wrap.className = mode === 'declaracao' ? 'mySlides' : 'mySlides2';
+
     const pol = document.createElement('div');
     pol.className = 'polaroid rotate-' + ((i % 3) + 1);
+
     const ph = document.createElement('div');
     ph.className = 'photo';
     const img = document.createElement('img');
     img.src = src;
     ph.appendChild(img);
+
     const cap = document.createElement('div');
     cap.className = 'caption';
     cap.textContent = data.datas[i];
+
     pol.appendChild(ph);
     pol.appendChild(cap);
     wrap.appendChild(pol);
@@ -104,25 +139,21 @@ function buildUI(mode) {
   main.appendChild(carta);
 
   /* ====== CONTADOR ====== */
-  const contSec = document.createElement('section');
-  contSec.className = 'section';
-  contSec.innerHTML = `
-  <div class="white-box contador-box">
+  const cont = document.createElement('div');
+  cont.className = 'contador';
+  cont.innerHTML = `
     <div class="title">⏳ Nosso tempo juntos</div>
-    <div class="time-box">
+    <div class="time">
       <span id="days">0</span> dias • 
       <span id="hours">0</span>h 
       <span id="mins">0</span>m 
       <span id="secs">0</span>s
     </div>
-  </div>
-`;
-main.appendChild(contSec);
-
-  if(counterInterval) clearInterval(counterInterval); // limpa o contador antigo
+  `;
+  main.appendChild(cont);
   initCounter(new Date(data.dataInicio));
 
-  /* ====== NOSSAS MENSAGENS ====== */
+  /* ====== MENSAGENS ====== */
   createRevealBox(main, "💌 Nossas Mensagens", data.mensagens);
 
   /* ====== VERSÍCULOS ====== */
@@ -132,18 +163,16 @@ main.appendChild(contSec);
   const formSec = document.createElement('section');
   formSec.className = 'section';
   formSec.innerHTML = `
-    <div class="white-box">
-      <h2>💬 Enviar uma mensagem</h2>
-      <form method="POST" action="https://formspree.io/f/xovkwzej">
-        <div class="form-row">
-          <input type="text" name="name" placeholder="Seu nome" required>
-          <input type="email" name="email" placeholder="Seu e-mail" required>
-        </div>
-        <textarea name="message" placeholder="Escreva sua mensagem..." required></textarea>
-        <button type="submit">Enviar 💌</button>
-        <div id="formStatus" class="hidden"></div>
-      </form>
-    </div>
+    <h2>💬 Enviar uma mensagem</h2>
+    <form method="POST" action="https://formspree.io/f/xovkwzej">
+      <div class="form-row">
+        <input type="text" name="name" placeholder="Seu nome" required>
+        <input type="email" name="email" placeholder="Seu e-mail" required>
+      </div>
+      <textarea name="message" placeholder="Escreva sua mensagem..." required></textarea>
+      <button type="submit">Enviar 💌</button>
+      <div id="formStatus" class="hidden"></div>
+    </form>
   `;
   main.appendChild(formSec);
 
@@ -153,28 +182,6 @@ main.appendChild(contSec);
   }
 
   initSlides(mode);
-}
-
-/* ====== BOX DE REVELAÇÃO ====== */
-function createRevealBox(parent, title, items) {
-  const sec = document.createElement('section');
-  sec.className = 'section';
-  sec.innerHTML = `
-    <div class="white-box">
-      <h2>${title}</h2>
-      <button class="reveal-btn">${title}</button>
-      <div class="pink-overlay"></div>
-    </div>
-  `;
-  const overlay = sec.querySelector('.pink-overlay');
-  const btn = sec.querySelector('.reveal-btn');
-  let index = 0;
-  btn.addEventListener('click', () => {
-    overlay.style.display = 'flex';
-    overlay.textContent = items.length ? items[index % items.length] : "💌";
-    index++;
-  });
-  parent.appendChild(sec);
 }
 
 /* ====== SLIDES ====== */
@@ -196,7 +203,7 @@ function initSlides(mode) {
 
 /* ====== CONTADOR ====== */
 function initCounter(start) {
-  function updateCounter() {
+  const update = () => {
     const diff = Date.now() - start.getTime();
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff / 3600000) % 24);
@@ -206,12 +213,10 @@ function initCounter(start) {
     $("#hours").textContent = h;
     $("#mins").textContent = m;
     $("#secs").textContent = s;
-  }
-
-  updateCounter(); // atualiza imediatamente
-  counterInterval = setInterval(updateCounter, 1000);
+  };
+  update(); // atualiza na hora do carregamento
+  setInterval(update, 1000);
 }
-
 
 /* ====== MENU ====== */
 document.addEventListener("DOMContentLoaded", () => {
@@ -227,50 +232,45 @@ document.addEventListener("DOMContentLoaded", () => {
   buildUI("declaracao");
 });
 
-/* ====== CORAÇÕES ROSAS ====== */
+/* ====== CORAÇÕES ====== */
 setInterval(() => {
   const c = document.createElement('div');
   c.className = 'heart';
   c.textContent = '💗';
   c.style.fontSize = (12 + Math.random()*22) + 'px';
   c.style.left = Math.random()*95 + 'vw';
-  c.style.animationDuration = (3 + Math.random()*3) + 's'; // 3 a 6 segundos
+  c.style.top = '100vh';
   document.querySelector('#coracoes').appendChild(c);
   setTimeout(() => c.remove(), 6000);
-}, 400);
+}, 500);
 
-function soltarBuque() {
-  const buqueContainer = document.createElement("div");
-  buqueContainer.style.position = "fixed";
-  buqueContainer.style.top = "50%";
-  buqueContainer.style.left = "50%";
-  buqueContainer.style.transform = "translate(-50%, -50%)";
-  buqueContainer.style.zIndex = 9999;
-  document.body.appendChild(buqueContainer);
-
-  const totalFlores = 7; // número de flores no buquê
-
-  for (let i = 0; i < totalFlores; i++) {
-    const flor = document.createElement("div");
-    flor.className = "flower-buque";
-    flor.style.backgroundImage = "url('imagens/flor-branca.png')";
-    flor.style.backgroundSize = "contain";
-    flor.style.backgroundRepeat = "no-repeat";
-    flor.style.width = 50 + Math.random()*40 + "px"; // tamanhos variados
-    flor.style.height = 50 + Math.random()*40 + "px";
-    flor.style.position = "absolute";
-    flor.style.top = (Math.random()*40 - 20) + "px"; // pequenas variações
-    flor.style.left = (Math.random()*40 - 20) + "px";
-    flor.style.transform = `rotate(${Math.random()*45 - 22}deg)`; // leve rotação
-    buqueContainer.appendChild(flor);
-  }
-
-  // desaparece após 3 segundos
-  setTimeout(() => {
-    buqueContainer.remove();
-  }, 3000);
+/* ====== FLOR AO CLICAR BOTÃO ====== */
+function createFlower() {
+  const flower = document.createElement('div');
+  flower.textContent = '🌸';
+  flower.style.position = 'fixed';
+  flower.style.fontSize = '80px';
+  flower.style.left = Math.random() * 80 + 'vw';
+  flower.style.top = Math.random() * 60 + 'vh';
+  flower.style.zIndex = 9999;
+  flower.style.pointerEvents = 'none';
+  document.body.appendChild(flower);
+  setTimeout(() => flower.remove(), 3000);
 }
 
-// botão chama o buquê
-document.getElementById("btnFlor").addEventListener("click", soltarBuque);
-
+// Botão de flor
+const flowerBtn = document.createElement('button');
+flowerBtn.textContent = 'Clique aqui 🌼';
+flowerBtn.style.position = 'fixed';
+flowerBtn.style.bottom = '20px';
+flowerBtn.style.left = '50%';
+flowerBtn.style.transform = 'translateX(-50%)';
+flowerBtn.style.fontSize = '1.2rem';
+flowerBtn.style.padding = '10px 18px';
+flowerBtn.style.border = 'none';
+flowerBtn.style.borderRadius = '12px';
+flowerBtn.style.background = '#ffd1e1';
+flowerBtn.style.cursor = 'pointer';
+flowerBtn.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+flowerBtn.addEventListener('click', createFlower);
+document.body.appendChild(flowerBtn);

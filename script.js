@@ -63,6 +63,22 @@ const SITE_DATA = {
 /* ================== SELECTOR ================== */
 const $ = s => document.querySelector(s);
 
+/* ===== ensure hearts container exists (behind content) ===== */
+function ensureHeartsContainer() {
+  let c = document.querySelector('#coracoes');
+  if (!c) {
+    c = document.createElement('div');
+    c.id = 'coracoes';
+    document.body.appendChild(c);
+  }
+  // keep it behind content
+  c.style.position = 'fixed';
+  c.style.inset = '0';
+  c.style.pointerEvents = 'none';
+  c.style.zIndex = '1';
+  return c;
+}
+
 /* ================== BUILD UI ================== */
 function buildUI(mode) {
   const data = SITE_DATA[mode];
@@ -83,12 +99,13 @@ function buildUI(mode) {
     ph.className = 'photo';
     const img = document.createElement('img');
     img.src = src;
-    img.loading = "lazy";
+    img.alt = `Foto ${i+1}`;
+    img.loading = 'lazy';
     ph.appendChild(img);
 
     const cap = document.createElement('div');
     cap.className = 'caption';
-    cap.textContent = data.datas[i];
+    cap.textContent = data.datas[i] || '';
 
     pol.appendChild(ph);
     pol.appendChild(cap);
@@ -128,20 +145,22 @@ function buildUI(mode) {
   /* ====== VERSÍCULOS ====== */
   createRevealBox(main, "📖 Versículos Bíblicos", data.versiculos, "Mostrar Versículos");
 
-  /* ====== FORMULÁRIO ====== */
+  /* ====== FORMULÁRIO (envolvido por white-box para manter fundo branco) ====== */
   const formSec = document.createElement('section');
   formSec.className = 'section';
   formSec.innerHTML = `
     <h2>💬 Enviar uma mensagem</h2>
-    <form method="POST" action="https://formspree.io/f/xovkwzej">
-      <div class="form-row">
-        <input type="text" name="name" placeholder="Seu nome" required>
-        <input type="email" name="email" placeholder="Seu e-mail" required>
-      </div>
-      <textarea name="message" placeholder="Escreva sua mensagem..." required></textarea>
-      <button type="submit">Enviar 💌</button>
-      <div id="formStatus" class="hidden"></div>
-    </form>
+    <div class="white-box">
+      <form method="POST" action="https://formspree.io/f/xovkwzej">
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Seu nome" required>
+          <input type="email" name="email" placeholder="Seu e-mail" required>
+        </div>
+        <textarea name="message" placeholder="Escreva sua mensagem..." required></textarea>
+        <button type="submit">Enviar 💌</button>
+        <div id="formStatus" class="hidden"></div>
+      </form>
+    </div>
   `;
   main.appendChild(formSec);
 
@@ -150,19 +169,18 @@ function buildUI(mode) {
     createRevealBox(main, "💘 Resposta dela", data.respostas, "Mostrar Resposta");
   }
 
-  /* ====== BOTÃO DE FLOR ====== */
+  /* ====== BOTÃO DE FLOR (separado, sem fundo branco) ====== */
   const flowerBtnSec = document.createElement('section');
-  flowerBtnSec.style.textAlign = 'center';
-  flowerBtnSec.style.margin = '20px 0';
-
-  const flowerBtn = document.createElement('button');
-  flowerBtn.id = "flower-btn";
-  flowerBtn.textContent = "Clique aqui 🌼";
-
-  flowerBtn.addEventListener('click', createFlower);
-
-  flowerBtnSec.appendChild(flowerBtn);
+  flowerBtnSec.className = 'section';
+  const inner = document.createElement('div');
+  inner.className = 'white-box';
+  inner.style.textAlign = 'center';
+  inner.innerHTML = `<button id="flower-btn" class="flower-button">Clique aqui 🌼</button>`;
+  flowerBtnSec.appendChild(inner);
   main.appendChild(flowerBtnSec);
+
+  const btn = flowerBtnSec.querySelector('#flower-btn');
+  btn.addEventListener('click', createFlower);
 
   initSlides(mode);
 }
@@ -192,7 +210,7 @@ function createRevealBox(parent, title, items, btnText) {
   parent.appendChild(sec);
 }
 
-/* ================== SLIDESHOW ================== */
+/* ================== SLIDESHOW autoplay ================== */
 function initSlides(mode) {
   const selector = mode === 'declaracao' ? '.mySlides' : '.mySlides2';
   const slides = document.querySelectorAll(selector);
@@ -208,7 +226,7 @@ function initSlides(mode) {
   show();
 }
 
-/* ================== CONTADOR ================== */
+/* ================== CONTADOR (sem alteração na lógica) ================== */
 function initCounter(start) {
   const daysEl = $('#days');
   const hoursEl = $('#hours');
@@ -227,8 +245,11 @@ function initCounter(start) {
   setInterval(update, 1000);
 }
 
-/* ================== MENU ================== */
+/* ================== MENU init ================== */
 document.addEventListener("DOMContentLoaded", () => {
+  // ensure hearts container exists
+  ensureHeartsContainer();
+
   document.querySelectorAll('.menu-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (btn.classList.contains('disabled')) return;
@@ -241,38 +262,74 @@ document.addEventListener("DOMContentLoaded", () => {
   buildUI("declaracao");
 });
 
-/* ================== CORAÇÕES (ao fundo, sem passar por cima) ================== */
-setInterval(() => {
-  const c = document.createElement('div');
-  c.className = 'heart';
-  c.textContent = '💗';
-  c.style.fontSize = (12 + Math.random() * 22) + 'px';
-  c.style.left = Math.random() * 95 + 'vw';
-  c.style.top = '100vh';
-  c.style.position = 'fixed';
-  c.style.zIndex = 1; // agora FICA ATRÁS DO CONTEÚDO
-  c.style.opacity = 0.7;
-  c.style.animation = "fall 6s linear forwards";
-  document.body.appendChild(c);
-  setTimeout(() => c.remove(), 6000);
-}, 500);
+/* ================== CORAÇÕES (spawn nas laterais, caem para baixo atrás do conteúdo) ================== */
+(function startHearts() {
+  const container = ensureHeartsContainer();
 
-/* ================== FUNÇÃO CRIAR FLOR ================== */
+  function spawnHeart() {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = '💗';
+    h.style.fontSize = (12 + Math.random() * 22) + 'px';
+    h.style.opacity = 0.85;
+    h.style.position = 'absolute';
+    // spawn near sides: left 5-18% or right 82-95%
+    const side = Math.random() < 0.5 ? 'left' : 'right';
+    if (side === 'left') {
+      h.style.left = (5 + Math.random() * 13) + 'vw';
+    } else {
+      h.style.left = (82 + Math.random() * 13) + 'vw';
+    }
+    h.style.top = '-40px';
+    h.style.zIndex = 1; // behind content
+    container.appendChild(h);
+
+    const duration = 4800 + Math.random() * 2400; // 4.8s - 7.2s
+    const start = performance.now();
+    function frame(now) {
+      const t = (now - start) / duration;
+      if (t >= 1) {
+        h.remove();
+        return;
+      }
+      const y = -40 + t * (window.innerHeight + 80);
+      h.style.transform = `translateY(${y}px) rotate(${t * 360}deg)`;
+      h.style.opacity = String(0.85 * (1 - t));
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  setInterval(spawnHeart, 420); // spawn frequency
+})();
+
+/* ================== FUNÇÃO CRIAR FLOR (uma flor por clique, espalhada) ================== */
+/* Usando a margarida que você escolheu (link estável) */
 function createFlower() {
-  const flower = document.createElement('img');
-  flower.src = "https://i.imgur.com/0wqQF1H.png"; // margarida branca LINDA
-  flower.style.position = "fixed";
-  flower.style.width = "90px";
+  try {
+    const imgUrl = "https://toppng.com/uploads/preview/white-daisy-flower-png-download-11574087340jrxacg8xvt.png";
 
-  // posição aleatória na tela inteira
-  flower.style.left = Math.random() * 90 + "vw";
-  flower.style.top = Math.random() * 90 + "vh";
+    const f = document.createElement('img');
+    f.className = 'temp-flower-img';
+    f.src = imgUrl;
 
-  flower.style.transform = "rotate(" + (Math.random() * 360) + "deg)";
-  flower.style.zIndex = 9999;
-  flower.style.pointerEvents = "none";
+    // posição aleatória - espalhada pela página (inclui rolagem)
+    const x = Math.random() * (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 80);
+    const y = window.scrollY + Math.random() * (Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 120);
 
-  document.body.appendChild(flower);
+    f.style.left = x + 'px';
+    f.style.top = y + 'px';
+    f.style.opacity = '1';
+    f.style.transform = `rotate(${(Math.random()*40 - 20)}deg) scale(${0.9 + Math.random()*0.4})`;
 
-  setTimeout(() => flower.remove(), 3500);
+    document.body.appendChild(f);
+
+    // after short delay, add hide class to animate out (CSS transitions)
+    setTimeout(() => {
+      f.classList.add('temp-flower-hide');
+      setTimeout(() => { try { f.remove(); } catch(e){/*ignore*/} }, 700);
+    }, 2800);
+  } catch (e) {
+    console.error('Erro ao criar flor:', e);
+  }
 }

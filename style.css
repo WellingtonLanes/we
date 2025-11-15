@@ -115,13 +115,21 @@ footer {
 
 /* Polaroid card — clássico */
 .polaroid{
-  width:420px;              /* reduzido — sem ficar minúsculo */
-  max-width:92%;
+  width:480px;                /* reduzi a largura lateral */
+  max-width:90%;
   background:#fffdf7;
-  padding:12px 8px 28px 8px; /* lateral fina, grande só embaixo */
-  border:2px solid #d8c4b0;
-  border-radius:10px;
-  box-shadow:0 12px 28px rgba(0,0,0,0.12);
+  
+  /* BORDAS AJUSTADAS */
+  padding:12px 6px 28px 6px;  /* laterais menores (6px), embaixo grande (28px) */
+
+  border:2px solid #d8c4b0;   /* borda fina, agora proporcional */
+  border-top-width:2px;
+  border-left-width:2px;
+  border-right-width:2px;
+  border-bottom-width:12px;   /* borda maior estilo polaroid clássico */
+
+  border-radius:8px;
+  box-shadow:0 10px 22px rgba(0,0,0,0.12);
   text-align:center;
   transform:rotate(-1deg);
   transition:transform .35s ease, box-shadow .35s ease;
@@ -339,5 +347,6 @@ form button{
 
 /* small util */
 .hidden{ display:none !important; }
+
 
 

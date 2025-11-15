@@ -11,18 +11,18 @@ body{
   overflow-x:hidden;
 }
 
-/* ========= Layering: hearts behind content ========= */
-#coracoes, #hearts-container {
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index: 1; /* atrás do conteúdo */
-  overflow:visible;
+/* ===== HEARTS CONTAINER (atrás do conteúdo) ===== */
+#coracoes {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1; /* atrás do conteúdo (conteúdo usa z-index:2) */
+  overflow: visible;
 }
 
-/* Ensure main content sits above hearts */
+/* Garante que o conteúdo fique acima dos corações */
 #main-content, header, footer, .section, .carta, .slideshow {
-  position:relative;
+  position: relative;
   z-index: 2;
 }
 
@@ -80,16 +80,17 @@ body{
   .menu button{ width:100%; text-align:center; }
 }
 
-/* ================== POLAROIDS (estilo clássico premium) ================== */
+/* ================== POLAROIDS (AUMENTADAS e CLÁSSICAS) ================== */
+/* Aumentei largura para ~560px (aprox. 2x do que estava) mantendo responsivo */
 .slideshow{
   width:100%;
   display:flex;
   justify-content:center;
   margin:22px 0;
   position:relative;
-  gap:18px;
-  overflow:hidden; /* evita barra lateral */
-  padding:0 6px;
+  gap:20px;
+  padding:0 10px;
+  flex-wrap:wrap;
 }
 
 .mySlides, .mySlides2{
@@ -97,54 +98,54 @@ body{
   flex-shrink:0;
 }
 
-/* Polaroid card */
+/* Polaroid card — clássico */
 .polaroid{
-  width:300px;
+  width:560px;                 /* maior, aproximadamente o dobro */
   max-width:92%;
-  background:#fffdf7;              /* leve creme vintage */
-  padding:14px 12px 22px 12px;     /* mais espaço embaixo como polaroid real */
+  background:#fffdf7;          /* leve creme vintage */
+  padding:16px 14px 28px 14px; /* mais espaço embaixo como polaroid real */
   border:2px solid #d8c4b0;
   border-radius:10px;
-  box-shadow:0 10px 22px rgba(0,0,0,0.12);
+  box-shadow:0 12px 28px rgba(0,0,0,0.12);
   text-align:center;
   transform:rotate(-1deg);
   transition:transform .35s ease, box-shadow .35s ease;
+  overflow:hidden;
 }
 
-/* dynamic rotation variants */
+/* rotações */
 .polaroid.rotate-1{ transform:rotate(-3deg); }
 .polaroid.rotate-2{ transform:rotate(2deg); }
 .polaroid.rotate-3{ transform:rotate(-1deg); }
 
-/* hover pop */
-.polaroid:hover{ transform:rotate(0deg) scale(1.04); box-shadow:0 18px 40px rgba(0,0,0,0.22); }
+.polaroid:hover{ transform:rotate(0deg) scale(1.02); box-shadow:0 18px 40px rgba(0,0,0,0.22); }
 
-/* photo area: preserves polaroid contour - no overflow visible */
+/* area da foto: mais alta (4:3-ish) para imagens grandes */
 .photo{
   width:100%;
   height:0;
-  padding-top:75%; /* 4:3 area (adjust if you prefer square) */
+  padding-top:66.66%; /* 3:2 área — mais alta que antes */
   position:relative;
   overflow:hidden;
   border-radius:6px;
-  background:#fefcf7; /* fallback bg if image smaller */
+  background:#fefcf7;
 }
 
-/* image fills the photo area horizontally (no side whitespace) */
+/* imagens NÃO cortam (contain) e centralizam — evita rostos cortados */
 .photo img{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
-  object-fit:cover;    /* chosen to avoid side whitespace */
-  object-position:center;
+  object-fit:contain;  /* evita cortar a imagem */
+  object-position:center center;
   display:block;
 }
 
-/* caption under polaroid */
+/* legenda */
 .caption{
-  margin-top:10px;
-  font-size:1.05rem;
+  margin-top:12px;
+  font-size:1.06rem;
   color:#4b3a30;
 }
 
@@ -161,8 +162,7 @@ body{
   background-image: repeating-linear-gradient(#ffffff, #ffffff 24px, #ffe8d6 25px);
 }
 
-/* ================== CONTADOR ================== */
-/* (Você pediu para não mudar a lógica — este estilo garante formatação) */
+/* ================== CONTADOR (mantido) ================== */
 .contador{
   width:90%;
   max-width:650px;
@@ -243,7 +243,6 @@ body{
 }
 
 /* ================== FORM ================== */
-/* Wrap form in white-box (done by JS) — this CSS ensures form looks right */
 form{
   width:100%;
   margin:0;
@@ -279,53 +278,45 @@ form button{
   cursor:pointer;
 }
 
-/* remove the extra pink line: hide status by default */
+/* hide status row by default so no pink stripe */
 #formStatus, #formStatus.hidden{ display:none !important; }
 
-/* if you choose to show status, remove .hidden via JS and set styles:
-#formStatus { display:block; margin-top:10px; padding:10px; background:#ffe4ec; border-radius:10px; text-align:center; } */
-
-/* ================== BOTÃO DA FLOR (sem fundo branco) ================== */
-.flower-button{
-  display:block;
-  margin:18px auto;
-  padding:12px 20px;
+/* ================== BOTÃO DE FLOR (sem fundo branco) ================== */
+#flower-btn, .flower-button{
+  padding:10px 18px;
+  border:2px solid #ffb6d5;
   border-radius:12px;
-  border:none;
-  background:#ffd1e1;   /* igual aos outros botões */
-  font-size:1.15rem;
+  background:transparent;
+  color:#ff5b96;
+  font-weight:700;
+  font-size:1.12rem;
   cursor:pointer;
-  box-shadow:0 6px 14px rgba(0,0,0,0.10);
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
+#flower-btn:hover, .flower-button:hover{ transform:scale(1.03); }
 
-/* flores animando na tela */
-.temp-flower{
-  position:absolute; /* AGORA NÃO É MAIS FIXED */
-  font-size:48px;
-  pointer-events:none;
-  animation: flowerFade 2.8s ease-out forwards;
-}
-
-@keyframes flowerFade{
-  0%   { transform:scale(0.2); opacity:0; }
-  10%  { transform:scale(1); opacity:1; }
-  100% { transform:scale(1.1) translateY(40px); opacity:0; }
-}
-
-/* ================== FOOTER ================== */
-footer{ text-align:center; margin:40px 0; opacity:0.75; }
-
-/* ================== HEARTS ANIMATION (controlled by JS) ================== */
-/* hearts container handled in JS; these default rules give animation fallback */
-.heart {
+/* temp flower image style */
+.temp-flower-img{
   position: absolute;
+  width: 92px;
+  height: auto;
+  pointer-events:none;
+  z-index: 9999;
+  transform-origin: center center;
+  transition: transform .6s ease, opacity .6s ease;
+}
+
+/* fade out helper (JS will set opacity/transform) */
+.temp-flower-hide{ opacity:0; transform: translateY(30px) scale(0.9); }
+
+/* ================== HEARTS (style fallback) ================== */
+.heart{
+  position:absolute;
   pointer-events:none;
   user-select:none;
-  opacity:0.85;
+  opacity:0.9;
   transform: translateY(-10px);
-  transition: transform 6s linear, opacity 6s linear;
 }
 
-/* small utility */
+/* small util */
 .hidden{ display:none !important; }
-

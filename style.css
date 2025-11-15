@@ -111,25 +111,25 @@ body {
   margin-bottom:8px;
 }
 
-/* WHITE BOX (mensagens, versículos, resposta dela) */
+/* WHITE BOX (mensagens, versículos, resposta dela, form) */
 .section {
   width:90%;
   max-width:650px;
   margin:25px auto;
 }
 
+.white-box {
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  margin-bottom:25px;
+}
+
 .section h2 {
   text-align:center;
   margin-bottom:10px;
   font-size:1.4rem;
-}
-
-.white-box {
-  background:white;
-  padding:18px;
-  border-radius:14px;
-  box-shadow:0 3px 8px rgba(0,0,0,0.1);
-  position:relative;
 }
 
 .reveal-btn {
@@ -149,16 +149,15 @@ body {
 }
 
 .pink-overlay {
-  margin-top:15px;
+  display:none;
+  margin-top:12px;
   padding:15px;
   border-radius:10px;
-  display:none;
   background:#ffe4ec;
-  min-height:40px;
   font-size:1.2rem;
-  align-items:center;
-  justify-content:center;
   text-align:center;
+  justify-content:center;
+  align-items:center;
 }
 
 /* FORM */

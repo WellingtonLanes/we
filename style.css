@@ -1,274 +1,332 @@
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 
-* { margin:0; padding:0; box-sizing:border-box; }
-
-body {
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
   font-family:'Patrick Hand', cursive;
   background:#fff0f5; /* rosa clarinho do site */
   color:#333;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
 }
 
-/* HEADER */
-.site-header {
+/* ========= Layering: hearts behind content ========= */
+#coracoes, #hearts-container {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index: 1; /* atrás do conteúdo */
+  overflow:visible;
+}
+
+/* Ensure main content sits above hearts */
+#main-content, header, footer, .section, .carta, .slideshow {
+  position:relative;
+  z-index: 2;
+}
+
+/* ================== HEADER / MENU ================== */
+.site-header{
   text-align:center;
-  padding:20px 0;
+  padding:22px 0;
 }
 
-.menu {
-  margin-top:15px;
+.menu{
+  margin-top:12px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
 }
 
-.menu button {
+.menu button{
   font-family:'Patrick Hand', cursive;
   padding:10px 20px;
   margin:0 6px;
-  font-size:1.15rem;
-  border:2px solid #ffb6c9;
-  border-radius:12px;
+  font-size:1.1rem;
+  border:none;
+  border-radius:14px;
   background:#ffe4ec;
   cursor:pointer;
-  transition:0.3s;
+  transition:0.2s;
+  box-shadow:0 3px 8px rgba(0,0,0,0.12);
 }
 
-.menu button.active {
+.menu button.active{
   background:#ffb6c9;
-  color:white;
-  font-weight:bold;
+  box-shadow:0 6px 14px rgba(0,0,0,0.18);
 }
 
-.menu button:hover:not(.disabled) {
+.menu button:hover:not(.disabled){
+  transform:translateY(-2px);
   background:#ffccda;
 }
 
-.menu button.disabled {
-  opacity:0.5;
+.menu button.disabled{
+  opacity:0.6;
   cursor:not-allowed;
 }
 
-/* POLAROIDS */
-.slideshow {
+/* Mobile menu grid 2x2 */
+@media (max-width:600px){
+  .menu{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    width:92%;
+    margin:0 auto;
+  }
+  .menu button{ width:100%; text-align:center; }
+}
+
+/* ================== POLAROIDS (estilo clássico premium) ================== */
+.slideshow{
   width:100%;
   display:flex;
   justify-content:center;
-  flex-wrap:wrap;
-  margin:20px 0;
+  margin:22px 0;
   position:relative;
+  gap:18px;
+  overflow:hidden; /* evita barra lateral */
+  padding:0 6px;
 }
 
-.mySlides, .mySlides2 {
+.mySlides, .mySlides2{
   display:none;
+  flex-shrink:0;
 }
 
-.polaroid {
-  width:280px;
-  background:white;
-  padding:12px;
-  margin:10px;
-  border:2px solid #ddd;
-  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+/* Polaroid card */
+.polaroid{
+  width:300px;
+  max-width:92%;
+  background:#fffdf7;              /* leve creme vintage */
+  padding:14px 12px 22px 12px;     /* mais espaço embaixo como polaroid real */
+  border:2px solid #d8c4b0;
+  border-radius:10px;
+  box-shadow:0 10px 22px rgba(0,0,0,0.12);
   text-align:center;
   transform:rotate(-1deg);
+  transition:transform .35s ease, box-shadow .35s ease;
 }
 
-.polaroid.rotate-1 { transform:rotate(-2deg); }
-.polaroid.rotate-2 { transform:rotate(1.5deg); }
-.polaroid.rotate-3 { transform:rotate(-1deg); }
+/* dynamic rotation variants */
+.polaroid.rotate-1{ transform:rotate(-3deg); }
+.polaroid.rotate-2{ transform:rotate(2deg); }
+.polaroid.rotate-3{ transform:rotate(-1deg); }
 
-.photo {
+/* hover pop */
+.polaroid:hover{ transform:rotate(0deg) scale(1.04); box-shadow:0 18px 40px rgba(0,0,0,0.22); }
+
+/* photo area: preserves polaroid contour - no overflow visible */
+.photo{
   width:100%;
-  height:280px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  height:0;
+  padding-top:75%; /* 4:3 area (adjust if you prefer square) */
+  position:relative;
   overflow:hidden;
+  border-radius:6px;
+  background:#fefcf7; /* fallback bg if image smaller */
 }
 
-.photo img {
+/* image fills the photo area horizontally (no side whitespace) */
+.photo img{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
-  object-fit:contain; /* mantém a proporção, não corta */
+  object-fit:cover;    /* chosen to avoid side whitespace */
+  object-position:center;
+  display:block;
 }
 
-/* legenda */
-.caption {
-  margin-top:6px;
-  font-size:1.1rem;
+/* caption under polaroid */
+.caption{
+  margin-top:10px;
+  font-size:1.05rem;
+  color:#4b3a30;
 }
 
-/* CARTA */
-.carta {
+/* ================== CARTA ================== */
+.carta{
   width:90%;
-  max-width:750px;
+  max-width:760px;
   background:white;
-  margin:30px auto;
-  padding:25px;
+  margin:28px auto;
+  padding:24px;
   border:1px solid #e2c4b3;
-  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
   line-height:1.55;
   background-image: repeating-linear-gradient(#ffffff, #ffffff 24px, #ffe8d6 25px);
 }
 
-/* CONTADOR */
-.contador {
+/* ================== CONTADOR ================== */
+/* (Você pediu para não mudar a lógica — este estilo garante formatação) */
+.contador{
   width:90%;
   max-width:650px;
   background:white;
   margin:20px auto;
   padding:20px;
-  border-radius:15px;
+  border-radius:14px;
   text-align:center;
-  box-shadow:0 3px 10px rgba(0,0,0,0.1);
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
-.contador .title {
-  font-size:1.4rem;
+.contador .title{
+  font-size:1.45rem;
   margin-bottom:12px;
+  color:#4b3a30;
 }
 
-.contador .time {
-  background:#ffd1e1;
-  padding:12px 20px;
-  border-radius:12px;
+.contador .time{
   display:inline-block;
-  font-size:1.5rem;
-  font-weight:bold;
+  background:#ffe4ec; /* rosa só no bloco do tempo */
+  padding:12px 22px;
+  border-radius:12px;
+  font-size:1.45rem;
+  font-weight:700;
+  color:#b71c1c;
+  letter-spacing:0.6px;
 }
 
-/* WHITE BOX (mensagens, versículos, resposta dela) */
-.section {
+/* ================== SECTIONS / WHITE BOX ================== */
+.section{
   width:90%;
   max-width:650px;
-  margin:25px auto;
+  margin:22px auto;
 }
 
-.section h2 {
+.section h2{
   text-align:center;
   margin-bottom:10px;
-  font-size:1.4rem;
+  font-size:1.35rem;
 }
 
-.white-box {
+/* white container for reveal boxes and form */
+.white-box{
   background:white;
-  padding:18px;
+  padding:16px;
   border-radius:14px;
-  box-shadow:0 3px 8px rgba(0,0,0,0.1);
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
   position:relative;
-  margin-bottom:15px;
 }
 
-.reveal-btn {
+/* reveal button style */
+.reveal-btn{
   width:100%;
-  font-size:1.2rem;
-  padding:10px;
+  font-size:1.15rem;
+  padding:12px 10px;
   border:none;
   border-radius:10px;
   background:#ffd1e1;
   cursor:pointer;
-  transition:0.2s;
-  font-family:'Patrick Hand', cursive;
+  transition:0.22s;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
 
-.reveal-btn:hover {
-  background:#ffbfd4;
-}
+.reveal-btn:hover{ transform:scale(1.02); background:#ffbfd4; }
 
-.pink-overlay {
-  margin-top:15px;
-  padding:15px;
+/* overlay pink that shows content */
+.pink-overlay{
+  margin-top:14px;
+  padding:14px;
   border-radius:10px;
   display:none;
   background:#ffe4ec;
-  min-height:40px;
-  font-size:1.2rem;
+  min-height:44px;
+  font-size:1.12rem;
   align-items:center;
   justify-content:center;
   text-align:center;
 }
 
-/* FORM */
-form {
+/* ================== FORM ================== */
+/* Wrap form in white-box (done by JS) — this CSS ensures form looks right */
+form{
   width:100%;
-  margin:auto;
+  margin:0;
   display:flex;
   flex-direction:column;
   gap:12px;
 }
 
-.form-row {
+.form-row{
   display:flex;
   gap:10px;
 }
 
-form input, form textarea {
+form input, form textarea{
   width:100%;
   padding:12px;
   border-radius:10px;
   border:2px solid #ffd3e0;
   font-family:'Patrick Hand', cursive;
-  font-size:1.1rem;
+  font-size:1.05rem;
   background:white;
   outline:none;
 }
 
-form textarea {
-  height:120px;
-  resize:none;
-}
+form textarea{ height:120px; resize:none; }
 
-form button {
+form button{
   background:#ffb6c9;
-  padding:12px 0;
+  padding:12px;
   border:none;
   border-radius:10px;
-  font-size:1.2rem;
+  font-size:1.12rem;
   cursor:pointer;
-  font-family:'Patrick Hand', cursive;
 }
 
-form button:hover {
-  background:#ffa8be;
-}
+/* remove the extra pink line: hide status by default */
+#formStatus, #formStatus.hidden{ display:none !important; }
 
-#formStatus {
-  margin-top:10px;
-  padding:10px;
-  background:#ffe4ec;
-  border-radius:10px;
-  text-align:center;
-}
+/* if you choose to show status, remove .hidden via JS and set styles:
+#formStatus { display:block; margin-top:10px; padding:10px; background:#ffe4ec; border-radius:10px; text-align:center; } */
 
-/* BOTÃO DE FLOR */
-button.flower-btn {
+/* ================== BOTÃO DA FLOR (centralizado, não fixo) ================== */
+.flower-button{
+  display:block;
+  margin:18px auto;
   padding:12px 20px;
-  border:none;
   border-radius:12px;
-  font-size:1.2rem;
+  border:none;
   background:#ffd1e1;
+  font-size:1.15rem;
   cursor:pointer;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-  margin:20px 0;
+  box-shadow:0 6px 14px rgba(0,0,0,0.10);
 }
 
-/* FOOTER */
-footer {
-  text-align:center;
-  margin:40px 0;
-  opacity:0.7;
-}
-
-/* HEARTS ANIMATION */
-#coracoes {
+/* style for big temporary flower (JS will create element) */
+.temp-flower{
   position:fixed;
-  inset:0;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) scale(0.95);
+  z-index: 9999;
+  font-size:80px;
   pointer-events:none;
+  animation: flowerPop 0.28s ease-out;
 }
-.heart {
-  position:absolute;
-  animation: floatUp linear forwards;
-  pointer-events:none;
-}
-@keyframes floatUp {
-  from { transform:translateY(0); opacity:1; }
-  to   { transform:translateY(-120vh); opacity:0; }
+@keyframes flowerPop{
+  from{ transform:translate(-50%,-50%) scale(0.1); opacity:0; }
+  to{ transform:translate(-50%,-50%) scale(1); opacity:1; }
 }
 
+/* ================== FOOTER ================== */
+footer{ text-align:center; margin:40px 0; opacity:0.75; }
+
+/* ================== HEARTS ANIMATION (controlled by JS) ================== */
+/* hearts container handled in JS; these default rules give animation fallback */
+.heart {
+  position: absolute;
+  pointer-events:none;
+  user-select:none;
+  opacity:0.85;
+  transform: translateY(-10px);
+  transition: transform 6s linear, opacity 6s linear;
+}
+
+/* small utility */
+.hidden{ display:none !important; }

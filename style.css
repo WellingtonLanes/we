@@ -80,62 +80,55 @@ body {
   flex-shrink:0; /* mantém tamanho fixo mesmo com imagens pequenas */
 }
 
-/* ================== POLAROID ================== */
+/* POLAROIDS */
+.slideshow {
+  width:100%;
+  display:flex;
+  justify-content:center;
+  margin:25px 0;
+  position:relative;
+  gap:15px;
+  flex-wrap: wrap;
+}
+
 .polaroid {
-  width:280px;               /* largura fixa */
-  background:#fffdf7;        /* tom levemente creme para vintage */
-  padding:15px 12px 25px 12px; /* mais espaço embaixo como polaroid real */
-  border:2px solid #d8c4b0;  /* borda elegante */
-  border-radius:8px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.12);
+  width:300px; /* maior */
+  background:white;
+  padding:12px;
+  border:2px solid #ddd;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
   text-align:center;
   transform:rotate(-1deg);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
-/* hover destaque */
-.polaroid:hover {
-  transform:rotate(0deg) scale(1.05);
-  box-shadow:0 12px 28px rgba(0,0,0,0.25);
-}
-
-/* rotações suaves e dinâmicas */
-.polaroid.rotate-1 { transform:rotate(-3deg); }
-.polaroid.rotate-2 { transform:rotate(2deg); }
+.polaroid.rotate-1 { transform:rotate(-2deg); }
+.polaroid.rotate-2 { transform:rotate(1.5deg); }
 .polaroid.rotate-3 { transform:rotate(-1deg); }
 
-/* ================== FOTO ================== */
 .photo {
   width:100%;
-  height:260px;
+  position: relative;
+  padding-top: 100%; /* força proporção quadrada */
+  overflow: hidden;
   display:flex;
   justify-content:center;
   align-items:center;
-  overflow:hidden;
-  border-radius:4px;
-  background:#fefcf7; /* fundo leve caso a imagem seja menor */
 }
 
 .photo img {
-  width:100%;
-  height:100%;
-  object-fit:cover;   /* cobre toda a área sem distorcer */
-  object-position:center; /* centraliza imagens menores */
-  transition: transform 0.4s ease;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* não corta a imagem */
 }
 
-/* efeito de zoom sutil na imagem ao hover do polaroid */
-.polaroid:hover .photo img {
-  transform: scale(1.05);
-}
-
-/* ================== CAPTION ================== */
 .caption {
-  margin-top:10px;
+  margin-top:8px;
   font-size:1.1rem;
-  font-weight:500;
-  color:#4b3a30;
-  letter-spacing:0.5px;
 }
 
 /* CARTA */
@@ -319,6 +312,7 @@ footer {
     opacity:0;
   }
 }
+
 
 
 

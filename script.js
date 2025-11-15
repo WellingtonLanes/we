@@ -194,7 +194,7 @@ function initSlides(mode) {
 
 /* ====== CONTADOR ====== */
 function initCounter(start) {
-  counterInterval = setInterval(() => {
+  function updateCounter() {
     const diff = Date.now() - start.getTime();
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff / 3600000) % 24);
@@ -204,8 +204,12 @@ function initCounter(start) {
     $("#hours").textContent = h;
     $("#mins").textContent = m;
     $("#secs").textContent = s;
-  }, 1000);
+  }
+
+  updateCounter(); // atualiza imediatamente
+  counterInterval = setInterval(updateCounter, 1000);
 }
+
 
 /* ====== MENU ====== */
 document.addEventListener("DOMContentLoaded", () => {
@@ -232,4 +236,5 @@ setInterval(() => {
   document.querySelector('#coracoes').appendChild(c);
   setTimeout(() => c.remove(), 6000);
 }, 400);
+
 

@@ -113,55 +113,48 @@ footer {
   flex-shrink:0;
 }
 
-/* Polaroid card — clássico */
-.polaroid{
-  width:480px;
-  max-width:95%;
-  background:#fffdf7;
-
-  /* laterais pequenas e fundo grande, agora SEM quebrar layout */
-  padding:10px 10px 26px 10px;
-
-  border:2px solid #d8c4b0;
-  border-bottom-width:12px; 
-  border-radius:10px;
-
-  box-shadow:0 10px 22px rgba(0,0,0,0.12);
-  text-align:center;
-  transform:rotate(-1deg);
-  transition:transform .35s ease, box-shadow .35s ease;
-  overflow:hidden;
+/* ===== POLAROID CORRETO ===== */
+.polaroid {
+  background: white;
+  padding: 12px 12px 28px 12px; /* laterais pequenas – borda inferior maior */
+  width: fit-content;
+  margin: 25px auto;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
 }
 
-.photo{
-  width:100%;
-  height:0;
-  padding-top:70%; /* garante altura estável */
-  position:relative;
-  overflow:hidden;
-  background:#fefcf7;
+/* leve rotação para parecer foto real */
+.rotate-1 { transform: rotate(-2deg); }
+.rotate-2 { transform: rotate(1.5deg); }
+.rotate-3 { transform: rotate(-1deg); }
+
+/* container da foto */
+.photo {
+  width: 100%;
+  max-width: 430px; /* foto grande, do tamanho da que tu quer */
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.photo img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  object-position:center;
+/* imagem sem corte, sem distorção */
+.photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover; /* mantém proporção, NÃO corta se não precisar */
 }
-/* rotações */
-.polaroid.rotate-1{ transform:rotate(-3deg); }
-.polaroid.rotate-2{ transform:rotate(2deg); }
-.polaroid.rotate-3{ transform:rotate(-1deg); }
-
-.polaroid:hover{ transform:rotate(0deg) scale(1.02); box-shadow:0 18px 40px rgba(0,0,0,0.22); }
 
 /* legenda */
-.caption{
-  margin-top:12px;
-  font-size:1.06rem;
-  color:#4b3a30;
+.caption {
+  margin-top: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #666;
+  text-align: center;
 }
 
 /* ================== CARTA ================== */
@@ -339,6 +332,7 @@ form button{
 
 /* small util */
 .hidden{ display:none !important; }
+
 
 
 

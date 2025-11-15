@@ -212,21 +212,42 @@ function initSlides(mode) {
 
 /* ====== CONTADOR ====== */
 function initCounter(start) {
+  const contadorSec = document.querySelector('.contador');
+  if (!contadorSec) return;
+
+  // Cria a estrutura correta se não existir
+  if (!contadorSec.querySelector('.time')) {
+    contadorSec.innerHTML = `
+      <div class="title">⏳ Nosso tempo juntos</div>
+      <div class="time">
+        <span id="days">0</span> dias • 
+        <span id="hours">0</span>h 
+        <span id="mins">0</span>m 
+        <span id="secs">0</span>s
+      </div>
+    `;
+  }
+
+  const daysEl = contadorSec.querySelector('#days');
+  const hoursEl = contadorSec.querySelector('#hours');
+  const minsEl = contadorSec.querySelector('#mins');
+  const secsEl = contadorSec.querySelector('#secs');
+
   function update() {
     const diff = Date.now() - start.getTime();
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff / 3600000) % 24);
     const m = Math.floor((diff / 60000) % 60);
     const s = Math.floor((diff / 1000) % 60);
-    $("#days").textContent = d;
-    $("#hours").textContent = h;
-    $("#mins").textContent = m;
-    $("#secs").textContent = s;
+    daysEl.textContent = d;
+    hoursEl.textContent = h;
+    minsEl.textContent = m;
+    secsEl.textContent = s;
   }
+
   update(); // atualiza imediatamente ao carregar
   setInterval(update, 1000);
 }
-
 /* ====== MENU ====== */
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.menu-btn').forEach(btn => {
@@ -269,3 +290,4 @@ function createFlower() {
   document.body.appendChild(flower);
   setTimeout(() => flower.remove(), 3000);
 }
+

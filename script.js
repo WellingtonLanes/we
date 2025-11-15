@@ -104,18 +104,20 @@ function buildUI(mode) {
   main.appendChild(carta);
 
   /* ====== CONTADOR ====== */
-  const cont = document.createElement('div');
-  cont.className = 'contador';
-  cont.innerHTML = `
+  const contSec = document.createElement('section');
+  contSec.className = 'section';
+  contSec.innerHTML = `
+  <div class="white-box contador-box">
     <div class="title">⏳ Nosso tempo juntos</div>
-    <div class="time">
+    <div class="time-box">
       <span id="days">0</span> dias • 
       <span id="hours">0</span>h 
       <span id="mins">0</span>m 
       <span id="secs">0</span>s
     </div>
-  `;
-  main.appendChild(cont);
+  </div>
+`;
+main.appendChild(contSec);
 
   if(counterInterval) clearInterval(counterInterval); // limpa o contador antigo
   initCounter(new Date(data.dataInicio));
@@ -236,5 +238,6 @@ setInterval(() => {
   document.querySelector('#coracoes').appendChild(c);
   setTimeout(() => c.remove(), 6000);
 }, 400);
+
 
 

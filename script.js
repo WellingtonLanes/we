@@ -306,12 +306,10 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ================== FUNÇÃO CRIAR FLOR (uma flor por clique, espalhada) ================== */
 /* Usando a margarida que você escolheu (link estável) */
 function createFlower() {
-  try {
-    const imgUrl = "https://toppng.com/uploads/preview/white-daisy-flower-png-download-11574087340jrxacg8xvt.png";
+    const flor = document.createElement("img");
+    flor.src = "imagens/flor.png";  // <-- usa sua imagem local
+    flor.classList.add("temp-flower-img");
 
-    const f = document.createElement('img');
-    f.className = 'temp-flower-img';
-    f.src = imgUrl;
 
     // posição aleatória - espalhada pela página (inclui rolagem)
     const x = Math.random() * (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 80);
@@ -333,4 +331,5 @@ function createFlower() {
     console.error('Erro ao criar flor:', e);
   }
 }
+
 

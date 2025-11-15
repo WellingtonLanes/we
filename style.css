@@ -46,7 +46,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* Botões “desativados” agora com ampulheta */
+/* Botões “desativados” */
 .menu button.disabled {
   opacity:0.7;
   cursor:default;
@@ -54,7 +54,6 @@ body {
 }
 
 .menu button.disabled:hover::after {
-  content: "⏳"; /* ampulheta */
   position:absolute;
   top:50%;
   left:50%;
@@ -320,6 +319,7 @@ footer {
     opacity:0;
   }
 }
+
 
 
 

@@ -179,7 +179,7 @@ function buildUI(mode) {
   const inner = document.createElement('div');
   inner.className = 'white-box';
   inner.style.textAlign = 'center';
-  inner.innerHTML = `<button class="flower-button">🌼 Revelar flor</button>`;
+  inner.innerHTML = `<button class="flower-button">Clique aqui 🌼</button>`;
   flowerBtnSec.appendChild(inner);
   main.appendChild(flowerBtnSec);
 
@@ -335,18 +335,31 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(spawnHeart, 420);
 })();
 
-/* ====== FUNÇÃO CRIAR FLOR ====== */
-/* creates a big white flower in the center for 3s */
+/* ====== FLORES ESPALHADAS ====== */
 function createFlower() {
-  const f = document.createElement('div');
-  f.className = 'temp-flower';
-  f.textContent = '🌼';
-  document.body.appendChild(f);
-  // remove after 3s with fade
-  setTimeout(() => {
-    f.style.transition = 'opacity .4s ease, transform .4s ease';
-    f.style.opacity = '0';
-    f.style.transform = 'translate(-50%,-50%) scale(1.15)';
-    setTimeout(() => f.remove(), 420);
-  }, 3000);
+  // cria de 6 a 10 flores aleatórias
+  const quantidade = 6 + Math.floor(Math.random() * 5);
+
+  for (let i = 0; i < quantidade; i++) {
+    const f = document.createElement('div');
+    f.className = 'temp-flower';
+    f.textContent = '🌼';
+
+    // posição completamente aleatória no body
+    const x = Math.random() * window.innerWidth;
+    const y = window.scrollY + Math.random() * window.innerHeight;
+
+    f.style.left = x + 'px';
+    f.style.top = y + 'px';
+
+    // tamanhos levemente aleatórios
+    const size = 35 + Math.random() * 35;
+    f.style.fontSize = size + 'px';
+
+    document.body.appendChild(f);
+
+    // remover depois da animação
+    setTimeout(() => f.remove(), 3000);
+  }
 }
+

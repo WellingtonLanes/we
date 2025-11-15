@@ -115,10 +115,10 @@ footer {
 
 /* Polaroid card — clássico */
 .polaroid{
-  width:560px;                 /* maior, aproximadamente o dobro */
+  width:420px;              /* reduzido — sem ficar minúsculo */
   max-width:92%;
-  background:#fffdf7;          /* leve creme vintage */
-  padding:16px 14px 28px 14px; /* mais espaço embaixo como polaroid real */
+  background:#fffdf7;
+  padding:12px 8px 28px 8px; /* lateral fina, grande só embaixo */
   border:2px solid #d8c4b0;
   border-radius:10px;
   box-shadow:0 12px 28px rgba(0,0,0,0.12);
@@ -339,4 +339,5 @@ form button{
 
 /* small util */
 .hidden{ display:none !important; }
+
 

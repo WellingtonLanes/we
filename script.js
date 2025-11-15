@@ -63,22 +63,6 @@ const SITE_DATA = {
 /* ================== SELECTOR ================== */
 const $ = s => document.querySelector(s);
 
-/* ================== HELPERS: coracoes container ================== */
-function ensureHeartsContainer() {
-  let c = document.querySelector('#coracoes');
-  if (!c) {
-    c = document.createElement('div');
-    c.id = 'coracoes';
-    document.body.appendChild(c);
-  }
-  // ensure it's behind content (z-index controlled in CSS)
-  c.style.position = 'fixed';
-  c.style.inset = '0';
-  c.style.pointerEvents = 'none';
-  c.style.zIndex = '1';
-  return c;
-}
-
 /* ================== BUILD UI ================== */
 function buildUI(mode) {
   const data = SITE_DATA[mode];
@@ -88,7 +72,6 @@ function buildUI(mode) {
   /* ====== SLIDESHOW ====== */
   const slide = document.createElement('div');
   slide.className = 'slideshow';
-
   data.fotos.forEach((src, i) => {
     const wrap = document.createElement('div');
     wrap.className = mode === 'declaracao' ? 'mySlides' : 'mySlides2';
@@ -100,19 +83,18 @@ function buildUI(mode) {
     ph.className = 'photo';
     const img = document.createElement('img');
     img.src = src;
-    img.alt = `Foto ${i+1}`;
+    img.loading = "lazy";
     ph.appendChild(img);
 
     const cap = document.createElement('div');
     cap.className = 'caption';
-    cap.textContent = data.datas[i] || '';
+    cap.textContent = data.datas[i];
 
     pol.appendChild(ph);
     pol.appendChild(cap);
     wrap.appendChild(pol);
     slide.appendChild(wrap);
   });
-
   main.appendChild(slide);
 
   /* ====== CARTA ====== */
@@ -151,17 +133,15 @@ function buildUI(mode) {
   formSec.className = 'section';
   formSec.innerHTML = `
     <h2>💬 Enviar uma mensagem</h2>
-    <div class="white-box">
-      <form method="POST" action="https://formspree.io/f/xovkwzej">
-        <div class="form-row">
-          <input type="text" name="name" placeholder="Seu nome" required>
-          <input type="email" name="email" placeholder="Seu e-mail" required>
-        </div>
-        <textarea name="message" placeholder="Escreva sua mensagem..." required></textarea>
-        <button type="submit">Enviar 💌</button>
-        <div id="formStatus" class="hidden"></div>
-      </form>
-    </div>
+    <form method="POST" action="https://formspree.io/f/xovkwzej">
+      <div class="form-row">
+        <input type="text" name="name" placeholder="Seu nome" required>
+        <input type="email" name="email" placeholder="Seu e-mail" required>
+      </div>
+      <textarea name="message" placeholder="Escreva sua mensagem..." required></textarea>
+      <button type="submit">Enviar 💌</button>
+      <div id="formStatus" class="hidden"></div>
+    </form>
   `;
   main.appendChild(formSec);
 
@@ -170,32 +150,24 @@ function buildUI(mode) {
     createRevealBox(main, "💘 Resposta dela", data.respostas, "Mostrar Resposta");
   }
 
-  /* ====== BOTÃO DE FLOR ABAIXO DA RESPOSTA / FORMULÁRIO ======
-     Create a flower button that is part of the main flow (not fixed).
-     It will appear in both modes (added at end of main) and is centered.
-  */
-  flowerBtn.textContent = "Clique aqui 🌼";
-  flowerBtn.style.padding = '10px 18px';
-  flowerBtn.style.border = '2px solid #ffb6d5';
-  flowerBtn.style.borderRadius = '12px';
-  flowerBtn.style.fontSize = '1.2rem';
-  flowerBtn.style.background = 'transparent';
-  flowerBtn.style.color = '#ff75a8';
-  flowerBtn.style.fontWeight = 'bold';
-  flowerBtn.style.cursor = 'pointer';
-  flowerBtn.style.boxShadow = '0 3px 8px rgba(0,0,0,0.12)';
-  flowerBtn.style.transition = '0.2s';
-  flowerBtn.onmouseover = () => flowerBtn.style.transform = 'scale(1.05)';
-  flowerBtn.onmouseout  = () => flowerBtn.style.transform = 'scale(1)';
+  /* ====== BOTÃO DE FLOR ====== */
+  const flowerBtnSec = document.createElement('section');
+  flowerBtnSec.style.textAlign = 'center';
+  flowerBtnSec.style.margin = '20px 0';
 
-  // attach event to the button
-  const btn = flowerBtnSec.querySelector('.flower-button');
-  btn.addEventListener('click', createFlower);
+  const flowerBtn = document.createElement('button');
+  flowerBtn.id = "flower-btn";
+  flowerBtn.textContent = "Clique aqui 🌼";
+
+  flowerBtn.addEventListener('click', createFlower);
+
+  flowerBtnSec.appendChild(flowerBtn);
+  main.appendChild(flowerBtnSec);
 
   initSlides(mode);
 }
 
-/* ====== BOX DE REVELAÇÃO ====== */
+/* ================== REVEAL BOX ================== */
 function createRevealBox(parent, title, items, btnText) {
   const sec = document.createElement('section');
   sec.className = 'section';
@@ -220,7 +192,7 @@ function createRevealBox(parent, title, items, btnText) {
   parent.appendChild(sec);
 }
 
-/* ====== SLIDES ====== */
+/* ================== SLIDESHOW ================== */
 function initSlides(mode) {
   const selector = mode === 'declaracao' ? '.mySlides' : '.mySlides2';
   const slides = document.querySelectorAll(selector);
@@ -236,46 +208,26 @@ function initSlides(mode) {
   show();
 }
 
-/* ====== CONTADOR ====== */
+/* ================== CONTADOR ================== */
 function initCounter(start) {
-  const contadorSec = document.querySelector('.contador');
-  if (!contadorSec) return;
-
-  // ensure structure exists
-  if (!contadorSec.querySelector('.time')) {
-    contadorSec.innerHTML = `
-      <div class="title">⏳ Nosso tempo juntos</div>
-      <div class="time">
-        <span id="days">0</span> dias • 
-        <span id="hours">0</span>h 
-        <span id="mins">0</span>m 
-        <span id="secs">0</span>s
-      </div>
-    `;
-  }
-
-  const daysEl = contadorSec.querySelector('#days');
-  const hoursEl = contadorSec.querySelector('#hours');
-  const minsEl = contadorSec.querySelector('#mins');
-  const secsEl = contadorSec.querySelector('#secs');
+  const daysEl = $('#days');
+  const hoursEl = $('#hours');
+  const minsEl = $('#mins');
+  const secsEl = $('#secs');
 
   function update() {
     const diff = Date.now() - start.getTime();
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff / 3600000) % 24);
-    const m = Math.floor((diff / 60000) % 60);
-    const s = Math.floor((diff / 1000) % 60);
-    daysEl.textContent = d;
-    hoursEl.textContent = h;
-    minsEl.textContent = m;
-    secsEl.textContent = s;
+    daysEl.textContent = Math.floor(diff / 86400000);
+    hoursEl.textContent = Math.floor((diff / 3600000) % 24);
+    minsEl.textContent = Math.floor((diff / 60000) % 60);
+    secsEl.textContent = Math.floor((diff / 1000) % 60);
   }
 
   update();
   setInterval(update, 1000);
 }
 
-/* ====== MENU ====== */
+/* ================== MENU ================== */
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.menu-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -286,91 +238,41 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ensure hearts container exists and behind content
-  ensureHeartsContainer();
-
   buildUI("declaracao");
 });
 
-/* ====== CORAÇÕES ====== */
-/*
-  Hearts now append to #coracoes container (behind content).
-  They spawn near the sides and fall behind the main content.
-*/
-(function startHearts() {
-  const container = ensureHeartsContainer();
+/* ================== CORAÇÕES (ao fundo, sem passar por cima) ================== */
+setInterval(() => {
+  const c = document.createElement('div');
+  c.className = 'heart';
+  c.textContent = '💗';
+  c.style.fontSize = (12 + Math.random() * 22) + 'px';
+  c.style.left = Math.random() * 95 + 'vw';
+  c.style.top = '100vh';
+  c.style.position = 'fixed';
+  c.style.zIndex = 1; // agora FICA ATRÁS DO CONTEÚDO
+  c.style.opacity = 0.7;
+  c.style.animation = "fall 6s linear forwards";
+  document.body.appendChild(c);
+  setTimeout(() => c.remove(), 6000);
+}, 500);
 
-  function spawnHeart() {
-    const h = document.createElement('div');
-    h.className = 'heart';
-    h.textContent = '💗';
-    const size = 12 + Math.random() * 28;
-    h.style.fontSize = size + 'px';
-    // spawn near sides: left 5-18% or right 82-95%
-    const side = Math.random() < 0.5 ? 'left' : 'right';
-    if (side === 'left') {
-      h.style.left = (5 + Math.random() * 13) + 'vw';
-    } else {
-      h.style.left = (82 + Math.random() * 13) + 'vw';
-    }
-    h.style.top = '-30px';
-    h.style.opacity = 0.9;
-    h.style.position = 'absolute';
-    h.style.zIndex = 1; // behind content (content z-index:2)
-    container.appendChild(h);
-
-    // animate via CSS-like JS: translate down and fade
-    const duration = 4500 + Math.random() * 2500; // 4.5s - 7s
-    const start = performance.now();
-    function frame(now) {
-      const t = (now - start) / duration;
-      if (t >= 1) {
-        h.remove();
-        return;
-      }
-      // move from -30px to viewport height + 50
-      const y = -30 + t * (window.innerHeight + 80);
-      h.style.transform = `translateY(${y}px) rotate(${t * 360}deg)`;
-      h.style.opacity = String(0.9 * (1 - t));
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  }
-
-  setInterval(spawnHeart, 420);
-})();
-
-/* ====== FLORES ESPALHADAS ====== */
+/* ================== FUNÇÃO CRIAR FLOR ================== */
 function createFlower() {
   const flower = document.createElement('img');
-  flower.src = "https://png.pngtree.com/png-vector/20240207/ourmid/pngtree-white-daisy-flower-clipart-png-image_11712295.png";
-  flower.style.position = 'fixed';
-  flower.style.width = '80px';
-  flower.style.left = Math.random() * 90 + 'vw';
-  flower.style.top = Math.random() * 80 + 'vh';
+  flower.src = "https://i.imgur.com/0wqQF1H.png"; // margarida branca LINDA
+  flower.style.position = "fixed";
+  flower.style.width = "90px";
+
+  // posição aleatória na tela inteira
+  flower.style.left = Math.random() * 90 + "vw";
+  flower.style.top = Math.random() * 90 + "vh";
+
+  flower.style.transform = "rotate(" + (Math.random() * 360) + "deg)";
   flower.style.zIndex = 9999;
-  flower.style.pointerEvents = 'none';
-  flower.style.transform = "rotate(" + (Math.random()*40 - 20) + "deg)";
+  flower.style.pointerEvents = "none";
+
   document.body.appendChild(flower);
+
   setTimeout(() => flower.remove(), 3500);
 }
-
-    // posição completamente aleatória no body
-    const x = Math.random() * window.innerWidth;
-    const y = window.scrollY + Math.random() * window.innerHeight;
-
-    f.style.left = x + 'px';
-    f.style.top = y + 'px';
-
-    // tamanhos levemente aleatórios
-    const size = 35 + Math.random() * 35;
-    f.style.fontSize = size + 'px';
-
-    document.body.appendChild(f);
-
-    // remover depois da animação
-    setTimeout(() => f.remove(), 3000);
-  }
-}
-
-

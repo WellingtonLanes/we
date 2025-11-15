@@ -62,6 +62,8 @@ const SITE_DATA = {
 
 const $ = s => document.querySelector(s);
 
+let counterInterval; // guarda o intervalo do contador
+
 /* ================== BUILD UI ================== */
 function buildUI(mode) {
   const data = SITE_DATA[mode];
@@ -71,30 +73,24 @@ function buildUI(mode) {
   /* ====== SLIDESHOW ====== */
   const slide = document.createElement('div');
   slide.className = 'slideshow';
-
   data.fotos.forEach((src, i) => {
     const wrap = document.createElement('div');
     wrap.className = mode === 'declaracao' ? 'mySlides' : 'mySlides2';
-
     const pol = document.createElement('div');
     pol.className = 'polaroid rotate-' + ((i % 3) + 1);
-
     const ph = document.createElement('div');
     ph.className = 'photo';
     const img = document.createElement('img');
     img.src = src;
     ph.appendChild(img);
-
     const cap = document.createElement('div');
     cap.className = 'caption';
     cap.textContent = data.datas[i];
-
     pol.appendChild(ph);
     pol.appendChild(cap);
     wrap.appendChild(pol);
     slide.appendChild(wrap);
   });
-
   main.appendChild(slide);
 
   /* ====== CARTA ====== */
@@ -121,9 +117,10 @@ function buildUI(mode) {
   `;
   main.appendChild(cont);
 
+  if(counterInterval) clearInterval(counterInterval); // limpa o contador antigo
   initCounter(new Date(data.dataInicio));
 
-  /* ====== MENSAGENS ====== */
+  /* ====== NOSSAS MENSAGENS ====== */
   createRevealBox(main, "💌 Nossas Mensagens", data.mensagens);
 
   /* ====== VERSÍCULOS ====== */
@@ -133,16 +130,18 @@ function buildUI(mode) {
   const formSec = document.createElement('section');
   formSec.className = 'section';
   formSec.innerHTML = `
-    <h2>💬 Enviar uma mensagem</h2>
-    <form method="POST" action="https://formspree.io/f/xovkwzej">
-      <div class="form-row">
-        <input type="text" name="name" placeholder="Seu nome" required>
-        <input type="email" name="email" placeholder="Seu e-mail" required>
-      </div>
-      <textarea name="message" placeholder="Escreva sua mensagem..." required></textarea>
-      <button type="submit">Enviar 💌</button>
-      <div id="formStatus" class="hidden"></div>
-    </form>
+    <div class="white-box">
+      <h2>💬 Enviar uma mensagem</h2>
+      <form method="POST" action="https://formspree.io/f/xovkwzej">
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Seu nome" required>
+          <input type="email" name="email" placeholder="Seu e-mail" required>
+        </div>
+        <textarea name="message" placeholder="Escreva sua mensagem..." required></textarea>
+        <button type="submit">Enviar 💌</button>
+        <div id="formStatus" class="hidden"></div>
+      </form>
+    </div>
   `;
   main.appendChild(formSec);
 
@@ -158,25 +157,21 @@ function buildUI(mode) {
 function createRevealBox(parent, title, items) {
   const sec = document.createElement('section');
   sec.className = 'section';
-
   sec.innerHTML = `
-    <h2>${title}</h2>
     <div class="white-box">
+      <h2>${title}</h2>
       <button class="reveal-btn">${title}</button>
       <div class="pink-overlay"></div>
     </div>
   `;
-
   const overlay = sec.querySelector('.pink-overlay');
   const btn = sec.querySelector('.reveal-btn');
-
   let index = 0;
   btn.addEventListener('click', () => {
     overlay.style.display = 'flex';
     overlay.textContent = items.length ? items[index % items.length] : "💌";
     index++;
   });
-
   parent.appendChild(sec);
 }
 
@@ -199,7 +194,7 @@ function initSlides(mode) {
 
 /* ====== CONTADOR ====== */
 function initCounter(start) {
-  setInterval(() => {
+  counterInterval = setInterval(() => {
     const diff = Date.now() - start.getTime();
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff / 3600000) % 24);
@@ -226,14 +221,14 @@ document.addEventListener("DOMContentLoaded", () => {
   buildUI("declaracao");
 });
 
-/* ====== CORAÇÕES ====== */
+/* ====== CORAÇÕES ROSAS ====== */
 setInterval(() => {
   const c = document.createElement('div');
   c.className = 'heart';
   c.textContent = '💗';
   c.style.fontSize = (12 + Math.random()*22) + 'px';
   c.style.left = Math.random()*95 + 'vw';
-  c.style.top = '100vh';
+  c.style.top = '-5vh';
   document.querySelector('#coracoes').appendChild(c);
-  setTimeout(() => c.remove(), 6000);
-}, 500);
+  setTimeout(() => c.remove(), 7000);
+}, 400);

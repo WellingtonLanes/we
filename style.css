@@ -95,30 +95,30 @@ body {
 }
 
 /* CONTADOR */
-.contador {
-  width:90%;
-  max-width:650px;
-  background:#ffe4ec; /* caixa rosa */
-  margin:20px auto;
+.contador-box {
+  background:white; /* caixa branca */
   padding:25px;
   border-radius:15px;
   text-align:center;
   box-shadow:0 4px 12px rgba(0,0,0,0.12);
-  font-size:1.4rem;
-  color:#b71c1c;
 }
 
-.contador .title {
+.contador-box .title {
   font-size:1.6rem;
   margin-bottom:12px;
   font-weight:bold;
+  color:#b71c1c;
 }
 
-.contador .time {
+.time-box {
+  background:#ffe4ec; /* rosa atrás do tempo */
+  display:inline-block;
+  padding:15px 25px;
+  border-radius:12px;
   font-size:1.5rem;
   font-weight:bold;
+  color:#b71c1c;
   letter-spacing:1px;
-  margin-top:5px;
 }
 
 /* WHITE BOX (mensagens, versículos, resposta dela, form) */
@@ -253,5 +253,6 @@ footer {
     opacity:0;
   }
 }
+
 
 

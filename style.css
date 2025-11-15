@@ -285,33 +285,31 @@ form button{
 /* if you choose to show status, remove .hidden via JS and set styles:
 #formStatus { display:block; margin-top:10px; padding:10px; background:#ffe4ec; border-radius:10px; text-align:center; } */
 
-/* ================== BOTÃO DA FLOR (centralizado, não fixo) ================== */
+/* ================== BOTÃO DA FLOR (sem fundo branco) ================== */
 .flower-button{
   display:block;
   margin:18px auto;
   padding:12px 20px;
   border-radius:12px;
   border:none;
-  background:#ffd1e1;
+  background:#ffd1e1;   /* igual aos outros botões */
   font-size:1.15rem;
   cursor:pointer;
   box-shadow:0 6px 14px rgba(0,0,0,0.10);
 }
 
-/* style for big temporary flower (JS will create element) */
+/* flores animando na tela */
 .temp-flower{
-  position:fixed;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%) scale(0.95);
-  z-index: 9999;
-  font-size:80px;
+  position:absolute; /* AGORA NÃO É MAIS FIXED */
+  font-size:48px;
   pointer-events:none;
-  animation: flowerPop 0.28s ease-out;
+  animation: flowerFade 2.8s ease-out forwards;
 }
-@keyframes flowerPop{
-  from{ transform:translate(-50%,-50%) scale(0.1); opacity:0; }
-  to{ transform:translate(-50%,-50%) scale(1); opacity:1; }
+
+@keyframes flowerFade{
+  0%   { transform:scale(0.2); opacity:0; }
+  10%  { transform:scale(1); opacity:1; }
+  100% { transform:scale(1.1) translateY(40px); opacity:0; }
 }
 
 /* ================== FOOTER ================== */
@@ -330,3 +328,4 @@ footer{ text-align:center; margin:40px 0; opacity:0.75; }
 
 /* small utility */
 .hidden{ display:none !important; }
+

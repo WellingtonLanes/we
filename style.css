@@ -98,17 +98,27 @@ body {
 .contador {
   width:90%;
   max-width:650px;
-  background:white;
+  background:#ffe4ec; /* fundo rosa suave */
   margin:20px auto;
-  padding:20px;
-  border-radius:15px;
+  padding:25px;
+  border-radius:20px;
   text-align:center;
-  box-shadow:0 3px 10px rgba(0,0,0,0.1);
+  box-shadow:0 6px 15px rgba(0,0,0,0.15);
+  font-size:1.3rem;
+  color:#b71c1c;
 }
 
 .contador .title {
-  font-size:1.3rem;
-  margin-bottom:8px;
+  font-size:1.6rem;
+  margin-bottom:12px;
+  font-weight:bold;
+}
+
+.contador .time {
+  font-size:1.5rem;
+  font-weight:bold;
+  letter-spacing:1px;
+  margin-top:5px;
 }
 
 /* WHITE BOX (mensagens, versículos, resposta dela, form) */
@@ -243,3 +253,4 @@ footer {
     opacity:0;
   }
 }
+

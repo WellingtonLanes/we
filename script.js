@@ -60,41 +60,8 @@ const SITE_DATA = {
   }
 };
 
+/* ================== SELECTOR ================== */
 const $ = s => document.querySelector(s);
-
-/* ================== FUNÇÃO CREATE REVEAL BOX ================== */
-function createRevealBox(parent, title, items) {
-  const sec = document.createElement('section');
-  sec.className = 'section';
-
-  // Texto do botão separado do título
-  let btnText = "";
-  if (title.includes("Mensagens")) btnText = "Mostrar Mensagens";
-  else if (title.includes("Versículos")) btnText = "Mostrar Versículos";
-  else if (title.includes("Resposta")) btnText = "Mostrar Resposta";
-  else btnText = "Mostrar Conteúdo";
-
-  sec.innerHTML = `
-    <h2>${title}</h2>
-    <div class="white-box">
-      <button class="reveal-btn">${btnText}</button>
-      <div class="pink-overlay"></div>
-    </div>
-  `;
-
-  const overlay = sec.querySelector('.pink-overlay');
-  const btn = sec.querySelector('.reveal-btn');
-
-  let index = 0;
-  btn.addEventListener('click', () => {
-    overlay.style.display = 'flex';
-    overlay.textContent = items.length ? items[index % items.length] : "💌";
-    index++;
-  });
-
-  parent.appendChild(sec);
-  return sec;
-}
 
 /* ================== BUILD UI ================== */
 function buildUI(mode) {
@@ -155,10 +122,10 @@ function buildUI(mode) {
   initCounter(new Date(data.dataInicio));
 
   /* ====== MENSAGENS ====== */
-  createRevealBox(main, "💌 Nossas Mensagens", data.mensagens);
+  createRevealBox(main, "💌 Nossas Mensagens", data.mensagens, "Mostrar Mensagens");
 
   /* ====== VERSÍCULOS ====== */
-  createRevealBox(main, "📖 Versículos Bíblicos", data.versiculos);
+  createRevealBox(main, "📖 Versículos Bíblicos", data.versiculos, "Mostrar Versículos");
 
   /* ====== FORMULÁRIO ====== */
   const formSec = document.createElement('section');
@@ -179,24 +146,52 @@ function buildUI(mode) {
 
   /* ====== RESPOSTA DELA (somente declaração) ====== */
   if (mode === "declaracao") {
-    const respostaSec = createRevealBox(main, "💘 Resposta dela", data.respostas);
-
-    // Botão de flor aparece abaixo da resposta dela
-    const flowerBtn = document.createElement('button');
-    flowerBtn.textContent = 'Clique para flor 🌼';
-    flowerBtn.style.marginTop = '12px';
-    flowerBtn.style.fontSize = '1.2rem';
-    flowerBtn.style.padding = '10px 18px';
-    flowerBtn.style.border = 'none';
-    flowerBtn.style.borderRadius = '12px';
-    flowerBtn.style.background = '#ffd1e1';
-    flowerBtn.style.cursor = 'pointer';
-    flowerBtn.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
-    flowerBtn.addEventListener('click', createFlower);
-    respostaSec.querySelector('.white-box').appendChild(flowerBtn);
+    createRevealBox(main, "💘 Resposta dela", data.respostas, "Mostrar Resposta");
   }
 
+  /* ====== BOTÃO DE FLOR ABAIXO DA RESPOSTA / FORMULÁRIO ====== */
+  const flowerBtnSec = document.createElement('section');
+  flowerBtnSec.style.textAlign = 'center';
+  flowerBtnSec.style.margin = '20px 0';
+  const flowerBtn = document.createElement('button');
+  flowerBtn.textContent = "Clique para flor 🌼";
+  flowerBtn.style.padding = '12px 20px';
+  flowerBtn.style.border = 'none';
+  flowerBtn.style.borderRadius = '12px';
+  flowerBtn.style.fontSize = '1.2rem';
+  flowerBtn.style.background = '#ffd1e1';
+  flowerBtn.style.cursor = 'pointer';
+  flowerBtn.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+  flowerBtn.addEventListener('click', createFlower);
+  flowerBtnSec.appendChild(flowerBtn);
+  main.appendChild(flowerBtnSec);
+
   initSlides(mode);
+}
+
+/* ====== BOX DE REVELAÇÃO ====== */
+function createRevealBox(parent, title, items, btnText) {
+  const sec = document.createElement('section');
+  sec.className = 'section';
+
+  sec.innerHTML = `
+    <h2>${title}</h2>
+    <div class="white-box">
+      <button class="reveal-btn">${btnText}</button>
+      <div class="pink-overlay"></div>
+    </div>
+  `;
+
+  const overlay = sec.querySelector('.pink-overlay');
+  const btn = sec.querySelector('.reveal-btn');
+  let index = 0;
+  btn.addEventListener('click', () => {
+    overlay.style.display = 'flex';
+    overlay.textContent = items.length ? items[index % items.length] : "💌";
+    index++;
+  });
+
+  parent.appendChild(sec);
 }
 
 /* ====== SLIDES ====== */
@@ -206,7 +201,6 @@ function initSlides(mode) {
   if (!slides.length) return;
   slides.forEach(s => s.style.display = 'none');
   let i = 0;
-
   function show() {
     slides.forEach(s => s.style.display = 'none');
     slides[i].style.display = 'block';
@@ -218,25 +212,18 @@ function initSlides(mode) {
 
 /* ====== CONTADOR ====== */
 function initCounter(start) {
-  const daysSpan = $("#days");
-  const hoursSpan = $("#hours");
-  const minsSpan = $("#mins");
-  const secsSpan = $("#secs");
-
-  const update = () => {
+  function update() {
     const diff = Date.now() - start.getTime();
     const d = Math.floor(diff / 86400000);
     const h = Math.floor((diff / 3600000) % 24);
     const m = Math.floor((diff / 60000) % 60);
     const s = Math.floor((diff / 1000) % 60);
-
-    daysSpan.textContent = d;
-    hoursSpan.textContent = h;
-    minsSpan.textContent = m;
-    secsSpan.textContent = s;
-  };
-
-  update(); // atualiza na hora do carregamento
+    $("#days").textContent = d;
+    $("#hours").textContent = h;
+    $("#mins").textContent = m;
+    $("#secs").textContent = s;
+  }
+  update(); // atualiza imediatamente ao carregar
   setInterval(update, 1000);
 }
 
@@ -262,28 +249,12 @@ setInterval(() => {
   c.style.fontSize = (12 + Math.random()*22) + 'px';
   c.style.left = Math.random()*95 + 'vw';
   c.style.top = '100vh';
-  document.querySelector('#coracoes').appendChild(c);
+  c.style.position = 'fixed';
+  c.style.zIndex = 9999;
+  c.style.pointerEvents = 'none';
+  document.body.appendChild(c);
   setTimeout(() => c.remove(), 6000);
 }, 500);
-
-/* ====== BOTÃO DE FLOR CENTRALIZADO ====== */
-function createFlowerButton(parent) {
-  const flowerBtn = document.createElement('button');
-  flowerBtn.textContent = 'Clique aqui 🌼';
-  flowerBtn.style.display = 'block';
-  flowerBtn.style.margin = '20px auto'; // centraliza
-  flowerBtn.style.fontSize = '1.2rem';
-  flowerBtn.style.padding = '10px 18px';
-  flowerBtn.style.border = 'none';
-  flowerBtn.style.borderRadius = '12px';
-  flowerBtn.style.background = '#ffd1e1';
-  flowerBtn.style.cursor = 'pointer';
-  flowerBtn.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
-
-  flowerBtn.addEventListener('click', createFlower);
-
-  parent.appendChild(flowerBtn);
-}
 
 /* ====== FUNÇÃO CRIAR FLOR ====== */
 function createFlower() {
@@ -298,4 +269,3 @@ function createFlower() {
   document.body.appendChild(flower);
   setTimeout(() => flower.remove(), 3000);
 }
-

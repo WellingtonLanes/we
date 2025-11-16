@@ -79,7 +79,7 @@ const SITE_DATA = {
   "Eu amo ser seu namorado. 💗"
   ],
     mensagens: [
-      "Nosso amor é lindo demais 💕",
+      "O quanto eu fico a vontade pra demostrar meus sentimentos depois que te conheci, eu não era assim kkk",
       "Cada dia contigo é uma nova alegria 🌼",
       "Você é minha melhor companhia 🙏"
     ],
@@ -371,6 +371,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

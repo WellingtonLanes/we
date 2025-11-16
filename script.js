@@ -36,7 +36,7 @@ const SITE_DATA = {
       "só de poder compartilhar contigo já está bommm ❤️"
     ],
     versiculos: [
-      "O amor é paciente e bondoso. (1 Coríntios 13:4–7) 💞",
+      "O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha. Não maltrata, não procura seus interesses, não se irrita facilmente, não guarda rancor. O amor não se alegra com a injustiça, mas se alegra com a verdade. Tudo sofre, tudo crê, tudo espera, tudo suporta. (1 Coríntios 13:4–7)",
       "Nós amamos porque Ele nos amou primeiro. (1 João 4:19) 💗"
     ],
     respostas: [
@@ -375,6 +375,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

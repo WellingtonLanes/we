@@ -29,7 +29,9 @@ const SITE_DATA = {
       "Que bomm, valeu muito a pena ter caminhado por 3 bairros atrás delas (flores) então kkkk. Eu caminharia de novooo.",
       "mas a forma como tu chegou foi bem educada e natural, por isso que gostei",
       "Qualquer coisa que eu faça contigo é muito bom.",
-      "eu também me sinto assim, conversar e ficar perto de ti é muito bom"
+      "eu também me sinto assim, conversar e ficar perto de ti é muito bom",
+      "E eu fico feliz que tu fica feliz vendo eu ficando feliz contigo feliz e ficamos todo mundo feliz kkkkkk.",
+      ""
     ],
     versiculos: [
       "O amor é paciente e bondoso. (1 Coríntios 13:4–7) 💞",
@@ -367,6 +369,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

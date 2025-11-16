@@ -47,7 +47,7 @@ const SITE_DATA = {
       "14/11/2025","14/11/2025"
     ],
     texto: [
-      "Eu fiquei pensando em como começar esse texto, então resolvi começar pelo começo kkkk.
+      `Eu fiquei pensando em como começar esse texto, então resolvi começar pelo começo kkkk.
       O Wellington de 11 de agosto de 2025 estava muito nervoso e com medo de te mandar mensagem, não sabia como fazer, mas sabia que devia fazer. 
       Os meses de agosto e setembro eram os piores meses do ano pra mim desde que a minha mãe faleceu, mas Deus me fez te conhecer e o nosso primeiro encontro ser nesses meses.
       Outubro passou a ser o meu mês preferido pois soube que tu gostava de mim também.
@@ -60,7 +60,7 @@ const SITE_DATA = {
       Fiz coisas que não imaginava que queria fazer antes, adorei cada uma delas, e quero descobrir muitos hobbies novos contigo.
       A cada dia que passa eu sinto mais certeza que fiz a melhor escolha ao te chamar pra conversar, meus dias ganharam muito mais vida e cor como o bobbie goods que a gete pintou kkkk
       Virei um fã de arte e museus e quero fazer skincare contigo, viajar pra vários  lugares contigo e acho isso incrível como falei da outra vez. Eu quero fazer as coisas que tu gosta, pois se é importante pra ti então é importante pra mim também, quero ir na igreja contigo, fazer a obra de Deus juntos, um ajudando o outro a crescer mais e mais espiritualmente, quero te ver sempre com esse sorriso lindo que tu tem e vou me esforçar o máximo pra isso.
-      Como eu já disse, amo ver o teu sorriso, acho muito fofo quando tu coloca a mão no rosto pra rir, amo ouvir tu falar, sobre teu dia, sobre teus sonhos, sobre tudo, amo o teu olhar, amo a tua companhia, amo estar ao teu lado poderia ficar o dia todo te olhando e conversando contigo, eu amo a gente. Eu amo ser seu namorado. ❤"
+      Como eu já disse, amo ver o teu sorriso, acho muito fofo quando tu coloca a mão no rosto pra rir, amo ouvir tu falar, sobre teu dia, sobre teus sonhos, sobre tudo, amo o teu olhar, amo a tua companhia, amo estar ao teu lado poderia ficar o dia todo te olhando e conversando contigo, eu amo a gente. Eu amo ser seu namorado. ❤`
       
     ],
     mensagens: [
@@ -356,6 +356,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

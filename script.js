@@ -86,7 +86,7 @@ const SITE_DATA = {
       "Simm, é sempre muito bom ir nos cultos contigo ❤️",
       "eu tô gostando muito de orar juntos pela gente ❤️",
       "Eu achei muito bommm, a cada dia que passa eu tenho mais certeza, pq na minha opinião Deus confirma algo no dia a dia, nas pequenas coisas e foi muito bom esses dias que a gente passou orando, de várias formas, até espiritual também. Isso não quer dizer que não vamos sentir medo ou ter dificuldades, mas da certeza que se pode vencer todas elas com Jesus",
-      "",
+      "nem se eu imaginasse teria sido tão bom, tu faz muito bem pra mim, de verdade ❤️. ",
       ""
     ],
     versiculos: [
@@ -377,6 +377,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

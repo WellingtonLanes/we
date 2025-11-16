@@ -40,8 +40,12 @@ const SITE_DATA = {
       "Nós amamos porque Ele nos amou primeiro. (1 João 4:19) 💗"
     ],
     respostas: [
-      "Eu também te amo muito ❤️",
-      "Tu me faz muito feliz, meu amor 💞"
+      "Bom... Não sei muito bem como começar, mas eu queria que tu soubesse o quanto eu fiquei feliz lendo esse texto, eu não consegui me expressar muito bem aquela hora, mas o meu coração estava explodindo por dentro kkkk. O jeito que tu escreveu e lembrou de cada detalhe me deixou encantada.",
+      "Receber aquela mensagem tua foi uma grande (e muito boa kkkk) surpresa, eu realmente não esperava, mas a maneira que tu falava me fez querer te conhecer mais e mais, e naquele dia não imaginei que tu se tornaria uma pessoa tão especial pra mim.",
+      "Eu te acho extremamente fofo (pra mim esse é um dos melhores elogios que existem ta kkk) educado, atencioso, lindo, charmoso, inteligente e descobri que tu também é românico, dentre muuuitas outras qualidades.",
+      "Eu acho muito lindo o teu jeito todo tímido (combina muito comigo kkkk), acho muito fofo que quando tu sorri (sorriso lindo inclusive) os teus olhos fecham, e eu adoro te ouvir falando, acho a tua voz tranquila e isso me acalma muito. Eu consigo ver que tu é um homem temente a Deus e quer sempre agradar a Ele, e isso me deixa ainda mais encantada por ti.",
+      "Eu me sinto extremamente confortável perto de ti, parece que a gente já se conhece a muito mais tempo, e aquele dia no cinema que eu deitei no teu ombro, me senti em casa. Eu gosto muito de ti, conversar e rir contigo torna o meu dia muito melhor, mas quero te conhecer ainda mais, quero que a gente viva muitas experiências novas juntos, quero fazer tudo que tu falou no texto e muito mais, tudo conforme a vontade de Deus.",
+      "É isso kkkk falei bastante mas ainda não falei tudo... 😚❤️"
     ]
   },
 
@@ -371,6 +375,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

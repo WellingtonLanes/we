@@ -135,7 +135,7 @@ footer {
 
 /* foto dentro do polaroid */
 .photo {
-  width: 300px;
+  width: 360px;
   height: 400px; /* <<< ALTURA FIXA: impede “piscadas” ao trocar slide */
   border-radius: 10px;
   overflow: hidden;
@@ -335,6 +335,7 @@ form button{
 
 /* small util */
 .hidden{ display:none !important; }
+
 
 
 

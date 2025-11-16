@@ -116,7 +116,7 @@ footer {
 /* ===== POLAROID CORRETO ===== */
 .polaroid {
   background: white;
-  width: 360px; /* <<< TAMANHO FIXO E IGUAL PARA TODAS */
+  width: 400px; /* <<< TAMANHO FIXO E IGUAL PARA TODAS */
   padding: 12px 12px 40px 12px;
   border-radius: 10px;
   margin: 20px auto;
@@ -143,7 +143,7 @@ footer {
 
 /* imagem ajustada sem distorcer nem piscar */
 .polaroid img {
-  width: 360px;
+  width: 400px;
   height: 400px;
   object-fit: cover;
   display: block;
@@ -335,6 +335,7 @@ form button{
 
 /* small util */
 .hidden{ display:none !important; }
+
 
 
 

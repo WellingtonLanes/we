@@ -37,7 +37,7 @@ const SITE_DATA = {
     ],
     versiculos: [
       "O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha. Não maltrata, não procura seus interesses, não se irrita facilmente, não guarda rancor. O amor não se alegra com a injustiça, mas se alegra com a verdade. Tudo sofre, tudo crê, tudo espera, tudo suporta. (1 Coríntios 13:4–7)",
-      "Nós amamos porque Ele nos amou primeiro. (1 João 4:19) 💗"
+      "Nós amamos porque Ele nos amou primeiro. (1 João 4:19)"
     ],
     respostas: [
       "Bom... Não sei muito bem como começar, mas eu queria que tu soubesse o quanto eu fiquei feliz lendo esse texto, eu não consegui me expressar muito bem aquela hora, mas o meu coração estava explodindo por dentro kkkk. O jeito que tu escreveu e lembrou de cada detalhe me deixou encantada.",
@@ -375,6 +375,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

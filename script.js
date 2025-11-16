@@ -89,7 +89,7 @@ const SITE_DATA = {
       "Você é minha melhor companhia 🙏"
     ],
     versiculos: [
-      "Acima de tudo, revistam-se do amor. (Colossenses 3:14) 💗",
+      "O meu mandamento é este: Que vos ameis uns aos outros, assim como eu vos amei. (João 15:12)",
       "O cordão de três dobras não se rompe facilmente. (Eclesiastes 4:12) 💒"
     ],
     respostas: []
@@ -376,6 +376,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

@@ -144,7 +144,7 @@ footer {
 /* imagem ajustada sem distorcer nem piscar */
 .polaroid img {
   width: 100%;
-  height: auto;
+  height: 350px;
   object-fit: cover;
   display: block;
   margin: 0 auto;
@@ -335,6 +335,7 @@ form button{
 
 /* small util */
 .hidden{ display:none !important; }
+
 
 
 

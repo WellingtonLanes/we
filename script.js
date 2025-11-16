@@ -8,9 +8,9 @@ const SITE_DATA = {
       "imagens/foto7.jpg","imagens/foto8.jpg","imagens/foto9.jpg"
     ],
     datas: [
-      "13/09/2025","13/09/2025","13/08/2025",
-      "14/08/2025","15/08/2025","16/08/2025",
-      "17/08/2025","18/08/2025","19/08/2025"
+      "13/09/2025","13/09/2025","21/09/2025",
+      "21/09/2025","28/09/2025","28/09/2025",
+      "28/09/2025","18/08/2025","19/08/2025"
     ],
     texto: [
       "Oii, paz, prazer kkkk foi assim que me apresentei e assim queria começar esse texto, eu nunca fui bom em puxar assunto, não sou muito bom em expressar em palavras o que eu estou sentindo, me faltam palavras, e geralmente me enrolo todo kkkk, mas tu me faz querer expressar tudo o que estou sentindo, se não em palavras, por que não escrever né, mas de um jeito diferente até por que a minha letra não é das mais bonitas e tu ia ter um pouco de dificuldade em entender kkkkk.",
@@ -380,6 +380,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

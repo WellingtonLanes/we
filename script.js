@@ -28,7 +28,7 @@ const SITE_DATA = {
     mensagens: [
       "Que bomm, valeu muito a pena ter caminhado por 3 bairros atrás delas (flores) então kkkk. Eu caminharia de novooo.",
       "mas a forma como tu chegou foi bem educada e natural, por isso que gostei",
-      "Obrigado por existir, meu amor 💖"
+      "Qualquer coisa que eu faça contigo é muito bom."
     ],
     versiculos: [
       "O amor é paciente e bondoso. (1 Coríntios 13:4–7) 💞",
@@ -366,6 +366,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

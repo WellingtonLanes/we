@@ -93,7 +93,8 @@ const SITE_DATA = {
     ],
     versiculos: [
       "O meu mandamento é este: Que vos ameis uns aos outros, assim como eu vos amei. (João 15:12)",
-      "Amai-vos cordialmente uns aos outros com amor fraternal, preferindo-vos em honra uns aos outros. (Romanos 12:10)"
+      "Amai-vos cordialmente uns aos outros com amor fraternal, preferindo-vos em honra uns aos outros. (Romanos 12:10)",
+      "O meu amado é meu, e eu sou dele;ele se alimenta entre os lírios. (Cânticos 2:16)"
     ],
     respostas: []
   }
@@ -379,6 +380,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

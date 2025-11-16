@@ -82,7 +82,7 @@ const SITE_DATA = {
       "O quanto eu fico a vontade pra demostrar meus sentimentos depois que te conheci, eu não era assim kkk",
       "quanto mais tempo a gente ficar juntos melhooor ❤️",
       "Tu também faz muito bem para mim, tu alegrou meus dias e me traz uma paz muito grande ❤️",
-      "",
+      "eu também gostei de tudooo, mas só foi bom porque tu estava comigo ❤️",
       "",
       "",
       "",
@@ -377,6 +377,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

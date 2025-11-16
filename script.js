@@ -26,7 +26,7 @@ const SITE_DATA = {
       "O que eu quero dizer é que eu estou gostando muito de ti e fiz esse site pra te contar e pra tu não esquecer e poder ver sempre que tu quiser."
     ],
     mensagens: [
-      "",
+      "Que bomm, valeu muito a pena ter caminhado por 3 bairros atrás delas (flores) então kkkk. Eu caminharia de novooo.",
       "mas a forma como tu chegou foi bem educada e natural, por isso que gostei",
       "Obrigado por existir, meu amor 💖"
     ],
@@ -366,6 +366,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

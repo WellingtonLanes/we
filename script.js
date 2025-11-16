@@ -88,11 +88,7 @@ const SITE_DATA = {
       "Eu achei muito bommm, a cada dia que passa eu tenho mais certeza, pq na minha opinião Deus confirma algo no dia a dia, nas pequenas coisas e foi muito bom esses dias que a gente passou orando, de várias formas, até espiritual também. Isso não quer dizer que não vamos sentir medo ou ter dificuldades, mas da certeza que se pode vencer todas elas com Jesus",
       "nem se eu imaginasse teria sido tão bom, tu faz muito bem pra mim, de verdade ❤️. quero que a gente seja muito felizes juntos ❤️❤️",
       "Eu que tive sorte de encontrar ela, sabia que eu amo ver o olhar dela e o sorriso dela pra mim, que eu acho muito fofo quando ela põe a mão no rosto pra rir ou quando está com vergonha, amo ver ela arrumando o cabelo mesmo com uma ventania que em menos de 1 minuto depois bagunça tudo de novo kkk eu poderia ficar olhando o dia todo pra ela e admirando o quão incrível ela é 🥰❤️",
-      "",
-      "",
-      "",
-      "",
-      ""
+      "obrigadaaa, isso faz eu me sentir muito bemmm, muito segura contigo 🥹❤️"
     ],
     versiculos: [
       "O meu mandamento é este: Que vos ameis uns aos outros, assim como eu vos amei. (João 15:12)",
@@ -382,6 +378,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

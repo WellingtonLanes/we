@@ -80,7 +80,7 @@ const SITE_DATA = {
   ],
     mensagens: [
       "O quanto eu fico a vontade pra demostrar meus sentimentos depois que te conheci, eu não era assim kkk",
-      "Cada dia contigo é uma nova alegria 🌼",
+      "quanto mais tempo a gente ficar juntos melhooor ❤️",
       "Você é minha melhor companhia 🙏"
     ],
     versiculos: [
@@ -371,6 +371,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

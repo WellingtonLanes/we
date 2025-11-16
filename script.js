@@ -90,7 +90,7 @@ const SITE_DATA = {
     ],
     versiculos: [
       "O meu mandamento é este: Que vos ameis uns aos outros, assim como eu vos amei. (João 15:12)",
-      "O cordão de três dobras não se rompe facilmente. (Eclesiastes 4:12) 💒"
+      "Amai-vos cordialmente uns aos outros com amor fraternal, preferindo-vos em honra uns aos outros. (Romanos 12:10)
     ],
     respostas: []
   }
@@ -376,6 +376,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

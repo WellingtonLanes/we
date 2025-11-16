@@ -13,16 +13,16 @@ const SITE_DATA = {
       "17/08/2025","18/08/2025","19/08/2025"
     ],
     texto: [
-      "Oii, paz, prazer kkkk foi assim que me apresentei e assim queria começar esse texto, eu nunca fui bom em puxar assunto, não sou muito bom em expressar em palavras o que eu estou sentindo, me faltam palavras, e geralmente me enrolo todo kkkk, mas tu me faz querer expressar tudo o que estou sentindo, se não em palavras, por que não escrever né, mas de um jeito diferente até por que a minha letra não é das mais bonitas e tu ia ter um pouco de dificuldade em entender kkkkk."
-      "Eu gostaria de começar dizendo que me sinto tão bem e confortável ao teu lado, tu me transmite uma segurança muito grande, eu sou bem tímido, mas contigo minha timidez foi embora."
-      "Eu queria dizer que mandar aquela mensagem foi a melhor decisão que eu já tomei, e agradeço a Deus por Ele ter feito eu te conhecer, Ele foi muito bom comigo, quando eu te vi eu tive a certeza que eu precisava falar contigo e desde que a gente começou conversar meus dias ficaram muito mais alegres, que a tua simples presença e sorriso melhoram o meu dia, é muito bom conversar contigo, até um banho de chuva, assistir uma série pelo discord, jogar gartic, comprar um guarda-chuva é uma aventura contigo."
-      "Tu tem um jeito que é só teu que eu acho incrível, tu gosta do pôr do sol, ama lasanha (de todos sabores possíveis kkkk), ama brigadeiro, é ruim nos esportes, tem medo de cair de bicicleta, desenha muito melhor que eu, é muito boa no stop, gosta de friends e the office, gosta muito de ler, tem medo de lagartixa e sapo kkk, quer ter um poodle, e deseja conhecer New York."
-      "Tu é muito meiga, engraçada, simpática, inteligente, tem um coração muito grande e muitas outras qualidades."
-      "Eu te acho muito linda, eu poderia olhar pro teu sorriso e pro teu olhar o dia todo kkkk."
-      "Mas a coisa que mais admiro em ti é o fato tu ser tão temente a Deus, de fazer a obra Dele, de louvar, de ajudar na recepção, de virar atriz dos convites pros cultos, ensinar a palavra de Deus pras crianças (eu quero assistir uma aula tua ainda kkk) e de como as crianças gostam de ti."
-      "Eu quero louvar contigo ou até quem sabe tocar violão pra ti louvar, quero que tu me veja pregando, quero orar contigo, conhecer novos lugares contigo (quem sabe New York ou a rua em Paris com o teu nome)."
-      "Eu quero te dar muitos brigadeiros, flores, te levar pra tirar muitas fotos do pôr do sol e fotos nossas tambem (até com o filtro de cachorro kkkk), até fazer skincare (coisa que eu nunca tinha pensado em fazer antes kkkk) comer muitos entreveros depois do culto. Tudo conforme a permissão de Deus."
-      "Eu acho que a gente combina muito em muitas coisas, temos as nossas diferenças, o que nos tornas unicos, mas até as nossas diferenças e o esforço de cada um pra fazer ou dar o que o outro gosta, faz eu gostar tanto da gente."
+      "Oii, paz, prazer kkkk foi assim que me apresentei e assim queria começar esse texto, eu nunca fui bom em puxar assunto, não sou muito bom em expressar em palavras o que eu estou sentindo, me faltam palavras, e geralmente me enrolo todo kkkk, mas tu me faz querer expressar tudo o que estou sentindo, se não em palavras, por que não escrever né, mas de um jeito diferente até por que a minha letra não é das mais bonitas e tu ia ter um pouco de dificuldade em entender kkkkk.",
+      "Eu gostaria de começar dizendo que me sinto tão bem e confortável ao teu lado, tu me transmite uma segurança muito grande, eu sou bem tímido, mas contigo minha timidez foi embora.",
+      "Eu queria dizer que mandar aquela mensagem foi a melhor decisão que eu já tomei, e agradeço a Deus por Ele ter feito eu te conhecer, Ele foi muito bom comigo, quando eu te vi eu tive a certeza que eu precisava falar contigo e desde que a gente começou conversar meus dias ficaram muito mais alegres, que a tua simples presença e sorriso melhoram o meu dia, é muito bom conversar contigo, até um banho de chuva, assistir uma série pelo discord, jogar gartic, comprar um guarda-chuva é uma aventura contigo.",
+      "Tu tem um jeito que é só teu que eu acho incrível, tu gosta do pôr do sol, ama lasanha (de todos sabores possíveis kkkk), ama brigadeiro, é ruim nos esportes, tem medo de cair de bicicleta, desenha muito melhor que eu, é muito boa no stop, gosta de friends e the office, gosta muito de ler, tem medo de lagartixa e sapo kkk, quer ter um poodle, e deseja conhecer New York.",
+      "Tu é muito meiga, engraçada, simpática, inteligente, tem um coração muito grande e muitas outras qualidades.",
+      "Eu te acho muito linda, eu poderia olhar pro teu sorriso e pro teu olhar o dia todo kkkk.",
+      "Mas a coisa que mais admiro em ti é o fato tu ser tão temente a Deus, de fazer a obra Dele, de louvar, de ajudar na recepção, de virar atriz dos convites pros cultos, ensinar a palavra de Deus pras crianças (eu quero assistir uma aula tua ainda kkk) e de como as crianças gostam de ti.",
+      "Eu quero louvar contigo ou até quem sabe tocar violão pra ti louvar, quero que tu me veja pregando, quero orar contigo, conhecer novos lugares contigo (quem sabe New York ou a rua em Paris com o teu nome).",
+      "Eu quero te dar muitos brigadeiros, flores, te levar pra tirar muitas fotos do pôr do sol e fotos nossas tambem (até com o filtro de cachorro kkkk), até fazer skincare (coisa que eu nunca tinha pensado em fazer antes kkkk) comer muitos entreveros depois do culto. Tudo conforme a permissão de Deus.",
+      "Eu acho que a gente combina muito em muitas coisas, temos as nossas diferenças, o que nos tornas unicos, mas até as nossas diferenças e o esforço de cada um pra fazer ou dar o que o outro gosta, faz eu gostar tanto da gente.",
       "O que eu quero dizer é que eu estou gostando muito de ti e fiz esse site pra te contar e pra tu não esquecer e poder ver sempre que tu quiser."
     ],
     mensagens: [
@@ -366,6 +366,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

@@ -84,7 +84,7 @@ const SITE_DATA = {
       "Tu também faz muito bem para mim, tu alegrou meus dias e me traz uma paz muito grande ❤️",
       "eu também gostei de tudooo, mas só foi bom porque tu estava comigo ❤️",
       "Simm, é sempre muito bom ir nos cultos contigo ❤️",
-      "",
+      "eu tô gostando muito de orar juntos pela gente ❤️",
       "",
       "",
       ""
@@ -377,6 +377,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

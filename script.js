@@ -37,11 +37,14 @@ const SITE_DATA = {
       "imagens/fotos10.jpg","imagens/fotos11.jpg","imagens/fotos12.jpg",
       "imagens/fotos13.jpg","imagens/fotos14.jpg","imagens/fotos15.jpg",
       "imagens/fotos16.jpg","imagens/fotos17.jpg","imagens/fotos18.jpg",
-      "imagens/fotos19.jpg"
+      "imagens/fotos19.jpg","imagens/fotos20.jpg","imagens/fotos21.jpg",
+      "imagens/fotos22.jpg","imagens/fotos23.jpg"
     ],
     datas: [
       "09/11/2025","10/11/2025","11/11/2025","12/11/2025","13/11/2025",
-      "14/11/2025","15/11/2025","16/11/2025","17/11/2025","18/11/2025"
+      "14/11/2025","15/11/2025","16/11/2025","17/11/2025","18/11/2025",
+      "14/11/2025","15/11/2025","16/11/2025","17/11/2025","18/11/2025",
+      "14/11/2025","14/11/2025"
     ],
     texto: [
       "Cada dia do nosso namoro é um capítulo lindo da nossa história.",
@@ -340,6 +343,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

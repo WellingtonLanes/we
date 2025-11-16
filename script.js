@@ -81,7 +81,13 @@ const SITE_DATA = {
     mensagens: [
       "O quanto eu fico a vontade pra demostrar meus sentimentos depois que te conheci, eu não era assim kkk",
       "quanto mais tempo a gente ficar juntos melhooor ❤️",
-      "Você é minha melhor companhia 🙏"
+      "Tu também faz muito bem para mim, tu alegrou meus dias e me traz uma paz muito grande ❤️",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
     ],
     versiculos: [
       "O meu mandamento é este: Que vos ameis uns aos outros, assim como eu vos amei. (João 15:12)",
@@ -371,6 +377,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

@@ -113,49 +113,57 @@ footer {
   flex-shrink:0;
 }
 
-/* ===== POLAROID CORRETO ===== */
+/* ===== POLAROID PERFEITO ===== */
 .polaroid {
   background: white;
-  width: 400px; /* <<< TAMANHO FIXO E IGUAL PARA TODAS */
+  width: 380px;             /* polaroid bonito sem ocupar a tela */
   padding: 10px 10px 40px 10px;
   border-radius: 10px;
   margin: 20px auto;
   box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-  display: inline-block;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  transition: opacity 0.8s ease-in-out;
-  overflow: hidden; /* previne qualquer bug de deslocamento */
+  overflow: hidden;
+  position: relative;
 }
 
-/* leve rotação */
-.rotate-1 { transform: rotate(-1deg); }
-.rotate-2 { transform: rotate(1deg); }
-.rotate-3 { transform: rotate(-0.5deg); }
-
-/* foto dentro do polaroid */
+/* área onde a foto fica */
 .photo {
   width: 100%;
-  height: 100%;
-  object-fit: contain;    /* mostra a foto inteira */
-  object-position: center; /* mantém centralizada */
+  height: 420px;            /* >>> ALTURA FIXA = sem piscadas, sem pulos */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
-.polaroid-slide img {
+/* imagem dentro da polaroid */
+.polaroid img {
   width: 100%;
   height: 100%;
-  object-fit: contain;  /* MOSTRA A FOTO INTEIRA */
-  background: #fff;     /* fundo limpo onde sobra espaço */
-  transition: opacity 0.6s ease-in-out;
+  object-fit: contain;       /* >>> MOSTRA A FOTO INTEIRA */
+  object-position: center;   /* >>> sem cortar rosto */
+  background: #fff;          /* onde sobrar espaço fica branco */
+}
+
+/* transição suave entre fotos */
+.polaroid-slide img {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: opacity 0.5s ease-in-out;
   opacity: 0;
 }
+
 .polaroid-slide img.active {
-  opacity: 1;
+  opacity: 1;               /* >>> troca suave sem piscar */
 }
+
 
 /* legenda */
 .caption {
@@ -339,6 +347,7 @@ form button{
 
 /* small util */
 .hidden{ display:none !important; }
+
 
 
 

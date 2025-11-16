@@ -33,7 +33,7 @@ const SITE_DATA = {
       "E eu fico feliz que tu fica feliz vendo eu ficando feliz contigo feliz e ficamos todo mundo feliz kkkkkk.",
       "eu tambémm, acordei sorrindo hoje kkkk, acho que eu fiquei pensando na nossa conversa kkkk",
       "Capaaaz, tu pode falar o que está sentindo sempre comigo, sobre qualquer assunto, quando quiser. Nem sempre vou saber como ajudar ou o que falar, mas vou tentar e vou estar sempre aqui.",
-      ""
+      "só de poder compartilhar contigo já está bommm ❤️"
     ],
     versiculos: [
       "O amor é paciente e bondoso. (1 Coríntios 13:4–7) 💞",
@@ -371,6 +371,7 @@ function createFlower() {
         console.error("Erro ao gerar a flor:", e);
     }
 }
+
 
 
 

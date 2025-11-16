@@ -124,7 +124,7 @@ footer {
   display: inline-block;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.25s ease;
+  transition: opacity 0.8s ease-in-out;
   overflow: hidden; /* previne qualquer bug de deslocamento */
 }
 
@@ -335,6 +335,7 @@ form button{
 
 /* small util */
 .hidden{ display:none !important; }
+
 
 
 

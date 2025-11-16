@@ -116,8 +116,8 @@ footer {
 /* ===== POLAROID CORRETO ===== */
 .polaroid {
   background: white;
-  width: 300px; /* <<< TAMANHO FIXO E IGUAL PARA TODAS */
-  padding: 10px 10px 25px 10px; /* borda inferior maior */
+  width: 260px; /* <<< TAMANHO FIXO E IGUAL PARA TODAS */
+  padding: 10px;
   border-radius: 14px;
   margin: 20px auto;
   box-shadow: 0 6px 18px rgba(0,0,0,0.18);
@@ -142,11 +142,13 @@ footer {
 }
 
 /* imagem ajustada sem distorcer nem piscar */
-.photo img {
+.polaroid img {
   width: 100%;
-  height: 100%;
-  object-fit: cover; /* mantém proporção, mas preenche o espaço */
-  display: block;
+  height: 300%;
+  object-fit: contain;      /* evita cortar */
+  object-position: center;  
+  background: white;        /* preenche o espaço extra */
+  border-radius: 8px;
 }
 
 /* legenda */
@@ -331,6 +333,7 @@ form button{
 
 /* small util */
 .hidden{ display:none !important; }
+
 
 
 

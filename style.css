@@ -1,0 +1,1142 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Patrick+Hand&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Patrick Hand', cursive;
+  background:#fff0f5;
+  color:#333;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+
+/* ================== FOOTER ================== */
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 22px 16px;
+  margin-top: 30px;
+  font-size: 1.1rem;
+  color: #5f4250;
+  background: #ffe4ec;
+  border-top: 1px solid #ffccda;
+  box-shadow: 0 -4px 18px rgba(183,28,87,0.08);
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== HEARTS CONTAINER (CORRIGIDO) ===== */
+#coracoes {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible; /* IMPORTANTE pra animação */
+}
+
+/* garante conteúdo acima */
+#main-content, header, footer, .section, .carta, .slideshow {
+  position: relative;
+  z-index: 2;
+}
+
+#main-content{
+  transition:opacity 0.18s ease, transform 0.18s ease;
+}
+
+#main-content.is-switching{
+  opacity:0;
+  transform:translateY(8px);
+}
+
+/* ================== HEADER / MENU ================== */
+.site-header{
+  text-align:center;
+  padding:24px 16px 22px;
+  background:#ffe4ec;
+  border-bottom:1px solid #ffccda;
+  box-shadow:0 4px 18px rgba(183,28,87,0.08);
+  position:relative;
+  z-index:3;
+}
+
+.site-header h1{
+  color:#5f4250;
+  text-shadow:0 1px 0 rgba(255,255,255,0.9);
+}
+
+.menu{
+  margin-top:12px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.menu button{
+  font-family:'Patrick Hand', cursive;
+  padding:10px 20px;
+  margin:0 6px;
+  font-size:1.1rem;
+  border:1px solid #ffd3e0;
+  border-radius:14px;
+  background:#fff8fb;
+  color:#5f4250;
+  cursor:pointer;
+  transition:0.2s;
+  box-shadow:0 3px 10px rgba(183,28,87,0.08);
+}
+
+.menu button.active{
+  background:#ffd9e6;
+  border-color:#ffb6c9;
+  color:#b71c87;
+  box-shadow:0 6px 14px rgba(183,28,87,0.12);
+}
+
+.menu button:hover:not(.disabled){
+  transform:translateY(-2px);
+  background:#ffccda;
+}
+
+.menu button.disabled{
+  opacity:0.6;
+  cursor:not-allowed;
+}
+
+@media (max-width:600px){
+  .site-header{
+    padding:16px 0 12px;
+  }
+
+  .site-header h1{
+    font-size:1.75rem;
+    padding:0 12px;
+  }
+
+  .menu{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    width:92%;
+    margin:0 auto;
+  }
+  .menu button{ width:100%; text-align:center; }
+
+  #music-player{
+    position:static;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:92%;
+    max-width:340px;
+    margin:14px auto 0;
+  }
+
+  #music-btn{
+    width:100%;
+    max-width:320px;
+  }
+
+  .music-progress{
+    width:calc(100% - 8px);
+    max-width:312px;
+  }
+}
+
+/* ================== PLAYER MÚSICA ================== */
+#music-player{
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 9999;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:7px;
+  padding:8px 10px;
+  border-radius:16px;
+  background:rgba(255,255,255,0.82);
+  border:1px solid #ffd3e0;
+  box-shadow:0 5px 16px rgba(0,0,0,0.12);
+  backdrop-filter:blur(6px);
+}
+
+#music-btn{
+  font-family:'Patrick Hand', cursive;
+  background:#ffe4ec;
+  border:none;
+  padding:10px 16px;
+  border-radius:14px;
+  cursor:pointer;
+  font-size:1rem;
+  box-shadow:0 3px 8px rgba(0,0,0,0.12);
+  transition:0.2s;
+  min-width:190px;
+  text-align:center;
+}
+
+#music-btn:hover{
+  transform:translateY(-2px);
+  background:#ffccda;
+}
+
+.music-progress{
+  width:calc(100% - 8px);
+  max-width:190px;
+  height:0;
+  overflow:hidden;
+  border-radius:999px;
+  background:#ffe4ec;
+  border:1px solid #ffccda;
+  box-shadow:0 2px 6px rgba(0,0,0,0.06);
+  opacity:0;
+  transition:height 0.2s, opacity 0.2s;
+}
+
+#music-player.is-playing .music-progress{
+  height:7px;
+  opacity:1;
+}
+
+#music-progress-bar{
+  display:block;
+  width:0%;
+  height:100%;
+  border-radius:999px;
+  background:#ff8bb3;
+  transition:width 0.2s linear;
+}
+
+/* ================== BOTÃO ALEATÓRIO ================== */
+.random-box{
+  text-align:center;
+}
+
+.random-box .reveal-btn{
+  background:#ffd1e1;
+}
+
+/* ================== ORAÇÃO ================== */
+.prayer-item{
+  background:#fffafa;
+  padding:16px;
+  margin-top:12px;
+  border-radius:14px;
+  border:1px solid #ffd3e0;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  text-align:left;
+  position:relative;
+}
+
+.prayer-item p{
+  font-size:1.1rem;
+  margin-bottom:6px;
+  padding-right:36px;
+}
+
+.prayer-item small{
+  color:#888;
+  font-size:0.9rem;
+}
+
+.prayer-actions{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.prayer-actions button{
+  font-family:'Patrick Hand', cursive;
+  border:none;
+  padding:6px 10px;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:0.95rem;
+  background:#ffe4ec;
+  box-shadow:0 3px 6px rgba(0,0,0,0.1);
+  transition:0.2s;
+}
+
+.prayer-actions button:hover{
+  transform:scale(1.05);
+  background:#ffccda;
+}
+
+.prayer-actions button.active{
+  background:#ffacc6 !important;
+  color:#8a0f5a !important;
+  box-shadow:0 0 0 2px #ff6f9f inset, 0 5px 12px rgba(183,28,87,0.18) !important;
+  transform:translateY(-1px);
+}
+
+.delete-prayer{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:30px;
+  height:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:none;
+  border-radius:50%;
+  background:#ffe4ec;
+  cursor:pointer;
+  font-size:0.95rem;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  transition:transform 0.2s, background 0.2s;
+}
+
+.delete-prayer:hover{
+  transform:scale(1.08);
+  background:#ffccda;
+}
+
+.prayer-section .white-box{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  text-align:left;
+}
+
+.prayer-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.memory-result{
+  line-height:1.4;
+}
+
+/* ================== FORM ORAÇÃO ================== */
+#prayerForm textarea{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:2px solid #ffd3e0;
+  font-family:'Patrick Hand', cursive;
+  font-size:1.05rem;
+  background:white;
+  outline:none;
+}
+
+#prayerForm button{
+  background:#ffb6c9;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  font-size:1.05rem;
+  cursor:pointer;
+}
+
+/* ================== CARROSSEL 100 ================== */
+.carousel{
+  text-align:center;
+}
+
+.carousel #frase{
+  font-size:1.2rem;
+  margin-bottom:10px;
+  color:#4b3a30;
+}
+
+.carousel button{
+  font-family:'Patrick Hand', cursive;
+  padding:8px 16px;
+  border:none;
+  border-radius:12px;
+  background:#ffe4ec;
+  cursor:pointer;
+  margin:5px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.12);
+  transition:0.2s;
+}
+
+.carousel button:hover{
+  transform:translateY(-2px);
+  background:#ffccda;
+}
+
+#contador{
+  margin-top:6px;
+  font-size:1rem;
+  color:#888;
+}
+
+/* ================== SLIDESHOW ================== */
+.polaroid-gallery{
+  width:min(92vw, 380px);
+  margin:22px auto 24px;
+  border-radius:10px;
+  background:white;
+  box-shadow:0 6px 18px rgba(0,0,0,0.18);
+  overflow:hidden;
+  position:relative;
+}
+
+.slideshow{
+  width:100%;
+  height:calc(clamp(320px, 100vw, 420px) + 20px);
+  margin:0;
+  position:relative;
+  display:grid;
+  align-items:start;
+  justify-items:center;
+  overflow:visible;
+}
+
+.mySlides, .mySlides2{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:grid;
+  align-items:start;
+  justify-items:center;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(10px) rotate(-0.7deg) scale(0.985);
+  transition:opacity 900ms ease, transform 900ms ease, visibility 900ms ease;
+  pointer-events:none;
+}
+
+.mySlides.active, .mySlides2.active{
+  z-index:2;
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0) rotate(0deg) scale(1);
+  pointer-events:auto;
+}
+
+/* ================== POLAROID ================== */
+.polaroid {
+  background:white;
+  width:100%;
+  padding: 10px;
+  border-radius:10px 10px 0 0;
+  margin: 0 auto;
+  box-shadow:none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.photo {
+  width: 100%;
+  height: clamp(320px, 100vw, 420px);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff8fb;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:contain;
+}
+
+.polaroid img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: #fff8fb;
+}
+
+.caption {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 1.02rem;
+  color: #8a6070;
+  letter-spacing:0;
+  line-height:1;
+}
+
+.slideshow-controls{
+  width:100%;
+  margin:0;
+  display:grid;
+  grid-template-columns:42px minmax(118px, 1fr) 42px;
+  align-items:center;
+  gap:6px;
+  padding:9px 12px 11px;
+  border:0;
+  border-radius:0;
+  background:#fffafa;
+  box-shadow:none;
+  backdrop-filter:blur(5px);
+}
+
+.slideshow-controls button{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border:1px solid #ffb6c9;
+  border-radius:999px;
+  background:#fff0f5;
+  color:#b71c87;
+  font-family:'Patrick Hand', cursive;
+  font-size:1.12rem;
+  font-weight:700;
+  line-height:1;
+  cursor:pointer;
+  box-shadow:0 2px 7px rgba(183,28,87,0.1);
+  transition:transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.slideshow-controls button:hover{
+  transform:translateY(-2px);
+  background:#ffccda;
+  box-shadow:0 6px 14px rgba(0,0,0,0.16);
+}
+
+.slide-jump{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  color:#8a6070;
+  font-size:0.95rem;
+}
+
+.slide-number{
+  width:56px;
+  height:32px;
+  border:1px solid #ffd3e0;
+  border-radius:999px;
+  background:#fff8fb;
+  color:#b71c87;
+  font:inherit;
+  text-align:center;
+  box-shadow:inset 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.slide-number:focus{
+  outline:3px solid rgba(255,139,179,0.35);
+  outline-offset:2px;
+}
+
+.slide-counter{
+  position:absolute;
+  top:18px;
+  right:22px;
+  z-index:6;
+  min-width:58px;
+  padding:6px 12px;
+  border-radius:999px;
+  background:#ffe4ec;
+  color:#b71c87;
+  font-size:1rem;
+  line-height:normal;
+  text-align:center;
+  white-space:nowrap;
+  box-shadow:0 3px 8px rgba(0,0,0,0.12);
+}
+
+/* ================== CARTA ================== */
+.carta{
+  width:90%;
+  max-width:760px;
+  background:white;
+  margin:28px auto;
+  padding:24px;
+  border:1px solid #e2c4b3;
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  line-height:1.55;
+  background-image: repeating-linear-gradient(#ffffff, #ffffff 24px, #ffe8d6 25px);
+}
+
+/* ================== CONTADOR ================== */
+.contador{
+  text-align:center;
+}
+
+.contador .time{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:10px;
+  background:#ffe4ec;
+  padding:12px;
+  border-radius:12px;
+  box-shadow:inset 0 0 0 1px #ffd3e0;
+}
+
+.time-unit{
+  min-width:0;
+  padding:12px 8px;
+  border-radius:12px;
+  background:#fffafa;
+  border:1px solid #ffd3e0;
+  box-shadow:0 3px 8px rgba(0,0,0,0.06);
+}
+
+.time-unit span{
+  display:block;
+  font-family:'Fraunces', serif;
+  color:#b71c87;
+  font-size:2rem;
+  font-weight:800;
+  line-height:1;
+}
+
+.time-unit small{
+  display:block;
+  margin-top:6px;
+  color:#4b3a30;
+  font-size:0.95rem;
+  line-height:1;
+}
+
+/* ================== SECTIONS ================== */
+.section{
+  width:90%;
+  max-width:650px;
+  margin:22px auto;
+}
+
+.section h2{
+  text-align:center;
+  width:fit-content;
+  max-width:100%;
+  margin:0 auto 10px;
+  padding:6px 14px;
+  border-radius:999px;
+  background:#ffe4ec;
+  color:#4b3a30;
+  font-size:1.35rem;
+  box-shadow:0 3px 8px rgba(0,0,0,0.08);
+}
+
+.white-box{
+  background:white;
+  padding:18px;
+  border-radius:14px;
+  border:1px solid #ffd3e0;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  position:relative;
+  overflow:hidden;
+}
+
+.reveal-btn{
+  width:100%;
+  font-size:1.15rem;
+  padding:12px 10px;
+  border:none;
+  border-radius:999px;
+  background:#ffd1e1;
+  color:#4b3a30;
+  cursor:pointer;
+  transition:0.22s;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.reveal-btn:hover{ transform:scale(1.02); background:#ffbfd4; }
+
+.pink-overlay{
+  margin-top:14px;
+  padding:18px;
+  border-radius:14px;
+  display:none;
+  background:#ffe4ec;
+  min-height:88px;
+  font-size:1.12rem;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  line-height:1.4;
+  color:#4b3a30;
+  box-shadow:inset 0 0 0 1px #ffd3e0;
+}
+
+/* ================== FORM ================== */
+form{
+  width:100%;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.form-row{
+  display:flex;
+  gap:10px;
+}
+
+form input, form textarea{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:2px solid #ffd3e0;
+  font-family:'Patrick Hand', cursive;
+  font-size:1.05rem;
+  background:#fffafa;
+  outline:none;
+}
+
+form textarea{ height:120px; resize:none; }
+
+form button{
+  background:#ffb6c9;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  font-size:1.12rem;
+  cursor:pointer;
+  color:#4b3a30;
+  box-shadow:0 3px 8px rgba(0,0,0,0.1);
+  transition:transform 0.2s, background 0.2s;
+}
+
+form button:hover{
+  transform:translateY(-2px);
+  background:#ffccda;
+}
+
+/* ===== STATUS FORM (NOVO) ===== */
+#formStatus {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: #b71c87;
+  text-align: center;
+}
+
+/* ================== BOTÃO FLOR ================== */
+#flower-btn, .flower-button{
+  padding:10px 18px;
+  border:2px solid #ff8bb3;
+  border-radius:12px;
+  background:#ffd1e1;
+  color:#b71c87;
+  font-weight:700;
+  font-size:1.12rem;
+  cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+  display:block;
+  margin:20px auto;
+}
+
+#flower-btn:hover, .flower-button:hover{
+  transform:scale(1.03);
+  background:#ffbfd4;
+}
+
+/* ================== HEART ================== */
+.heart{
+  position:fixed;
+  pointer-events:none;
+  user-select:none;
+  top:-40px;
+  opacity:0;
+  will-change: transform, opacity;
+  animation:heart-fall var(--duration, 7s) linear forwards;
+  filter:drop-shadow(0 4px 6px rgba(183,28,87,0.18));
+}
+
+@keyframes heart-fall{
+  0%{
+    opacity:0;
+    transform:translate3d(0, -30px, 0) rotate(0deg) scale(var(--scale, 1));
+  }
+  12%{
+    opacity:var(--opacity, 0.75);
+  }
+  50%{
+    transform:translate3d(var(--drift-mid, 18px), 50vh, 0) rotate(var(--rotate-mid, 18deg)) scale(var(--scale, 1));
+  }
+  88%{
+    opacity:var(--opacity, 0.75);
+  }
+  100%{
+    opacity:0;
+    transform:translate3d(var(--drift-end, -16px), 105vh, 0) rotate(var(--rotate-end, -28deg)) scale(var(--scale, 1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .heart{
+    animation:none;
+    display:none;
+  }
+}
+
+/* ================== FLOWER ================== */
+.temp-flower-img{
+  position: absolute;
+  width: 92px;
+  height: auto;
+  pointer-events:none;
+  z-index: 9999;
+  transform-origin: center center;
+  transition: transform .6s ease, opacity .6s ease;
+}
+
+.temp-flower-hide{ opacity:0; transform: translateY(30px) scale(0.9); }
+
+/* ================== UTIL ================== */
+.hidden{ display:none !important; }
+
+/* ================== FINAL DO SITE ================== */
+#main-content > section{
+  width:90%;
+  max-width:650px;
+  margin:22px auto;
+  position:relative;
+  z-index:2;
+}
+
+#main-content > section h2{
+  text-align:center;
+  margin-bottom:10px;
+  font-size:1.35rem;
+  color:#4b3a30;
+}
+
+#main-content > section > button,
+#main-content > section .white-box button{
+  font-family:'Patrick Hand', cursive;
+  border:none;
+  border-radius:999px;
+  background:#ffe4ec;
+  color:#4b3a30;
+  cursor:pointer;
+  font-size:1.1rem;
+  padding:10px 18px;
+  margin:5px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.12);
+  transition:transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+#main-content > section > button{
+  display:block;
+  width:min(100%, 320px);
+  margin:0 auto;
+  background:#ffd1e1;
+}
+
+#main-content > section > button:hover,
+#main-content > section .white-box button:hover{
+  transform:translateY(-2px);
+  background:#ffccda;
+  box-shadow:0 6px 14px rgba(0,0,0,0.16);
+}
+
+#main-content > section .white-box{
+  text-align:center;
+}
+
+.love-card{
+  overflow:hidden;
+  border:1px solid #ffd3e0;
+  background:white;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.love-card-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.love-badge{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#ffe4ec;
+  box-shadow:0 3px 8px rgba(0,0,0,0.12);
+  font-size:1.2rem;
+}
+
+.love-counter{
+  padding:6px 12px;
+  border-radius:999px;
+  background:#ffe4ec;
+  color:#b71c87;
+  font-size:1rem;
+  box-shadow:0 3px 8px rgba(0,0,0,0.12);
+}
+
+.love-phrase{
+  height:190px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0;
+  padding:18px;
+  border-radius:14px;
+  background:#ffe4ec;
+  color:#4b3a30;
+  font-size:1.45rem;
+  line-height:1.35;
+  text-align:center;
+  white-space:pre-line;
+  overflow-y:auto;
+  box-shadow:inset 0 0 0 1px #ffd3e0;
+}
+
+.love-phrase.is-long{
+  font-size:1.12rem;
+  line-height:1.32;
+}
+
+.love-phrase.is-extra-long{
+  align-items:flex-start;
+  font-size:0.95rem;
+  line-height:1.28;
+  text-align:left;
+}
+
+.love-controls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin-top:14px;
+}
+
+.content-jump{
+  flex:0 1 auto;
+}
+
+.love-controls button{
+  width:52px !important;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 !important;
+  border:1px solid #ffb6c9 !important;
+  border-radius:999px !important;
+  appearance:none;
+  -webkit-appearance:none;
+  font-size:1.35rem !important;
+  font-weight:700;
+  color:#b71c87 !important;
+  background:#ffd1e1 !important;
+  box-shadow:0 4px 10px rgba(0,0,0,0.12) !important;
+  cursor:pointer;
+  transition:transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.love-controls button:hover{
+  transform:translateY(-2px);
+  background:#ffbfd4 !important;
+  box-shadow:0 6px 14px rgba(0,0,0,0.16) !important;
+}
+
+.love-controls button:focus-visible{
+  outline:3px solid rgba(255,139,179,0.45);
+  outline-offset:3px;
+}
+
+.love-controls .reveal-card-btn{
+  width:auto !important;
+  min-width:180px;
+  padding:0 18px !important;
+  font-size:1.08rem !important;
+}
+
+#main-content > section:not(.section){
+  background:white;
+  padding:16px;
+  border-radius:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+#main-content > section:not(.section) h2{
+  margin-bottom:0;
+}
+
+@media (max-width:600px){
+  .slideshow{
+    height:calc(clamp(320px, 100vw, 420px) + 20px);
+    margin-bottom:0;
+  }
+
+  .slideshow-controls{
+    width:100%;
+    min-height:66px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:3px;
+    padding:8px 48px;
+    position:relative;
+  }
+
+  .slide-prev,
+  .slide-next{
+    position:absolute;
+    top:16px;
+    flex:none;
+  }
+
+  .slide-prev{ left:14px; }
+  .slide-next{ right:14px; }
+
+  .slide-jump{
+    flex:none;
+  }
+
+  .slide-counter{
+    top:18px;
+    right:18px;
+    min-width:52px;
+    padding:5px 9px;
+  }
+
+  .slideshow-controls button{
+    width:32px;
+    height:32px;
+    font-size:1.05rem;
+  }
+
+  .slide-jump{
+    gap:6px;
+    font-size:0.9rem;
+  }
+
+  .slide-number{
+    width:52px;
+    height:30px;
+  }
+
+  .slide-counter{
+    font-size:0.92rem;
+  }
+
+  #main-content > section{
+    width:92%;
+  }
+
+  #main-content > section > button,
+  #main-content > section .white-box button{
+    width:100%;
+    margin:5px 0;
+  }
+
+  #music-player{
+    position:static;
+    display:flex;
+    justify-content:center;
+    width:92%;
+    margin:14px auto 0;
+  }
+
+  #music-btn{
+    width:100%;
+    max-width:320px;
+  }
+
+  .form-row{
+    flex-direction:column;
+  }
+
+  .contador{
+    width:100%;
+    padding:12px;
+  }
+
+  .contador .time{
+    width:100%;
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+    gap:5px;
+    padding:8px;
+  }
+
+  .time-unit{
+    padding:8px 3px;
+    border-radius:10px;
+  }
+
+  .time-unit span{
+    font-size:clamp(1.05rem, 5.2vw, 1.45rem);
+  }
+
+  .time-unit small{
+    margin-top:4px;
+    font-size:clamp(0.64rem, 2.7vw, 0.78rem);
+  }
+
+  .carta{
+    width:92%;
+    padding:18px;
+    font-size:1rem;
+  }
+
+  .polaroid{
+    margin:0 auto;
+  }
+
+  .caption{
+    font-size:13px;
+  }
+
+  .love-card-top{
+    align-items:flex-start;
+  }
+
+  .love-phrase{
+    height:170px;
+    padding:16px;
+    font-size:1.24rem;
+  }
+
+  .love-phrase.is-long{
+    font-size:1.02rem;
+  }
+
+  .love-phrase.is-extra-long{
+    font-size:0.9rem;
+  }
+
+  .verse-section .love-phrase{
+    height:auto;
+    min-height:170px;
+    overflow-y:visible;
+  }
+
+  .verse-section .love-phrase.is-long{
+    font-size:1.02rem;
+    line-height:1.32;
+  }
+
+  .prayer-actions{
+    flex-wrap:nowrap;
+    gap:5px;
+  }
+
+  .prayer-actions button{
+    flex:1 1 0;
+    min-width:0;
+    width:auto !important;
+    padding:6px 4px;
+    margin:0 !important;
+    font-size:clamp(0.78rem, 3.1vw, 0.9rem);
+    white-space:nowrap;
+  }
+
+  .delete-prayer{
+    top:8px;
+    right:8px;
+    width:28px !important;
+    height:28px;
+    min-width:28px;
+    padding:0 !important;
+    margin:0 !important;
+    font-size:0.82rem;
+  }
+}
+
+

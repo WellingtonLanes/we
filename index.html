@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Um cantinho especial com fotos, cartas, mensagens e lembrancas do casal." />
+  <meta name="theme-color" content="#ffb6c9" />
+  <title>Nosso Cantinho</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script defer src="script.js"></script>
+</head>
+
+<body>
+
+  <!-- CORAÇÕES -->
+  <div id="coracoes"></div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <h1>Nosso Cantinho 💕</h1>
+
+    <nav class="menu">
+      <button class="menu-btn active" data-mode="declaracao">Declaração &#128140;</button>
+      <button class="menu-btn" data-mode="namoro">Namoro &#128149;</button>
+      <button class="menu-btn" data-mode="noivado">Noivado &#128141;</button>
+      <button class="menu-btn disabled" disabled>Casamento &#9203;</button>
+    </nav>
+	
+	<!-- PLAYER DE MÚSICA -->
+	<div id="music-player">
+	<button id="music-btn" type="button">🔊 Tocar nossa música</button>
+	<div class="music-progress" aria-hidden="true"><span id="music-progress-bar"></span></div>
+	<audio id="music" preload="auto">
+	  <source src="musica.mp3" type="audio/mpeg">
+	</audio>
+	</div>
+	
+  </header>
+
+  <!-- CONTEÚDO DINÂMICO -->
+  <main id="main-content">
+    <p class="loading">Carregando conteúdo...</p>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>Feito com ❤️ por Wellington 💌</p>
+  </footer>
+
+</body>
+</html>

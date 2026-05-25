@@ -122,7 +122,7 @@ const SITE_DATA = {
   },
 
   noivado: {
-    dataInicio: "2026-05-09T18:00:00",
+    dataInicio: "2026-05-09T14:35:00",
     fotos: [
       ...imageRange(24, 51, "jpg"),
       ...imageRange(52, 195, "jpg")
@@ -148,7 +148,11 @@ const SITE_DATA = {
     ],
     versiculos: BIBLE_VERSES,
     respostas: [
-      "Aguardando sua resposta ❤️"
+      "Meu amor, eu também quero começar esse texto dizendo que eu te amo muito, e esse amor é algo que eu nunca imaginei que fosse tão bom e tão lindo quanto é. Te encontrar foi o presente mais lindo que Deus me deu, mudou completamente o que eu pensava sobre o amor."
+      "Tu é tão especial para mim, tudo mudou depois que tu entrou na minha vida. A tua presença, o teu olhar, o teu sorriso, o teu abraço, o teu carinho e o teu amor, são coisas que eu não posso mais viver sem."
+      "Como que pode uma pessoa fazer um bem tão grande só por existir? Fui muito abençoada por Deus, pois encontrei o que eu tanto procurava."
+      "Meu amor, agora nós somos noivos, e eu mal posso esperar pra viver tudo que temos ainda pela frente, sei que todos os dias vão ser especiais ao teu lado, não só os dias bons, mas até os ruins, os tristes, os dias que estivermos ansiosos ou frustrados, vão ser mais leves, pois vamos ter um ao outro e acima de tudo, Deus nos ajudando."
+      "Meu amor, saiba que tu é uma pessoa incrível, com um coração lindo, e o sorriso mais perfeito do mundo. Eu sou muito feliz de ser a tua noiva e quero ser a melhor esposa que alguém poderia ter. Tu é e sempre vai ser o meu lar. Eu te amo muito! ❤️"
     ]
   }
 };
